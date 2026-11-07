@@ -1,0 +1,90 @@
+{
+  "pathwayChoice": {
+    "code": "10200",
+    "name": "Architecture Pathway",
+    "reason": "This program aligns with your goal of becoming an architect."
+  },
+  "summary": "You'll start with foundational courses in your first semester, focusing on communication and design. This pathway sets you up for a successful transfer to FIU.",
+  "adjustedTerms": [
+    {
+      "label": "Term 1",
+      "courseCodes": [
+        "ENC 1101",
+        "ARH 1000",
+        "ARC 1115",
+        "SLS 1106"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 12"
+    },
+    {
+      "label": "Term 2",
+      "courseCodes": [
+        "ENC 1102",
+        "MAC 1105",
+        "ARC 1126C",
+        "ARC 1301"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 14"
+    },
+    {
+      "label": "Term 3 (Summer)",
+      "courseCodes": [
+        "ARC 2701"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 6"
+    },
+    {
+      "label": "Term 4",
+      "courseCodes": [
+        "SPC 2608",
+        "MAC 1114",
+        "ARC 1302",
+        "ARC 2171C"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 14"
+    },
+    {
+      "label": "Term 5",
+      "courseCodes": [
+        "PHY 2053",
+        "PHY 2053L",
+        "ARC 2461",
+        "ARC 2702"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 14"
+    },
+    {
+      "label": "Semesters 6-7 (FIU prerequisites)",
+      "courseCodes": [
+        "ARC 2303",
+        "ARC 2304",
+        "ARC 2172",
+        "ARC 2580"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 18"
+    }
+  ],
+  "warnings": [
+    "A minimum GPA of 3.0 is required for transfer to FIU.",
+    "A design portfolio must be submitted for admission to the FIU Accelerated Master of Architecture program.",
+    "Ensure to complete all prerequisites for advanced courses to avoid delays in the program.",
+    "Be mindful of limits on attempts for courses, as repeated attempts may affect your GPA and transfer eligibility."
+  ],
+  "nextSteps": [
+    "Meet with an Advisor to confirm your term plan.",
+    "Prepare for your design portfolio for FIU transfer.",
+    "Register for your first semester courses as soon as possible."
+  ],
+  "advisorQuestions": [
+    "Can you confirm the specific courses required for the Architecture Pathway?",
+    "What resources are available for building a design portfolio?",
+    "Are there any additional scholarships or financial aid opportunities?",
+    "Can you provide guidance on maintaining a GPA of 3.0 or higher?"
+  ]
+}

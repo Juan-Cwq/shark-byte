@@ -1,0 +1,37 @@
+---
+description: Core rules for the Cone of Uncertainty hackathon app
+alwaysApply: true
+---
+
+# Project: Cone of Uncertainty — MDC career pathway navigator (SharkByte hackathon)
+
+## Stack
+- Next.js (App Router) + TypeScript (strict) + Tailwind. Deploy on Vercel.
+- zod for all validation. No other new dependencies without asking me first.
+- No database / Supabase for the hackathon. Facts are static JSON; AI calls are Next.js API routes; tutor history is client state; demo fallbacks are `/data/cache/*.json`.
+
+## Source of truth
+- `/data/mdc_pathways.json` is the ONLY source of programs, course codes, credits, sequences, costs, pay, and transfer rules.
+- Never invent a course code, program code, price, salary, or requirement. If the data doesn't have it, the UI says "Ask an MDC advisor."
+- Facts are rendered directly from the JSON. The LLM never generates course lists or numbers; it only personalizes, explains, and tutors.
+- Each career has an `unverified` array. Anything listed there gets a visible "Unverified — confirm with advisor" badge in the UI.
+- Data quirks to handle: career ids use underscores (`mechanical_engineer`, `it_consultant`); some `credits` are strings like "3-4"; some `median_pay_usd` are null; some course `code` fields are compounds like `"CTS 1134 or CTS 1650"`.
+
+## Swarms API
+- Base URL `https://api.swarms.world`, header `x-api-key` from `process.env.SWARMS_API_KEY`.
+- All Swarms calls live in `/lib/swarms.ts` and run server-side only (`/app/api/*`). Never import that file from a client component.
+- Model comes from `process.env.SWARMS_MODEL`. Never hardcode a model name.
+- Prefer a cheap model; cache good personalize responses in `/data/cache/` for the demo. Do not burn budget on UI debugging loops.
+- Every AI response is validated with zod. On failure: retry once, then return the cached response from `/data/cache/`.
+- Any course code an agent mentions is checked against the course index built from the JSON; unknown codes are stripped via `sanitizePlan()`.
+- Never commit `.env.local` or paste API keys into source files / chat logs when avoidable.
+
+## Code style
+- Small components, one per file. Server components by default; `"use client"` only where needed.
+- Shared types only in `/lib/types.ts`. Data access only through `/lib/pathways.ts`. Agent prompts only in `/lib/agents.ts`. Swarms HTTP only in `/lib/swarms.ts`.
+- `/lib/types.ts`, `/lib/pathways.ts`, `/lib/agents.ts`, and `/lib/swarms.ts` are the hand-written contract. Do not rewrite or restructure them; ask me before changing them.
+- Every AI plan goes through `sanitizePlan()` before it reaches the client.
+- Leave `/app/alerts/page.tsx` and `/lib/weather.ts` as stubs. Do not implement weather until I ask.
+- After each task: run `npm run build` and fix all type errors before telling me you're done.
+- Keep diffs focused on the task I gave you. Don't refactor unrelated files.
+- Work on a feature branch and open a PR into `main`. Never force-push `main`.

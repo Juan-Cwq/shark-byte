@@ -1,0 +1,88 @@
+{
+  "pathwayChoice": {
+    "code": "22031",
+    "name": "Culinary Arts Management",
+    "reason": "This program is ideal as it directly aligns with the student's goal of becoming a chef."
+  },
+  "summary": "You'll start with foundational courses in culinary terminology and procedures. This structured path will help you gain the necessary skills and experience to become a chef.",
+  "adjustedTerms": [
+    {
+      "label": "Term 1",
+      "courseCodes": [
+        "ENC 1101",
+        "FSS 1200",
+        "FSS 1202C",
+        "HFT 1212"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 12"
+    },
+    {
+      "label": "Term 2",
+      "courseCodes": [
+        "FSS 1204C",
+        "FSS 1246C",
+        "MGF 1130"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 12"
+    },
+    {
+      "label": "Term 3",
+      "courseCodes": [
+        "HFT 1220",
+        "FSS 2248C",
+        "HUN 1201"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 12"
+    },
+    {
+      "label": "Term 4",
+      "courseCodes": [
+        "BSC 1005",
+        "FSS 1801",
+        "FSS 2242C",
+        "HFT 1454"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 12"
+    },
+    {
+      "label": "Term 5",
+      "courseCodes": [
+        "ACG 1403",
+        "FSS 2205C",
+        "FSS 2381"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 8"
+    },
+    {
+      "label": "Term 6",
+      "courseCodes": [
+        "PHI 2010",
+        "FSS 2940"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 7"
+    }
+  ],
+  "warnings": [
+    "Total Cost: The total cost of the program is approximately $25,700.",
+    "GPA Minimum: Maintain a minimum GPA of 2.0.",
+    "Portfolio Deadlines: Confirm any deadlines for submitting a portfolio with an MDC advisor.",
+    "Unverified Prerequisites: Confirm the prerequisite for FSS 2381 with an advisor."
+  ],
+  "nextSteps": [
+    "Meet with an Advisor to confirm the term plan.",
+    "Explore financial aid options for tuition and lab fees.",
+    "Plan for work-life balance to manage coursework and work hours."
+  ],
+  "advisorQuestions": [
+    "Can you confirm the prerequisites for FSS 2381?",
+    "Are there specific deadlines for submitting a portfolio?",
+    "What financial aid options are available for this program?",
+    "Are there recommended electives that would benefit my career as a chef?"
+  ]
+}
