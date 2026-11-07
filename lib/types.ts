@@ -317,3 +317,33 @@ export const ExplainRequest = z.object({
   reasons: z.array(z.string().min(1).max(300)).min(1).max(12),
 });
 export type ExplainRequest = z.infer<typeof ExplainRequest>;
+
+/* ------------------------------------------------------------------ */
+/* Academic record (student's MAP / transcript, parsed in the browser) */
+/* ------------------------------------------------------------------ */
+
+export const RecordStatus = z.enum(["completed", "in_progress", "planned", "not_counted"]);
+export type RecordStatus = z.infer<typeof RecordStatus>;
+
+export const RecordCourse = z.object({
+  code: z.string().regex(/^[A-Z]{3} \d{4}[A-Z]?$/), // "ENC 1101", "CGS 1060C"
+  status: RecordStatus,
+  grade: z.string().max(3).optional(),
+  note: z.string().max(160).optional(),
+});
+export type RecordCourse = z.infer<typeof RecordCourse>;
+
+// Only codes, statuses and grades are stored, never the pasted text (it can contain name / student ID).
+export const StoredAcademicRecord = z.object({
+  version: z.literal(1),
+  savedAt: z.string(),
+  courses: z.array(RecordCourse).max(200),
+});
+export type StoredAcademicRecord = z.infer<typeof StoredAcademicRecord>;
+
+// One semester of the primary program, prepared on the server for the progress tracker.
+export interface PathProgressTerm {
+  term: string;
+  // codes normalized ("ENC1101"); empty = gen-ed/elective slot. title only for single-course entries.
+  entries: { label: string; codes: string[]; title: string | null }[];
+}

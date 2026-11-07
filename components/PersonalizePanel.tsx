@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import type { CareerId, PersonalizedPlan, PersonalizeResponse } from "@/lib/types";
 import { CourseChip } from "@/components/CourseChip";
+import { recordByCode, useAcademicRecord } from "@/lib/academic-record";
+import { normalizeRecordCode } from "@/lib/record-parse";
 
 const STATUSES = [
   { value: "high-school", label: "High school" },
@@ -23,7 +25,15 @@ export function PersonalizePanel({
   const uniqueCourses = useMemo(() => [...new Set(courseOptions)].sort(), [courseOptions]);
   const [status, setStatus] = useState<(typeof STATUSES)[number]["value"]>("new-mdc-student");
   const [attendance, setAttendance] = useState<"full-time" | "part-time">("full-time");
-  const [completed, setCompleted] = useState<string[]>([]);
+  const record = useAcademicRecord();
+  const fromRecord = useMemo(() => {
+    const byCode = recordByCode(record);
+    return new Set(uniqueCourses.filter((c) => byCode.get(normalizeRecordCode(c))?.status === "completed"));
+  }, [record, uniqueCourses]);
+  // Manual chip toggles win over the saved record.
+  const [overrides, setOverrides] = useState<Record<string, boolean>>({});
+  const isCompleted = (code: string) => overrides[code] ?? fromRecord.has(code);
+  const completed = uniqueCourses.filter(isCompleted);
   const [hours, setHours] = useState("");
   const [goals, setGoals] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,7 +42,7 @@ export function PersonalizePanel({
   const [result, setResult] = useState<(PersonalizeResponse & { plan: PersonalizedPlan }) | null>(null);
 
   function toggleCourse(code: string) {
-    setCompleted((prev) => (prev.includes(code) ? prev.filter((c) => c !== code) : [...prev, code]));
+    setOverrides((prev) => ({ ...prev, [code]: !isCompleted(code) }));
   }
 
   async function onSubmit(e: React.FormEvent) {
@@ -126,10 +136,13 @@ export function PersonalizePanel({
           />
         </label>
         <fieldset className="sm:col-span-2">
-          <legend className="text-sm text-mdc-muted">Already completed (from this pathway)</legend>
+          <legend className="text-sm text-mdc-muted">
+            Already completed (from this pathway)
+            {fromRecord.size ? ` · ${fromRecord.size} filled in from your saved MAP` : ""}
+          </legend>
           <div className="mt-2 flex max-h-40 flex-wrap gap-2 overflow-y-auto">
             {uniqueCourses.map((code) => {
-              const on = completed.includes(code);
+              const on = isCompleted(code);
               return (
                 <button
                   key={code}
