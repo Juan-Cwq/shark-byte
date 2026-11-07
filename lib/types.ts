@@ -226,10 +226,51 @@ export const ChatMessage = z.object({
 });
 export type ChatMessage = z.infer<typeof ChatMessage>;
 
+/* ------------------------------------------------------------------ */
+/* Study buddy memory (stored in the browser's localStorage, no DB)    */
+/* ------------------------------------------------------------------ */
+
+const MemoryItem = z.string().min(1).max(160);
+
+// What the Learner-Profiler agent returns. Also sent with every tutor request.
+export const LearnerProfileFields = z.object({
+  learningStyle: z.string().max(240).default(""), // e.g. "likes worked examples, short answers"
+  goals: z.array(MemoryItem).max(5).default([]),
+  strengths: z.array(MemoryItem).max(8).default([]),
+  struggles: z.array(MemoryItem).max(8).default([]),
+  topicsCovered: z.array(MemoryItem).max(15).default([]),
+});
+export type LearnerProfileFields = z.infer<typeof LearnerProfileFields>;
+
+export const StoredLearnerProfile = LearnerProfileFields.extend({
+  version: z.literal(1),
+  questionsAsked: z.number().int().min(0).default(0),
+  updatedAt: z.string(),
+});
+export type StoredLearnerProfile = z.infer<typeof StoredLearnerProfile>;
+
+export const StudyArtifact = z.object({
+  id: z.string(),
+  careerId: CareerId,
+  title: z.string().max(120),
+  content: z.string().max(6000),
+  createdAt: z.string(),
+});
+export type StudyArtifact = z.infer<typeof StudyArtifact>;
+
 export const TutorRequest = z.object({
   careerId: CareerId,
   currentCourseCodes: z.array(z.string()).max(10).default([]),
   history: z.array(ChatMessage).max(40).default([]),
   question: z.string().min(1).max(4000),
+  profile: LearnerProfileFields.optional(),
+  questionsAsked: z.number().int().min(0).optional(),
 });
 export type TutorRequest = z.infer<typeof TutorRequest>;
+
+export const ProfileUpdateRequest = z.object({
+  careerId: CareerId,
+  profile: LearnerProfileFields.optional(),
+  history: z.array(ChatMessage).min(2).max(40),
+});
+export type ProfileUpdateRequest = z.infer<typeof ProfileUpdateRequest>;

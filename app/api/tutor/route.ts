@@ -27,7 +27,14 @@ export async function POST(request: Request) {
     }
 
     const raw = await callAgent(
-      buildTutorPayload(body.careerId, body.currentCourseCodes, body.history, body.question)
+      buildTutorPayload(
+        body.careerId,
+        body.currentCourseCodes,
+        body.history,
+        body.question,
+        body.profile,
+        body.questionsAsked
+      )
     );
     const reply = extractFinalText(raw);
     return NextResponse.json({ reply });
