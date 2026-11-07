@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { LearnerMemoryView } from "@/components/LearnerMemoryView";
 import { SavedStudyList } from "@/components/SavedStudyList";
+import { TutorMessage } from "@/components/TutorMessage";
 import {
   addArtifact,
   clearMemory,
@@ -216,7 +217,9 @@ export function StudyBuddy({
                     </div>
                   ) : (
                     <div key={i} className="max-w-[90%]">
-                      <div className="whitespace-pre-wrap bg-white px-3 py-2 text-sm text-mdc-muted">{m.content}</div>
+                      <div className="bg-white px-3 py-2 text-sm text-mdc-muted">
+                        <TutorMessage content={m.content} />
+                      </div>
                       <button
                         type="button"
                         disabled={savedIndexes.has(i)}

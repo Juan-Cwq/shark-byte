@@ -1,5 +1,6 @@
 "use client";
 
+import { TutorMessage } from "@/components/TutorMessage";
 import type { StudyArtifact } from "@/lib/types";
 
 export function SavedStudyList({
@@ -27,7 +28,9 @@ export function SavedStudyList({
               <span className="shrink-0 text-xs text-mdc-muted">{new Date(a.createdAt).toLocaleDateString()}</span>
             </summary>
             <div className="border-t border-mdc-line px-3 py-2.5">
-              <p className="whitespace-pre-wrap text-sm text-mdc-muted">{a.content}</p>
+              <div className="text-sm text-mdc-muted">
+                <TutorMessage content={a.content} />
+              </div>
               <button
                 type="button"
                 onClick={() => onDelete(a.id)}
