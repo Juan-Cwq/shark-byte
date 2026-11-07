@@ -274,3 +274,46 @@ export const ProfileUpdateRequest = z.object({
   history: z.array(ChatMessage).min(2).max(40),
 });
 export type ProfileUpdateRequest = z.infer<typeof ProfileUpdateRequest>;
+
+/* ------------------------------------------------------------------ */
+/* Storm alerts (NWS) + alert verification                             */
+/* ------------------------------------------------------------------ */
+
+// One official NWS alert, normalized from api.weather.gov GeoJSON.
+export const AlertSchema = z.object({
+  id: z.string(), // NWS URN, e.g. "urn:oid:2.49.0.1.840.0...."
+  url: z.string(), // https://api.weather.gov/alerts/<id>
+  event: z.string(), // "Hurricane Warning", "Flood Advisory", ...
+  headline: z.string().nullable(),
+  description: z.string(),
+  instruction: z.string().nullable(),
+  severity: z.string(),
+  urgency: z.string(),
+  certainty: z.string(),
+  areaDesc: z.string(),
+  senderName: z.string(),
+  sent: z.string(),
+  effective: z.string().nullable(),
+  expires: z.string().nullable(),
+});
+export type Alert = z.infer<typeof AlertSchema>;
+
+export const AlertsSnapshot = z.object({
+  alerts: z.array(AlertSchema),
+  fetchedAt: z.string(), // ISO time the server fetched from NWS
+});
+export type AlertsSnapshot = z.infer<typeof AlertsSnapshot>;
+
+export const VerifyLabel = z.enum(["verified", "suspicious", "unverified"]);
+export type VerifyLabel = z.infer<typeof VerifyLabel>;
+
+export interface VerifyResult {
+  label: VerifyLabel;
+  reasons: string[];
+}
+
+export const ExplainRequest = z.object({
+  label: VerifyLabel,
+  reasons: z.array(z.string().min(1).max(300)).min(1).max(12),
+});
+export type ExplainRequest = z.infer<typeof ExplainRequest>;
