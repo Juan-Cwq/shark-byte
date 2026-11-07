@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import { Disclaimer } from "@/components/Disclaimer";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WaveFooter } from "@/components/WaveFooter";
+import { getAllCareers } from "@/lib/pathways";
 import "./globals.css";
 
 const body = Source_Sans_3({
@@ -30,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Disclaimer />
         {children}
         <WaveFooter />
+        <ServiceWorkerRegister precacheUrls={getAllCareers().map((c) => `/career/${c.id}`)} />
       </body>
     </html>
   );
