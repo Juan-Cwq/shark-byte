@@ -1,0 +1,73 @@
+{
+  "pathwayChoice": {
+    "code": "25055",
+    "name": "Computer Information Technology",
+    "reason": "The primary program aligns with the student's goal of becoming an IT Consultant."
+  },
+  "summary": "You'll start with foundational courses in Computer Information Technology. This pathway will help you achieve your goal of becoming an IT Consultant.",
+  "adjustedTerms": [
+    {
+      "label": "Term 1",
+      "courseCodes": [
+        "ENC 1101",
+        "CGS 1060C"
+      ],
+      "otherRequirements": [],
+      "note": "14 credits"
+    },
+    {
+      "label": "Term 2",
+      "courseCodes": [
+        "CGS 1560",
+        "CTS 1328"
+      ],
+      "otherRequirements": [],
+      "note": "15 credits"
+    },
+    {
+      "label": "Term 3",
+      "courseCodes": [],
+      "otherRequirements": [
+        "Social science",
+        "Natural science"
+      ],
+      "note": "6 credits"
+    },
+    {
+      "label": "Term 4",
+      "courseCodes": [
+        "CTS 1131",
+        "CTS 2148C",
+        "CTS 2153"
+      ],
+      "otherRequirements": [],
+      "note": "12 credits"
+    },
+    {
+      "label": "Term 5",
+      "courseCodes": [
+        "CGS 2108"
+      ],
+      "otherRequirements": [
+        "Electives (9)"
+      ],
+      "note": "13 credits"
+    }
+  ],
+  "warnings": [
+    "Maintain a minimum GPA of 2.0 to stay in good standing.",
+    "Ensure that prerequisites are met before enrolling in courses.",
+    "Complete an AA or AS degree and maintain a 2.0 transfer GPA to transfer."
+  ],
+  "nextSteps": [
+    "Register for courses for Semester 1 as soon as registration opens.",
+    "Meet with an advisor to confirm the term plan.",
+    "Explore financial aid options to help cover tuition."
+  ],
+  "advisorQuestions": [
+    "Are there any updates or changes to the program requirements for the Computer Information Technology AS degree?",
+    "Can you confirm the transfer requirements for the bachelor's program in Information Systems Technology?",
+    "Are there specific electives you recommend that align well with the IT Consultant career path?",
+    "What resources are available for students seeking internships or job placements in IT during their studies?"
+  ]
+}

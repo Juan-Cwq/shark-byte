@@ -1,0 +1,59 @@
+{
+  "pathwayChoice": {
+    "code": "25079",
+    "name": "Cybersecurity",
+    "reason": "This program aligns with your goal of becoming a Cybersecurity Professional."
+  },
+  "summary": "You'll start with foundational courses in Cybersecurity and Networking. This pathway supports your full-time attendance and career goals.",
+  "adjustedTerms": [
+    {
+      "label": "Term 1",
+      "courseCodes": [
+        "CTS 1111",
+        "CTS 1134",
+        "CTS 1120"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 12"
+    },
+    {
+      "label": "Term 2",
+      "courseCodes": [
+        "CIS 1531",
+        "CIS 2350",
+        "CTS 2314"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 12"
+    },
+    {
+      "label": "Semesters 3-4",
+      "courseCodes": [
+        "CGS 1060C",
+        "CGS 1700",
+        "CET 2880C"
+      ],
+      "otherRequirements": [
+        "Electives (9)",
+        "General Education (15)"
+      ],
+      "note": "Total Credits: 36"
+    }
+  ],
+  "warnings": [
+    "Ensure to complete all courses with a grade of 'C' or better.",
+    "Maintain a cumulative GPA of at least 2.0 to transfer.",
+    "Consider obtaining relevant certifications to enhance job prospects."
+  ],
+  "nextSteps": [
+    "Meet with an MDC advisor to confirm the course sequence.",
+    "Register for classes for the upcoming semester.",
+    "Explore certification options and plan to study for relevant industry certifications."
+  ],
+  "advisorQuestions": [
+    "Are there any specific prerequisites or recommendations for the courses in the Cybersecurity program?",
+    "What resources are available for students seeking industry certifications while enrolled in the program?",
+    "Can you provide guidance on selecting electives that will best support my career goals in cybersecurity?",
+    "Are there any upcoming workshops or events related to cybersecurity that I should attend?"
+  ]
+}

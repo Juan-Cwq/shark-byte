@@ -1,0 +1,96 @@
+{
+  "pathwayChoice": {
+    "code": "10911",
+    "name": "Engineering - Mechanical Pathway",
+    "reason": "It aligns with your goal of becoming a mechanical engineer."
+  },
+  "summary": "You'll start with foundational courses in engineering and mathematics. This pathway provides a clear route to transfer to a bachelor's program.",
+  "adjustedTerms": [
+    {
+      "label": "Term 1",
+      "courseCodes": [
+        "ENC 1101",
+        "EGN 1008C",
+        "MAC 1105",
+        "SLS 1106"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 13"
+    },
+    {
+      "label": "Term 2",
+      "courseCodes": [
+        "ENC 1102",
+        "CHM 1045",
+        "CHM 1045L",
+        "MAC 1140"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 14"
+    },
+    {
+      "label": "Term 3 (Summer)",
+      "courseCodes": [
+        "MAC 1114"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 3"
+    },
+    {
+      "label": "Term 4",
+      "courseCodes": [
+        "MAC 2311",
+        "PHY 1025"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 14"
+    },
+    {
+      "label": "Term 5",
+      "courseCodes": [
+        "MAC 2312",
+        "PHY 2048",
+        "PHY 2048L"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 12"
+    },
+    {
+      "label": "Term 6",
+      "courseCodes": [
+        "MAC 2313"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 4"
+    },
+    {
+      "label": "Semesters 7-8 (FIU prerequisites)",
+      "courseCodes": [
+        "MAP 2302",
+        "PHY 2049",
+        "PHY 2049L",
+        "COP 2270",
+        "EGN 2312"
+      ],
+      "otherRequirements": [],
+      "note": "Total Credits: 16"
+    }
+  ],
+  "warnings": [
+    "GPA Requirement: Maintain a minimum GPA of 2.0 for transfer to FIU.",
+    "Grade Requirements: Achieve a grade of C or higher in all prerequisites within two attempts.",
+    "Course Load: Manage your course load to avoid overextending yourself.",
+    "Transfer Confirmation: Confirm with an MDC advisor regarding additional requirements."
+  ],
+  "nextSteps": [
+    "Meet with an Advisor to confirm the term plan.",
+    "Register for upcoming semester courses as outlined.",
+    "Explore tutoring or study groups for challenging subjects."
+  ],
+  "advisorQuestions": [
+    "Are there any additional prerequisites or requirements for the Engineering - Mechanical Pathway?",
+    "Can you clarify the process for transferring to FIU and any specific deadlines?",
+    "Are there recommended resources or support services for engineering students?",
+    "What should I do if I struggle to maintain the required GPA or grades?"
+  ]
+}

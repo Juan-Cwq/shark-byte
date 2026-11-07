@@ -1,0 +1,2644 @@
+{
+  "meta": {
+    "title": "MDC Roadmap: career pathways starting at Miami Dade College",
+    "as_of": "2026-11-07",
+    "structure": [
+      "career_exploration",
+      "educational_pathway",
+      "timeline_and_cost",
+      "professional_development",
+      "alternative_pathways"
+    ],
+    "notes": "Florida-resident tuition and required fees only. Verify with MDConnect / an MDC advisor before relying on any requirement."
+  },
+  "cost_basis": {
+    "mdc_lower_division_per_credit": 118.22,
+    "mdc_upper_division_per_credit": 129.89,
+    "mdc_rates_year": "2024-25 (latest posted)",
+    "fiu_undergrad_per_credit": 205.57,
+    "fiu_grad_per_credit": 455.64,
+    "fiu_rates_term": "Fall 2026",
+    "fiu_per_semester_fees": {
+      "health": 93.69,
+      "athletic": 10.0
+    },
+    "sources": [
+      "https://www.mdc.edu/student-financial-services/tuition-fees/",
+      "https://regulations.fiu.edu/wp-content/uploads/2026/04/FIU-1101-Tuition-Fees-Schedule-Regulation-4.29.26.pdf"
+    ]
+  },
+  "transfer_rules": {
+    "aa_guarantee": "An MDC AA guarantees admission to a Florida public university, not to a limited-access program.",
+    "fiu_default": [
+      "Completed AA",
+      "C or higher in all prerequisites",
+      "2.0+ cumulative transfer GPA"
+    ],
+    "fiu_exceptions": {
+      "engineering": "C or higher in two attempts or fewer (drops/withdrawals count); Calculus I ready",
+      "architecture": "3.0 GPA, AA in Architectural Studies, design portfolio"
+    },
+    "fiu_advising": "c4sadvisors@fiu.edu (Connect4Success Bridge Advisors)",
+    "as_to_bachelors": "AS courses don't all count as university gen-ed; MDC's own BS/BAS programs accept the AS directly."
+  },
+  "articulation_agreements": [
+    {
+      "mdc": "B.S. Cybersecurity",
+      "to": [
+        "FIU M.S. Cybersecurity",
+        "Nova Southeastern M.S. Cybersecurity Management",
+        "UWF M.S. Cybersecurity"
+      ],
+      "note": "Possibly completed in one year"
+    },
+    {
+      "mdc": "B.S. Information Systems Technology",
+      "to": [
+        "FIU M.S. Information Technology",
+        "FIU M.S. Telecommunications & Networking"
+      ]
+    },
+    {
+      "mdc": "B.S. Data Analytics",
+      "to": [
+        "FIU M.S. Data Science & AI"
+      ]
+    },
+    {
+      "mdc": "B.S. Electrical & Computer Engineering Technology",
+      "to": [
+        "FIU M.S. Electrical Engineering",
+        "FIU M.S. Computer Engineering",
+        "FIU M.S. Internet of Things"
+      ]
+    },
+    {
+      "mdc": "BAS Supervision & Management - Hospitality",
+      "to": [
+        "FIU M.S. Hospitality Management"
+      ]
+    }
+  ],
+  "careers": [
+    {
+      "id": "architect",
+      "title": "Architect",
+      "summary": "MDC AA (Architecture, 10200) -> FIU Accelerated Master of Architecture -> NCARB AXP + ARE -> Florida license.",
+      "career_exploration": {
+        "duties": [
+          "Meet clients to set goals and budgets",
+          "Prepare scaled drawings and specifications",
+          "Prepare contract documents and visit construction sites",
+          "Direct drafting staff",
+          "Market services"
+        ],
+        "median_pay_usd": 99280,
+        "pay_year": "May 2025",
+        "outlook": "4% growth 2025-2035; ~6,900 openings/yr",
+        "entry_education": "Professional (NAAB-accredited) architecture degree",
+        "related_careers": [
+          {
+            "title": "Drafter",
+            "median_pay_usd": 68090,
+            "education": "Associate's"
+          },
+          {
+            "title": "Landscape architect",
+            "median_pay_usd": 79870,
+            "education": "Bachelor's"
+          },
+          {
+            "title": "Construction manager",
+            "median_pay_usd": 114990,
+            "education": "Bachelor's"
+          },
+          {
+            "title": "Urban and regional planner",
+            "median_pay_usd": 89320,
+            "education": "Master's"
+          },
+          {
+            "title": "Civil engineer",
+            "median_pay_usd": 100840,
+            "education": "Bachelor's"
+          }
+        ],
+        "source": "https://www.bls.gov/ooh/architecture-and-engineering/architects.htm"
+      },
+      "educational_pathway": {
+        "primary_program": {
+          "code": "10200",
+          "name": "Architecture Pathway",
+          "degree": "AA",
+          "credits": 60,
+          "effective_term": "Fall 2025",
+          "note": "FIU also requires ARC 2303, 2304, 2172 and 2580 (additional common prerequisites), so plan ~78 credits.",
+          "courses": [
+            {
+              "code": "ARC 1115",
+              "title": "Architectural Communications 1",
+              "credits": 2,
+              "prerequisites": [],
+              "corequisites": [
+                "IND 1020"
+              ],
+              "fiu_equivalent": "ARC 1131"
+            },
+            {
+              "code": "ARC 1126C",
+              "title": "Architectural Drawing 1",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": [],
+              "fiu_equivalent": "ARC 1132"
+            },
+            {
+              "code": "ARC 1301",
+              "title": "Architectural Design 1",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": [
+                "ARC 1115 (pre/co)"
+              ],
+              "fiu_equivalent": "ARC 1301"
+            },
+            {
+              "code": "ARC 1302",
+              "title": "Architectural Design 2",
+              "credits": 4,
+              "prerequisites": [
+                "ARC 1301"
+              ],
+              "corequisites": [
+                "ARC 1126C (pre/co)",
+                "ARC 2701 (pre/co)"
+              ],
+              "fiu_equivalent": "ARC 1302"
+            },
+            {
+              "code": "ARC 2171C",
+              "title": "Computer Aided Drafting 1",
+              "credits": 4,
+              "prerequisites": [
+                "ARC 1126C or ARC 2461"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "ARC 4058 (with ARC 2172)"
+            },
+            {
+              "code": "ARC 2461",
+              "title": "Architectural Materials & Construction 1",
+              "credits": 4,
+              "prerequisites": [
+                "ARC 1126 or BCN 1251"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "ARC 1461"
+            },
+            {
+              "code": "ARC 2701",
+              "title": "History of Architecture 1",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": [],
+              "fiu_equivalent": "ARC 2701"
+            },
+            {
+              "code": "ARC 2702",
+              "title": "History of Architecture 2",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": [],
+              "fiu_equivalent": "ARC 2702"
+            },
+            {
+              "code": "MAC 1105",
+              "title": "College Algebra",
+              "credits": 3,
+              "prerequisites": [
+                "MAT 1033"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "MAC 1114",
+              "title": "Trigonometry",
+              "credits": 3,
+              "prerequisites": [
+                "MAC 1105 or MAC 1106"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "MAC 1114"
+            },
+            {
+              "code": "PHY 2053",
+              "title": "Physics without Calculus 1",
+              "credits": 3,
+              "prerequisites": [
+                "MAC 1114 or MAC 1147"
+              ],
+              "corequisites": [
+                "PHY 2053L"
+              ],
+              "fiu_equivalent": "PHY 2053"
+            },
+            {
+              "code": "PHY 2053L",
+              "title": "Physics without Calculus 1 Lab",
+              "credits": 1,
+              "prerequisites": [
+                "MAC 1114 or MAC 1147"
+              ],
+              "corequisites": [
+                "PHY 2053"
+              ],
+              "fiu_equivalent": "PHY 2048L"
+            },
+            {
+              "code": "SPC 2608",
+              "title": "Introduction to Public Speaking",
+              "credits": 3,
+              "prerequisites": [
+                "Placement or ENC 0025"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "SPC 2608"
+            }
+          ],
+          "additional_prerequisites": [
+            {
+              "code": "ARC 2303",
+              "title": "Architectural Design 3",
+              "credits": 5,
+              "prerequisites": [
+                "ARC 1302",
+                "ARC 2461"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "ARC 2303"
+            },
+            {
+              "code": "ARC 2304",
+              "title": "Architectural Design 4",
+              "credits": 5,
+              "prerequisites": [
+                "ARC 2303"
+              ],
+              "corequisites": [
+                "ARC 2053 (pre/co)",
+                "ARC 2681 (pre/co)"
+              ],
+              "fiu_equivalent": "ARC 2304"
+            },
+            {
+              "code": "ARC 2172",
+              "title": "Computer Aided Drafting 2",
+              "credits": 4,
+              "prerequisites": [
+                "ARC 2171"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "ARC 4058 (with ARC 2171)"
+            },
+            {
+              "code": "ARC 2580",
+              "title": "Architectural Structures 1",
+              "credits": 4,
+              "prerequisites": [
+                "MAC 1114"
+              ],
+              "corequisites": [
+                "PHY 2053/L, ARC 1126, ARC 2461 (pre/co)"
+              ],
+              "fiu_equivalent": "ARC 4586 + ARC 4586L",
+              "note": "Upper division at FIU"
+            },
+            {
+              "code": "ARC 2201",
+              "title": "Theory of Architecture",
+              "credits": 3,
+              "prerequisites": [
+                "ARC 1115"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "ARC 2180C",
+              "title": "Introduction to 3D Building Modeling",
+              "credits": 4,
+              "prerequisites": [
+                "ARC 2172",
+                "CGS 1060",
+                "MAC 1105"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "ART 1330C",
+              "title": "Figure Drawing",
+              "credits": "3-4",
+              "prerequisites": [],
+              "corequisites": [],
+              "fiu_equivalent": "ART 2330C",
+              "note": "Recommended by FIU"
+            }
+          ],
+          "sequence_full_time": [
+            {
+              "term": "Semester 1",
+              "courses": [
+                "ENC 1101",
+                "ARH 1000",
+                "Social science (AMH 2010/AMH 2020/POS 2041)",
+                "ARC 1115",
+                "SLS 1106"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 2",
+              "courses": [
+                "ENC 1102",
+                "MAC 1105",
+                "ARC 1126C",
+                "ARC 1301",
+                "Computer competency (CSP or CGS 1060C)"
+              ],
+              "credits": 14
+            },
+            {
+              "term": "Semester 3 (summer)",
+              "courses": [
+                "Natural science (BSC 1005/CHM 1020/ESC 1000/EVR 1001)",
+                "ARC 2701"
+              ],
+              "credits": 6
+            },
+            {
+              "term": "Semester 4",
+              "courses": [
+                "SPC 2608",
+                "MAC 1114",
+                "ARC 1302",
+                "ARC 2171C"
+              ],
+              "credits": 14
+            },
+            {
+              "term": "Semester 5",
+              "courses": [
+                "Social science",
+                "PHY 2053",
+                "PHY 2053L",
+                "ARC 2461",
+                "ARC 2702"
+              ],
+              "credits": 14
+            },
+            {
+              "term": "Semesters 6-7 (FIU prerequisites)",
+              "courses": [
+                "ARC 2303",
+                "ARC 2304",
+                "ARC 2172",
+                "ARC 2580"
+              ],
+              "credits": 18
+            }
+          ]
+        },
+        "fiu_transfer": {
+          "degree": "Accelerated Master of Architecture (master's only, no bachelor's awarded)",
+          "catalog_year": "2026-2027",
+          "min_gpa": 3.0,
+          "admission": [
+            "AA (Architectural Studies)",
+            "Cumulative transfer GPA 3.0+",
+            "C or higher in all pre-graduate courses",
+            "Design portfolio via Get Acceptd (opens Sept 1, final deadline Jan 15, decisions by Mar 31)",
+            "Admits Summer and Fall only"
+          ],
+          "program": "Enter at third year; 102 graduate credits over 3-4 years; NAAB-accredited, STEM-designated",
+          "prerequisites": [
+            {
+              "mdc": [
+                "MAC 1114 or MAC 1147"
+              ],
+              "fiu": [
+                "MAC 1114 / MAC 1147"
+              ]
+            },
+            {
+              "mdc": [
+                "PHY 2053",
+                "PHY 2053L"
+              ],
+              "fiu": [
+                "PHY 2053",
+                "PHY 2048L"
+              ]
+            },
+            {
+              "mdc": [
+                "SPC 1017 or SPC 2608"
+              ],
+              "fiu": [
+                "SPC 1017 / SPC 2608"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 1115"
+              ],
+              "fiu": [
+                "ARC 1131"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 1126C"
+              ],
+              "fiu": [
+                "ARC 1132"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 2171",
+                "ARC 2172"
+              ],
+              "fiu": [
+                "ARC 4058"
+              ],
+              "note": "Both required; upper division"
+            },
+            {
+              "mdc": [
+                "ARC 1301 or IND 1020"
+              ],
+              "fiu": [
+                "ARC 1301"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 1302 or IND 1200"
+              ],
+              "fiu": [
+                "ARC 1302"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 2303 or IND 2210"
+              ],
+              "fiu": [
+                "ARC 2303"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 2304 or IND 2220"
+              ],
+              "fiu": [
+                "ARC 2304"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 2461"
+              ],
+              "fiu": [
+                "ARC 1461"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 2580"
+              ],
+              "fiu": [
+                "ARC 4586",
+                "ARC 4586L"
+              ],
+              "note": "Upper division"
+            },
+            {
+              "mdc": [
+                "ARC 2701 or IND 1100"
+              ],
+              "fiu": [
+                "ARC 2701"
+              ]
+            },
+            {
+              "mdc": [
+                "ARC 2702 or IND 1130"
+              ],
+              "fiu": [
+                "ARC 2702"
+              ]
+            }
+          ],
+          "sources": [
+            "FIU Architecture transfer guide (MDC, 2026-27)",
+            "https://carta.fiu.edu/architecture/admissions/",
+            "https://catalog.fiu.edu/programs/ARC:MARCH"
+          ]
+        },
+        "other_transfer": [
+          "UF B.Design + M.Arch (MDC-UF partnership)",
+          "FAMU B.S. Architectural Studies (limited access, 2.5 GPA)"
+        ]
+      },
+      "timeline_and_cost": {
+        "stages": [
+          {
+            "stage": "MDC AA + FIU-required studios (~78 cr)",
+            "years": "2.5-3",
+            "cost_low_usd": 9200,
+            "cost_high_usd": 9200
+          },
+          {
+            "stage": "FIU M.Arch (102 cr)",
+            "years": "3-4",
+            "cost_low_usd": 21000,
+            "cost_high_usd": 46500,
+            "note": "Range = undergraduate vs graduate per-credit rate"
+          },
+          {
+            "stage": "AXP experience",
+            "years": "~3 (often overlaps school)",
+            "cost_low_usd": 0,
+            "cost_high_usd": 0,
+            "note": "Paid work"
+          }
+        ],
+        "total": {
+          "years": "8-9 to license",
+          "cost_low_usd": 30000,
+          "cost_high_usd": 56000,
+          "excludes": "NCARB/ARE fees, books, supplies"
+        }
+      },
+      "professional_development": {
+        "licensure_steps": [
+          "NAAB-accredited professional degree",
+          "NCARB Record + Architectural Experience Program (AXP)",
+          "Pass all divisions of the ARE (AXP participation required before testing)",
+          "Apply to Florida Board of Architecture and Interior Design (no reciprocity; endorsement for out-of-state)",
+          "24 CE hours per 2-year cycle (22 HSW + 2 Florida Building Code)"
+        ],
+        "experience": [
+          "Build a studio portfolio every term",
+          "Firm internships from the summer after year 1"
+        ],
+        "source": "https://www2.myfloridalicense.com/architecture-and-interior-design/faqs/"
+      },
+      "alternative_pathways": [
+        {
+          "code": "26034",
+          "name": "Architectural Design & Construction Technology",
+          "degree": "AS",
+          "leads_to": "Drafter / CAD tech; MDC BAS Supervision & Management",
+          "note": "66 credits, ~$7,800; work-ready after AS"
+        },
+        {
+          "code": "10201",
+          "name": "Interior Design pathway",
+          "degree": "AA",
+          "leads_to": "FIU Accelerated Master of Interior Architecture"
+        },
+        {
+          "code": "10202",
+          "name": "Landscape Architecture pathway",
+          "degree": "AA",
+          "leads_to": "FIU Landscape Architecture or UF"
+        },
+        {
+          "code": "10907",
+          "name": "Building Construction pathway",
+          "degree": "AA",
+          "leads_to": "Construction management bachelor's"
+        },
+        {
+          "code": "26033",
+          "name": "Building Construction Technology",
+          "degree": "AS",
+          "leads_to": "Construction technician"
+        },
+        {
+          "code": "26037",
+          "name": "Drafting & Design Technology",
+          "degree": "AS",
+          "leads_to": "Drafter"
+        },
+        {
+          "code": "66070",
+          "name": "Computer Aided Design Assistant",
+          "degree": "CCC",
+          "leads_to": "CAD jobs in months; stacks into AS"
+        },
+        {
+          "code": "66071",
+          "name": "Computer Aided Design Operator",
+          "degree": "CCC",
+          "leads_to": "CAD jobs in months; stacks into AS"
+        }
+      ],
+      "unverified": []
+    },
+    {
+      "id": "mechanical_engineer",
+      "title": "Mechanical Engineer",
+      "summary": "MDC AA (Engineering-Mechanical, 10911) -> FIU BSME (ABET) -> FE -> ~4 yrs experience -> PE.",
+      "career_exploration": {
+        "duties": [
+          "Analyze problems mechanical/thermal devices can solve",
+          "Design with analysis and CAD",
+          "Investigate equipment failures",
+          "Build and test prototypes",
+          "Oversee manufacturing"
+        ],
+        "median_pay_usd": 104110,
+        "pay_year": "May 2025",
+        "outlook": "11% growth 2025-2035; ~17,800 openings/yr",
+        "entry_education": "Bachelor's in mechanical engineering or ME technology; PE not needed to start",
+        "related_careers": [
+          {
+            "title": "Mechanical engineering technician",
+            "median_pay_usd": 74510,
+            "education": "Associate's"
+          },
+          {
+            "title": "Drafter",
+            "median_pay_usd": 68090,
+            "education": "Associate's"
+          },
+          {
+            "title": "Materials engineer",
+            "median_pay_usd": 112860,
+            "education": "Bachelor's"
+          },
+          {
+            "title": "Sales engineer",
+            "median_pay_usd": 124900,
+            "education": "Bachelor's"
+          }
+        ],
+        "source": "https://www.bls.gov/ooh/architecture-and-engineering/mechanical-engineers.htm"
+      },
+      "educational_pathway": {
+        "primary_program": {
+          "code": "10911",
+          "name": "Engineering - Mechanical Pathway",
+          "degree": "AA",
+          "credits": 60,
+          "effective_term": "Fall 2024",
+          "note": "60 credits reach Calculus 3; FIU also needs MAP 2302, PHY 2049/L, COP 2270, EGN 2312 (~76 credits).",
+          "courses": [
+            {
+              "code": "EGN 1008C",
+              "title": "Introduction to Engineering",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": [],
+              "fiu_equivalent": "EGS 1006"
+            },
+            {
+              "code": "MAC 1105",
+              "title": "College Algebra",
+              "credits": 3,
+              "prerequisites": [
+                "MAT 1033"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "MAC 1140",
+              "title": "Pre-Calculus Algebra",
+              "credits": 3,
+              "prerequisites": [
+                "MAC 1105"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "MAC 1114",
+              "title": "Trigonometry",
+              "credits": 3,
+              "prerequisites": [
+                "MAC 1105 or MAC 1106"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "CHM 1045",
+              "title": "General Chemistry & Qualitative Analysis",
+              "credits": 3,
+              "prerequisites": [
+                "CHM 1025 or CART exam",
+                "MAC 1105"
+              ],
+              "corequisites": [
+                "CHM 1045L"
+              ],
+              "fiu_equivalent": "CHM 1045"
+            },
+            {
+              "code": "CHM 1045L",
+              "title": "General Chemistry Lab",
+              "credits": 2,
+              "prerequisites": [
+                "CHM 1025 or CART exam",
+                "MAC 1105"
+              ],
+              "corequisites": [
+                "CHM 1045"
+              ],
+              "fiu_equivalent": "CHM 1045L"
+            },
+            {
+              "code": "PHY 1025",
+              "title": "Basic Physics",
+              "credits": 3,
+              "prerequisites": [
+                "MAC 1105"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "MAC 2311",
+              "title": "Calculus & Analytic Geometry 1",
+              "credits": 5,
+              "prerequisites": [
+                "MAC 1140 + MAC 1114, or MAC 1106 + MAC 1114, or MAC 1147"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "MAC 2311"
+            },
+            {
+              "code": "MAC 2312",
+              "title": "Calculus & Analytic Geometry 2",
+              "credits": 4,
+              "prerequisites": [
+                "MAC 2311"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "MAC 2312"
+            },
+            {
+              "code": "MAC 2313",
+              "title": "Calculus & Analytic Geometry 3",
+              "credits": 4,
+              "prerequisites": [
+                "MAC 2312"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "MAC 2313"
+            },
+            {
+              "code": "PHY 2048",
+              "title": "Physics with Calculus 1",
+              "credits": 4,
+              "prerequisites": [
+                "MAC 2311",
+                "HS physics or PHY 1025 or PHY 2053"
+              ],
+              "corequisites": [
+                "PHY 2048L"
+              ],
+              "fiu_equivalent": "PHY 2048"
+            },
+            {
+              "code": "PHY 2048L",
+              "title": "Physics with Calculus 1 Lab",
+              "credits": 1,
+              "prerequisites": [
+                "MAC 2311"
+              ],
+              "corequisites": [
+                "PHY 2048"
+              ],
+              "fiu_equivalent": "PHY 2048L"
+            }
+          ],
+          "additional_prerequisites": [
+            {
+              "code": "MAP 2302",
+              "title": "Differential Equations",
+              "credits": 3,
+              "prerequisites": [
+                "MAC 2312"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "MAP 2302"
+            },
+            {
+              "code": "PHY 2049",
+              "title": "Physics with Calculus 2",
+              "credits": 4,
+              "prerequisites": [
+                "PHY 2048",
+                "PHY 2048L"
+              ],
+              "corequisites": [
+                "PHY 2049L",
+                "MAC 2312"
+              ],
+              "fiu_equivalent": "PHY 2049"
+            },
+            {
+              "code": "PHY 2049L",
+              "title": "Physics with Calculus 2 Lab",
+              "credits": 1,
+              "prerequisites": [
+                "PHY 2048",
+                "PHY 2048L"
+              ],
+              "corequisites": [
+                "PHY 2049",
+                "MAC 2312"
+              ],
+              "fiu_equivalent": "PHY 2049L"
+            },
+            {
+              "code": "COP 2270",
+              "title": "C for Engineers",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": [
+                "MAC 1105 (pre/co)"
+              ],
+              "fiu_equivalent": "EML 2032",
+              "note": "Upper-division credit for ME majors"
+            },
+            {
+              "code": "EGN 2312",
+              "title": "Engineering Mechanics - Statics (with Vectors)",
+              "credits": 4,
+              "prerequisites": [
+                "MAC 2312",
+                "PHY 2048"
+              ],
+              "corequisites": [],
+              "fiu_equivalent": "EGN 3311",
+              "note": "Required by FIU; upper-division credit"
+            }
+          ],
+          "sequence_full_time": [
+            {
+              "term": "Semester 1",
+              "courses": [
+                "ENC 1101",
+                "EGN 1008C",
+                "Humanities",
+                "MAC 1105",
+                "SLS 1106"
+              ],
+              "credits": 13
+            },
+            {
+              "term": "Semester 2",
+              "courses": [
+                "ENC 1102",
+                "Social science",
+                "Computer competency",
+                "CHM 1045",
+                "CHM 1045L",
+                "MAC 1140"
+              ],
+              "credits": 14
+            },
+            {
+              "term": "Semester 3 (summer)",
+              "courses": [
+                "MAC 1114"
+              ],
+              "credits": 3
+            },
+            {
+              "term": "Semester 4",
+              "courses": [
+                "MAC 2311",
+                "Social science",
+                "Oral communication",
+                "PHY 1025"
+              ],
+              "credits": 14
+            },
+            {
+              "term": "Semester 5",
+              "courses": [
+                "Humanities",
+                "MAC 2312",
+                "PHY 2048",
+                "PHY 2048L"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 6",
+              "courses": [
+                "MAC 2313"
+              ],
+              "credits": 4
+            },
+            {
+              "term": "Semesters 7-8 (FIU prerequisites)",
+              "courses": [
+                "MAP 2302",
+                "PHY 2049",
+                "PHY 2049L",
+                "COP 2270",
+                "EGN 2312"
+              ],
+              "credits": 16
+            }
+          ]
+        },
+        "fiu_transfer": {
+          "degree": "B.S. Mechanical Engineering (ABET)",
+          "catalog_year": "2026-2027",
+          "min_gpa": 2.0,
+          "admission": [
+            "Completed AA",
+            "Cumulative transfer GPA 2.0+",
+            "C or higher in all prerequisites in two attempts or fewer (drops/withdrawals count)",
+            "Calculus I ready: MAC 1140 + MAC 1114, or MAC 1147, each C or higher"
+          ],
+          "prerequisites": [
+            {
+              "mdc": [
+                "MAC 2311"
+              ],
+              "fiu": [
+                "MAC 2311"
+              ]
+            },
+            {
+              "mdc": [
+                "MAC 2312"
+              ],
+              "fiu": [
+                "MAC 2312"
+              ]
+            },
+            {
+              "mdc": [
+                "MAC 2313"
+              ],
+              "fiu": [
+                "MAC 2313"
+              ]
+            },
+            {
+              "mdc": [
+                "MAP 2302"
+              ],
+              "fiu": [
+                "MAP 2302"
+              ]
+            },
+            {
+              "mdc": [
+                "CHM 1045",
+                "CHM 1045L"
+              ],
+              "fiu": [
+                "CHM 1045",
+                "CHM 1045L"
+              ]
+            },
+            {
+              "mdc": [
+                "PHY 2048",
+                "PHY 2048L"
+              ],
+              "fiu": [
+                "PHY 2048",
+                "PHY 2048L"
+              ]
+            },
+            {
+              "mdc": [
+                "PHY 2049",
+                "PHY 2049L"
+              ],
+              "fiu": [
+                "PHY 2049",
+                "PHY 2049L"
+              ]
+            },
+            {
+              "mdc": [
+                "EGN 1008C"
+              ],
+              "fiu": [
+                "EGS 1006"
+              ],
+              "note": "Additional lower-division course (required)"
+            },
+            {
+              "mdc": [
+                "COP 2270"
+              ],
+              "fiu": [
+                "EML 2032"
+              ],
+              "note": "Transfers as noted for ME majors"
+            },
+            {
+              "mdc": [
+                "EGN 2312"
+              ],
+              "fiu": [
+                "EGN 3311"
+              ],
+              "note": "Transfers as noted for ME majors"
+            }
+          ],
+          "sources": [
+            "FIU Mechanical Engineering transfer guide (MDC, 2026-27)",
+            "https://tts.fiu.edu/guides/web/MDC/Mechanical-Engineering"
+          ]
+        },
+        "other_transfer": [
+          "FAMU-FSU College of Engineering ME (2.0 GPA)",
+          "UF / UCF / USF via statewide AA articulation"
+        ],
+        "graduate": [
+          "M.S. Mechanical Engineering",
+          "Ph.D. Mechanical Engineering"
+        ]
+      },
+      "timeline_and_cost": {
+        "stages": [
+          {
+            "stage": "MDC AA + additional prerequisites (~76 cr)",
+            "years": "2.5-3",
+            "cost_low_usd": 9000,
+            "cost_high_usd": 9000
+          },
+          {
+            "stage": "FIU BSME upper division (~60-68 cr)",
+            "years": "2-2.5",
+            "cost_low_usd": 12300,
+            "cost_high_usd": 14000,
+            "note": "Total credits not verified"
+          },
+          {
+            "stage": "Optional M.S. (30 cr)",
+            "years": "1.5-2",
+            "cost_low_usd": 13700,
+            "cost_high_usd": 13700
+          },
+          {
+            "stage": "Engineering experience before PE",
+            "years": "~4",
+            "cost_low_usd": 0,
+            "cost_high_usd": 0,
+            "note": "Paid work"
+          }
+        ],
+        "total": {
+          "years": "~5 to BSME; ~9 to PE",
+          "cost_low_usd": 21300,
+          "cost_high_usd": 23000,
+          "excludes": "M.S., exam fees, books"
+        }
+      },
+      "professional_development": {
+        "licensure_steps": [
+          "NCEES FE exam (usually senior year or right after graduation)",
+          "FBPE Engineer Intern certification: ABET degree, FE pass, $100 fee, Laws & Rules study guide 90%+",
+          "~4 years qualifying experience under a PE",
+          "NCEES PE exam (Mechanical); PE application $230, renewal $98.75"
+        ],
+        "experience": [
+          "Co-ops/internships from the summer after Calculus 2",
+          "ASME, SHPE, MDC engineering clubs",
+          "CAD projects (SolidWorks/AutoCAD)"
+        ],
+        "source": "https://fbpe.org/licensure/licensure-process/engineer-interns/"
+      },
+      "alternative_pathways": [
+        {
+          "code": "26039",
+          "name": "Electronics Engineering Technology",
+          "degree": "AS",
+          "leads_to": "MDC B.S. Electrical & Computer Engineering Technology (S5100) -> FIU M.S. EE/CE/IoT",
+          "note": "Technology degrees are not ABET engineering; PE eligibility needs board review"
+        },
+        {
+          "code": "66053",
+          "name": "Mechatronics",
+          "degree": "CCC",
+          "leads_to": "Technician jobs; stacks into AS"
+        },
+        {
+          "code": "66054",
+          "name": "Rapid Prototyping Specialist",
+          "degree": "CCC",
+          "leads_to": "Technician jobs; stacks into AS"
+        },
+        {
+          "code": "66052",
+          "name": "Engineering Technology Support Specialist",
+          "degree": "CCC",
+          "leads_to": "Technician jobs; stacks into AS"
+        },
+        {
+          "code": "68000",
+          "name": "Automation",
+          "degree": "CCC",
+          "leads_to": "Manufacturing technician"
+        },
+        {
+          "code": "10908",
+          "name": "Engineering - Civil pathway",
+          "degree": "AA",
+          "leads_to": "FIU Civil Engineering",
+          "note": "Same math/physics core"
+        },
+        {
+          "code": "10910",
+          "name": "Engineering - Electrical pathway",
+          "degree": "AA",
+          "leads_to": "FIU Electrical Engineering",
+          "note": "Same math/physics core"
+        },
+        {
+          "code": "10912",
+          "name": "Engineering - Industrial pathway",
+          "degree": "AA",
+          "leads_to": "FIU Industrial Engineering",
+          "note": "Same math/physics core"
+        },
+        {
+          "code": "10904",
+          "name": "Engineering - Biomedical pathway",
+          "degree": "AA",
+          "leads_to": "FIU Biomedical Engineering",
+          "note": "Same math/physics core"
+        }
+      ],
+      "unverified": [
+        "FIU BSME total credits",
+        "MDC ME program sheet shows a Fall 2017 effective term; CSG used instead"
+      ]
+    },
+    {
+      "id": "chef",
+      "title": "Chef",
+      "summary": "MDC AS Culinary Arts Management (22031) -> kitchen experience -> MDC BAS Supervision & Management - Hospitality -> optional FIU M.S. Hospitality.",
+      "career_exploration": {
+        "duties": [
+          "Plan menus and develop recipes",
+          "Supervise and train kitchen staff",
+          "Order supplies and inventory",
+          "Monitor sanitation and safety"
+        ],
+        "median_pay_usd": 62470,
+        "pay_year": "May 2025",
+        "outlook": "7% growth 2025-2035; ~25,200 openings/yr",
+        "entry_education": "High school diploma + 5+ years related experience (BLS)",
+        "related_careers": [
+          {
+            "title": "Food service manager",
+            "median_pay_usd": 69390,
+            "education": "High school"
+          },
+          {
+            "title": "Baker",
+            "median_pay_usd": 37160,
+            "education": "None"
+          },
+          {
+            "title": "Cook",
+            "median_pay_usd": 36640,
+            "education": "Varies"
+          }
+        ],
+        "source": "https://www.bls.gov/ooh/food-preparation-and-serving/chefs-and-head-cooks.htm"
+      },
+      "educational_pathway": {
+        "primary_program": {
+          "code": "22031",
+          "name": "Culinary Arts Management",
+          "degree": "AS",
+          "credits": 60,
+          "effective_term": "Fall 2024",
+          "campus": "Wolfson (Miami Culinary Institute)",
+          "gen_ed": [
+            "ENC 1101",
+            "PHI 2010",
+            "MGF 1130",
+            "BSC 1005",
+            "AMH 2010 or AMH 2020 or POS 2041"
+          ],
+          "computer_competency": "CCT or CGS 1060C",
+          "extra_fees_usd": 18644,
+          "embedded_certificates": [
+            {
+              "code": "65059",
+              "name": "Chef Apprentice"
+            },
+            {
+              "code": "65060",
+              "name": "Culinary Arts Management Operations",
+              "credits": 18
+            }
+          ],
+          "courses": [
+            {
+              "code": "FSS 1200",
+              "title": "Culinary Terminology and Procedures",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": [
+                "FSS 1202C"
+              ]
+            },
+            {
+              "code": "FSS 1202C",
+              "title": "Food Production 1 - Fundamental Skills",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": [
+                "FSS 1200"
+              ]
+            },
+            {
+              "code": "FSS 1204C",
+              "title": "Food Production 2 - American Regional Cuisine",
+              "credits": 3,
+              "prerequisites": [
+                "FSS 1200",
+                "FSS 1202C"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "FSS 1246C",
+              "title": "Basic Baking - Foundational Skills",
+              "credits": 3,
+              "prerequisites": [
+                "FSS 1200",
+                "FSS 1202C"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "FSS 2248C",
+              "title": "Garde Manger",
+              "credits": 3,
+              "prerequisites": [
+                "FSS 1200",
+                "FSS 1202C",
+                "FSS 1246C"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "FSS 1801",
+              "title": "Culinary Sustainability and Practices",
+              "credits": 3,
+              "prerequisites": [
+                "FSS 2248C"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "FSS 2242C",
+              "title": "International Cuisines",
+              "credits": 3,
+              "prerequisites": [
+                "FSS 1200",
+                "FSS 1202C",
+                "FSS 1204C",
+                "FSS 1246C",
+                "FSS 2248C"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "FSS 2205C",
+              "title": "Food Production 3 - Contemporary & Modernist",
+              "credits": 3,
+              "prerequisites": [
+                "FSS 1200",
+                "FSS 1202C",
+                "FSS 1204C",
+                "FSS 1246C",
+                "FSS 2242C",
+                "FSS 2248C"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "FSS 2381",
+              "title": "Culinary Management Internship",
+              "credits": 4,
+              "prerequisites": [
+                "FSS 2205"
+              ],
+              "corequisites": [],
+              "note": "Sheet prints FSS 2205L; verify"
+            },
+            {
+              "code": "FSS 2940",
+              "title": "Culinary Management Externship",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "HFT 1212",
+              "title": "Safety & Sanitation",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "HFT 1220",
+              "title": "Supervision and Personnel Management",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "HFT 1454",
+              "title": "Food and Beverage Cost Controls",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "HUN 1201",
+              "title": "Essentials of Human Nutrition",
+              "credits": 3,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "ACG 1403",
+              "title": "Excel for Business",
+              "credits": 1,
+              "prerequisites": [],
+              "corequisites": []
+            }
+          ],
+          "sequence_full_time": [
+            {
+              "term": "Semester 1",
+              "courses": [
+                "ENC 1101",
+                "FSS 1200",
+                "FSS 1202C",
+                "HFT 1212"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 2",
+              "courses": [
+                "Social science",
+                "FSS 1204C",
+                "FSS 1246C",
+                "MGF 1130"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 3",
+              "courses": [
+                "CCT or CGS 1060C",
+                "HFT 1220",
+                "FSS 2248C",
+                "HUN 1201"
+              ],
+              "credits": 9
+            },
+            {
+              "term": "Semester 4",
+              "courses": [
+                "BSC 1005",
+                "FSS 1801",
+                "FSS 2242C",
+                "HFT 1454"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 5",
+              "courses": [
+                "ACG 1403",
+                "FSS 2205C",
+                "FSS 2381"
+              ],
+              "credits": 8
+            },
+            {
+              "term": "Semester 6",
+              "courses": [
+                "PHI 2010",
+                "FSS 2940"
+              ],
+              "credits": 7
+            }
+          ],
+          "sources": [
+            "https://cuv.mdc.edu/academics/programs/ps/22031.pdf",
+            "https://mdc.edu/academics/programs/csg/AS_CulinaryArtsManagement_csg.pdf",
+            "https://mdc.edu/culinaryartsmanagement/"
+          ]
+        },
+        "mdc_bachelor": {
+          "code": "P9201",
+          "name": "Supervision and Management - Hospitality Management",
+          "degree": "BAS",
+          "admission": [
+            "AA, AS or AAS, or 60 credits incl. gen-ed",
+            "2.0 GPA",
+            "MDC application + BAS application"
+          ],
+          "source": "https://cuv.mdc.edu/supervisionmanagement/admission-requirements.aspx"
+        },
+        "fiu_transfer": {
+          "degree": "B.S. Hospitality & Tourism Management (Chaplin School)",
+          "catalog_year": "2025-2026",
+          "min_gpa": 2.0,
+          "admission": [
+            "Completed AA",
+            "C or higher in prerequisites",
+            "2.0 transfer GPA"
+          ],
+          "prerequisites": [
+            {
+              "mdc": [
+                "ECO 2013 (preferred) or ECO 2023"
+              ],
+              "fiu": [
+                "ECO 2013 / ECO 2023"
+              ]
+            },
+            {
+              "mdc": [
+                "HFT 1000"
+              ],
+              "fiu": [
+                "HFT 1000"
+              ]
+            },
+            {
+              "mdc": [
+                "HFT 1210 or HFT 1220"
+              ],
+              "fiu": [
+                "HFT 2220"
+              ]
+            },
+            {
+              "mdc": [
+                "HFT 2449"
+              ],
+              "fiu": [
+                "HFT 2441"
+              ]
+            },
+            {
+              "mdc": [
+                "HFT 2421 or ACG 2021 (or ACG 2001 + ACG 2011)"
+              ],
+              "fiu": [
+                "HFT 2401 / ACG 2021"
+              ]
+            }
+          ],
+          "strongly_recommended": [
+            {
+              "mdc": [
+                "HFT 2410"
+              ],
+              "fiu": [
+                "HFT 3453"
+              ],
+              "note": "Upper division"
+            },
+            {
+              "mdc": [
+                "HFT 2500"
+              ],
+              "fiu": [
+                "HFT 3503"
+              ],
+              "note": "Upper division"
+            },
+            {
+              "mdc": [
+                "HFT 3603"
+              ],
+              "fiu": [
+                "HFT 3603"
+              ]
+            }
+          ],
+          "sources": [
+            "https://tts.fiu.edu/guides/web/MDC/Hospitality-and-Tourism-Management"
+          ]
+        },
+        "graduate": [
+          "FIU M.S. Hospitality Management (articulation from MDC BAS - Hospitality)"
+        ]
+      },
+      "timeline_and_cost": {
+        "stages": [
+          {
+            "stage": "Embedded CCCs (Chef Apprentice / Culinary Ops)",
+            "years": "0.5-1",
+            "cost_low_usd": 0,
+            "cost_high_usd": 0,
+            "note": "Inside the AS"
+          },
+          {
+            "stage": "MDC AS Culinary Arts Management",
+            "years": "2",
+            "cost_low_usd": 25700,
+            "cost_high_usd": 25700,
+            "note": "$7,093 tuition + ~$18,644 lab fees"
+          },
+          {
+            "stage": "Kitchen experience to chef level",
+            "years": "~5",
+            "cost_low_usd": 0,
+            "cost_high_usd": 0,
+            "note": "Paid work"
+          },
+          {
+            "stage": "MDC BAS Supervision & Management (60 upper cr)",
+            "years": "2 (part-time while working)",
+            "cost_low_usd": 7800,
+            "cost_high_usd": 7800
+          },
+          {
+            "stage": "Optional FIU M.S. Hospitality (~30 cr)",
+            "years": "1-1.5",
+            "cost_low_usd": 13700,
+            "cost_high_usd": 13700,
+            "note": "Credits not verified"
+          }
+        ],
+        "total": {
+          "years": "2 to AS; ~7 to chef with experience",
+          "cost_low_usd": 25700,
+          "cost_high_usd": 47200
+        }
+      },
+      "professional_development": {
+        "certifications": [
+          "ServSafe Food Protection Manager (common employer requirement)",
+          "ACF Certified Culinarian -> Sous Chef -> Executive Chef"
+        ],
+        "experience": [
+          "FSS 2381 internship and FSS 2940 externship built into the AS",
+          "MCI visiting-chef events"
+        ]
+      },
+      "alternative_pathways": [
+        {
+          "code": "65059",
+          "name": "Chef Apprentice",
+          "degree": "CCC",
+          "leads_to": "Line cook -> sous chef; stacks into AS"
+        },
+        {
+          "code": "65051",
+          "name": "Food and Beverage Management",
+          "degree": "CCC",
+          "leads_to": "Restaurant supervision"
+        },
+        {
+          "code": "65058",
+          "name": "Food and Beverage Operations",
+          "degree": "CCC",
+          "leads_to": "Restaurant operations"
+        },
+        {
+          "code": "22016",
+          "name": "Hospitality & Tourism Management",
+          "degree": "AS",
+          "leads_to": "Hotel/restaurant management; BAS pathway"
+        },
+        {
+          "code": "10506",
+          "name": "Hospitality Administration/Travel & Tourism pathway",
+          "degree": "AA",
+          "leads_to": "FIU B.S. Hospitality (best fit)"
+        },
+        {
+          "code": "11305",
+          "name": "Dietetics pathway",
+          "degree": "AA",
+          "leads_to": "Nutrition/dietitian route (separate licensure)"
+        },
+        {
+          "code": "C6000",
+          "name": "Hospitality Management",
+          "degree": "ATC",
+          "leads_to": "Post-AS upskill"
+        }
+      ],
+      "unverified": [
+        "FSS 2381 prerequisite typo (FSS 2205L)",
+        "FIU M.S. Hospitality credit total"
+      ]
+    },
+    {
+      "id": "cybersecurity",
+      "title": "Cybersecurity Professional",
+      "summary": "CCC Cybersecurity Analyst -> AS Cybersecurity (25079) -> MDC B.S. Cybersecurity (S9515) -> M.S. via agreements.",
+      "career_exploration": {
+        "duties": [
+          "Monitor networks and investigate breaches",
+          "Run firewalls and encryption",
+          "Test for vulnerabilities",
+          "Write security standards and reports",
+          "Create disaster-recovery plans"
+        ],
+        "median_pay_usd": 129180,
+        "pay_year": "May 2025",
+        "local_pay_note": "MDC cites $89,754 South Florida security-analyst median",
+        "outlook": "21% growth 2025-2035; ~14,100 openings/yr",
+        "entry_education": "Bachelor's typical; certifications preferred",
+        "related_careers": [
+          {
+            "title": "Computer network architect",
+            "median_pay_usd": 134050,
+            "education": "Bachelor's"
+          },
+          {
+            "title": "Network & computer systems administrator",
+            "median_pay_usd": 99130,
+            "education": "Bachelor's"
+          },
+          {
+            "title": "Computer support specialist",
+            "median_pay_usd": 62890,
+            "education": "Varies"
+          },
+          {
+            "title": "Digital forensics / SOC analyst / penetration tester",
+            "median_pay_usd": null,
+            "education": "Varies"
+          }
+        ],
+        "source": "https://www.bls.gov/OOH/computer-and-information-technology/information-security-analysts.htm"
+      },
+      "educational_pathway": {
+        "primary_program": {
+          "code": "25079",
+          "name": "Cybersecurity",
+          "degree": "AS",
+          "credits": 60,
+          "effective_term": "Spring 2025",
+          "credit_breakdown": {
+            "gen_ed": 15,
+            "major": 20,
+            "program": 16,
+            "elective": 9
+          },
+          "gen_ed": [
+            "ENC 1101",
+            "Humanities (1)",
+            "MAC 1105 or STA 2023",
+            "Natural science (1)",
+            "AMH 2010 / AMH 2020 / POS 2041"
+          ],
+          "courses": [
+            {
+              "code": "CGS 1060C",
+              "title": "Intro to Computer Technology & Applications",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "CGS 1700",
+              "title": "Intro to Operating Systems",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "CIS 1531",
+              "title": "Intro to Secure Scripting",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "CTS 1134",
+              "title": "Networking Technologies",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": [],
+              "industry_cert": "CompTIA Network+",
+              "note": "Take before CTS 1120"
+            },
+            {
+              "code": "CTS 1120",
+              "title": "Cybersecurity Fundamentals",
+              "credits": 4,
+              "prerequisites": [
+                "Networking knowledge recommended"
+              ],
+              "corequisites": [],
+              "industry_cert": "CompTIA Security+"
+            },
+            {
+              "code": "CTS 1111",
+              "title": "Linux+",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": [],
+              "industry_cert": "CompTIA Linux+"
+            },
+            {
+              "code": "CIS 2350",
+              "title": "Cybersecurity Analysis",
+              "credits": 4,
+              "prerequisites": [
+                "CTS 1120",
+                "CTS 1134"
+              ],
+              "corequisites": [],
+              "industry_cert": "CompTIA CySA+"
+            },
+            {
+              "code": "CTS 2314",
+              "title": "Network Defense & Countermeasures",
+              "credits": 4,
+              "prerequisites": [
+                "CTS 1120",
+                "CTS 1134 or CTS 1650"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "CET 2880C",
+              "title": "Digital Forensics",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": []
+            }
+          ],
+          "electives": "9 credits: any CAI, CGS, CIS, COP, CTS (e.g. COP 1334, COP 2800, CTS 1145, CTS 2670/2671, CIS 2619)",
+          "embedded_certificates": [
+            {
+              "code": "66061",
+              "name": "Cybersecurity Analyst",
+              "credits": 24
+            }
+          ],
+          "sequence_full_time": [
+            {
+              "term": "Semester 1 (from CCC CSG)",
+              "courses": [
+                "CTS 1111",
+                "CTS 1134",
+                "CTS 1120"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 2 (from CCC CSG)",
+              "courses": [
+                "CIS 1531",
+                "CIS 2350",
+                "CTS 2314"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semesters 3-4",
+              "courses": [
+                "CGS 1060C",
+                "CGS 1700",
+                "CET 2880C",
+                "Electives (9)",
+                "Gen-ed (15)"
+              ],
+              "credits": 36
+            }
+          ],
+          "sources": [
+            "https://www3.mdc.edu/academics/programs/ps/25079.pdf",
+            "https://tropicalgreen.mdc.edu/academics/programs/csg/CCC_CybersecurityAnalyst_csg.pdf"
+          ]
+        },
+        "mdc_bachelor": {
+          "code": "S9515",
+          "name": "Cybersecurity",
+          "degree": "BS",
+          "credits": 120,
+          "effective_term": "Spring 2025",
+          "estimated_tuition_usd": 15586.8,
+          "estimated_years": 4,
+          "nsa_validated": true,
+          "admission": [
+            "AA, AS, or 60+ credits incl. gen-ed",
+            "2.5 cumulative GPA",
+            "C or higher in CTS 1120, CTS 1134, CTS 1111 + one of CIS 1531 / COP 1334 / COP 1047C"
+          ],
+          "credit_breakdown": {
+            "gen_ed": 36,
+            "lower_division": 36,
+            "upper_division": 40,
+            "program_electives": 12
+          },
+          "graduation": [
+            "120 credits, 2.0 GPA",
+            "C or better in gen-ed and upper division",
+            "Civic literacy (AMH 2010/2020 or POS 2041 + exam)",
+            "Foreign language competency",
+            "Computer competency"
+          ],
+          "upper_division_courses": [
+            {
+              "code": "CIS 3215",
+              "title": "Ethics in Cybersecurity",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "CIS 3360",
+              "title": "Principles of Information Security",
+              "credits": 4,
+              "prerequisites": [
+                "CTS 1134 or CTS 1650"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "CIS 3361",
+              "title": "Information Security Management",
+              "credits": 4,
+              "prerequisites": [
+                "CIS 3360"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "CIS 4204",
+              "title": "Ethical Hacking 1",
+              "credits": 4,
+              "prerequisites": [
+                "CIS 3360"
+              ],
+              "corequisites": [],
+              "industry_cert": "CEH, GIAC Experienced Incident Handler"
+            },
+            {
+              "code": "CIS 4378",
+              "title": "Ethical Hacking 2",
+              "credits": 4,
+              "prerequisites": [
+                "CIS 4204"
+              ],
+              "corequisites": [],
+              "industry_cert": "CEH, GIAC Experienced Incident Handler"
+            },
+            {
+              "code": "CIS 4364",
+              "title": "Intrusion Detection and Incident Response",
+              "credits": 4,
+              "prerequisites": [
+                "CIS 3360"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "CIS 4366",
+              "title": "Computer Forensics",
+              "credits": 4,
+              "prerequisites": [
+                "CIS 3360"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "CIS 4388",
+              "title": "Advanced Computer Forensics",
+              "credits": 4,
+              "prerequisites": [
+                "CIS 4366"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "CNT 3409C",
+              "title": "Network Security",
+              "credits": 4,
+              "prerequisites": [
+                "CIS 3360"
+              ],
+              "corequisites": []
+            },
+            {
+              "code": "CIS 4891",
+              "title": "Capstone Project",
+              "credits": 4,
+              "prerequisites": [
+                "Departmental approval"
+              ],
+              "corequisites": []
+            }
+          ],
+          "sequence_from_as_full_time": [
+            {
+              "term": "Semester 1",
+              "courses": [
+                "CIS 3215",
+                "CIS 3360",
+                "ENC 1102",
+                "MAC 1105 or STA 2023"
+              ],
+              "credits": 14
+            },
+            {
+              "term": "Semester 2",
+              "courses": [
+                "CIS 4204",
+                "CIS 4366",
+                "CNT 3409C"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 3 (summer)",
+              "courses": [
+                "CIS 4388",
+                "Oral communication",
+                "Social science"
+              ],
+              "credits": 10
+            },
+            {
+              "term": "Semester 4",
+              "courses": [
+                "CIS 3361",
+                "CIS 4364",
+                "CIS 4378"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 5",
+              "courses": [
+                "CIS 4891",
+                "Natural science",
+                "Humanities",
+                "Program elective"
+              ],
+              "credits": 12
+            }
+          ],
+          "certifications": [
+            "CEH",
+            "CISM",
+            "EC-Council Certified Incident Handler",
+            "CHFI"
+          ],
+          "masters_agreements": [
+            "FIU M.S. Cybersecurity",
+            "Nova Southeastern M.S. Cybersecurity Management",
+            "UWF M.S. Cybersecurity"
+          ],
+          "contact": "bscybersecurity@mdc.edu",
+          "sources": [
+            "MDC S9515 program sheet and CSG (Spring 2025)",
+            "https://changemaking.mdc.edu/cybersecuritybs/admission-requirements.aspx"
+          ]
+        },
+        "fiu_transfer": {
+          "degree": "B.S. Cybersecurity",
+          "catalog_year": "2026-2027",
+          "min_gpa": 2.0,
+          "admission": [
+            "Completed AA",
+            "2.0 transfer GPA",
+            "C or higher in prerequisites",
+            "MAC 1140 or MAC 1147 before transfer"
+          ],
+          "prerequisites": [
+            {
+              "mdc": [
+                "MAC 1140 or MAC 1147"
+              ],
+              "fiu": [
+                "MAC 1140 / MAC 1147"
+              ]
+            },
+            {
+              "mdc": [
+                "MAD 2104"
+              ],
+              "fiu": [
+                "MAD 2104"
+              ]
+            },
+            {
+              "mdc": [
+                "STA 2023 or QMB 2100"
+              ],
+              "fiu": [
+                "STA 2023"
+              ]
+            },
+            {
+              "mdc": [
+                "PHY 1020 or PHY 2053"
+              ],
+              "fiu": [
+                "PHY 1020 / PHY 2053"
+              ],
+              "note": "Lab not required"
+            },
+            {
+              "mdc": [
+                "CGS 1540C"
+              ],
+              "fiu": [
+                "CGS 1540"
+              ]
+            },
+            {
+              "mdc": [
+                "COP 1047C"
+              ],
+              "fiu": [
+                "COP 2047"
+              ],
+              "note": "Python"
+            },
+            {
+              "mdc": [
+                "COP 2270"
+              ],
+              "fiu": [
+                "COP 2270"
+              ],
+              "note": "Second programming requirement"
+            },
+            {
+              "mdc": [
+                "ECO 2013"
+              ],
+              "fiu": [
+                "ECO 2013"
+              ]
+            },
+            {
+              "mdc": [
+                "PSY 2012"
+              ],
+              "fiu": [
+                "PSY 2012"
+              ]
+            }
+          ],
+          "sources": [
+            "FIU Cybersecurity transfer guide (MDC, 2026-27)",
+            "https://tts.fiu.edu/guides/web/MDC/Cybersecurity"
+          ]
+        }
+      },
+      "timeline_and_cost": {
+        "stages": [
+          {
+            "stage": "CCC Cybersecurity Analyst (24 cr)",
+            "years": "1",
+            "cost_low_usd": 2840,
+            "cost_high_usd": 2840
+          },
+          {
+            "stage": "AS Cybersecurity (60 cr)",
+            "years": "2",
+            "cost_low_usd": 7093,
+            "cost_high_usd": 7093
+          },
+          {
+            "stage": "MDC B.S. Cybersecurity (120 cr total)",
+            "years": "4 total",
+            "cost_low_usd": 15586.8,
+            "cost_high_usd": 15586.8,
+            "note": "MDC estimate for full degree"
+          },
+          {
+            "stage": "FIU/UWF M.S. or NSU M.S.",
+            "years": "+1",
+            "cost_low_usd": 13700,
+            "cost_high_usd": 13700,
+            "note": "FIU ~30 cr; not verified"
+          }
+        ],
+        "total": {
+          "years": "4 to B.S.; ~5 to M.S.",
+          "cost_low_usd": 15587,
+          "cost_high_usd": 29300
+        },
+        "alternative": {
+          "route": "MDC AA -> FIU B.S. Cybersecurity",
+          "years": 4,
+          "cost_usd": 19400
+        }
+      },
+      "professional_development": {
+        "certifications": [
+          "CompTIA Network+",
+          "CompTIA Security+",
+          "CompTIA Linux+",
+          "CompTIA CySA+",
+          "CEH",
+          "CHFI",
+          "CISM",
+          "CISSP (after experience)"
+        ],
+        "experience": [
+          "SharkByte EC-Council CTF",
+          "NCL competitions",
+          "Help-desk or SOC internships during the AS"
+        ],
+        "notes": "Exam costs may be reimbursable; credit for prior certifications may be available."
+      },
+      "alternative_pathways": [
+        {
+          "code": "66059",
+          "name": "Network Security",
+          "degree": "CCC",
+          "leads_to": "Entry security jobs; stacks into AS"
+        },
+        {
+          "code": "66055",
+          "name": "Digital Forensics",
+          "degree": "CCC",
+          "leads_to": "Forensics technician"
+        },
+        {
+          "code": "25078",
+          "name": "Networking Services Technology - Network Security",
+          "degree": "AS",
+          "leads_to": "Network/security admin; MDC B.S. IST"
+        },
+        {
+          "code": "27028",
+          "name": "Computer Crime Investigation",
+          "degree": "AS",
+          "leads_to": "Digital forensics, law enforcement"
+        },
+        {
+          "code": "S5500",
+          "name": "Information Systems Technology (Cybersecurity concentration)",
+          "degree": "BS",
+          "leads_to": "Security analyst/consultant; FIU M.S. IT"
+        },
+        {
+          "code": "10703",
+          "name": "Computer Science pathway",
+          "degree": "AA",
+          "leads_to": "FIU B.S. Cybersecurity or Computer Science"
+        },
+        {
+          "code": "CPP04",
+          "name": "Cyber Defense",
+          "degree": "CPP",
+          "leads_to": "For bachelor's holders"
+        },
+        {
+          "code": "CPP07",
+          "name": "Vulnerability Assessment",
+          "degree": "CPP",
+          "leads_to": "For bachelor's holders"
+        }
+      ],
+      "unverified": [
+        "AS Cybersecurity CSG (sequence built from CCC CSG)",
+        "FIU M.S. credit total"
+      ]
+    },
+    {
+      "id": "it_consultant",
+      "title": "IT Consultant",
+      "summary": "MDC AS Computer Information Technology (25055) -> MDC B.S. IST (Networking) -> FIU M.S. IT via articulation.",
+      "career_exploration": {
+        "duties": [
+          "Advise managers on IT",
+          "Research technologies",
+          "Run cost-benefit analyses",
+          "Configure and install systems",
+          "Test systems and train users"
+        ],
+        "median_pay_usd": 105850,
+        "pay_year": "May 2025",
+        "occupation": "Computer systems analysts (some work as consultants/contractors)",
+        "outlook": "8% growth 2025-2035; ~32,900 openings/yr",
+        "entry_education": "Bachelor's in computer & information technology or related",
+        "related_careers": [
+          {
+            "title": "Information security analyst",
+            "median_pay_usd": 129180,
+            "education": "Bachelor's"
+          },
+          {
+            "title": "Computer network architect",
+            "median_pay_usd": 134050,
+            "education": "Bachelor's"
+          },
+          {
+            "title": "Network & computer systems administrator",
+            "median_pay_usd": 99130,
+            "education": "Bachelor's"
+          },
+          {
+            "title": "Computer support specialist",
+            "median_pay_usd": 62890,
+            "education": "Varies"
+          }
+        ],
+        "source": "https://www.bls.gov/ooh/computer-and-information-technology/computer-systems-analysts.htm"
+      },
+      "educational_pathway": {
+        "primary_program": {
+          "code": "25055",
+          "name": "Computer Information Technology",
+          "degree": "AS",
+          "credits": 60,
+          "effective_term": "Fall 2024",
+          "credit_breakdown": {
+            "gen_ed": 15,
+            "program_core": 32,
+            "electives": 13
+          },
+          "accelerated_option": "One year",
+          "gen_ed": [
+            "ENC 1101",
+            "Humanities (1)",
+            "MAC 1105 or STA 2023",
+            "Natural science (1)",
+            "AMH 2010 / AMH 2020 / POS 2041"
+          ],
+          "courses": [
+            {
+              "code": "CTS 1134 or CTS 1650",
+              "title": "Networking Technologies / CCNA 1",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": [],
+              "industry_cert": "CompTIA Network+",
+              "note": "Group A: 4 credits"
+            },
+            {
+              "code": "CGS 1060C",
+              "title": "Intro to Computer Technology & Applications",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": []
+            },
+            {
+              "code": "CGS 1560",
+              "title": "A+ Computer Operating Systems",
+              "credits": 4,
+              "prerequisites": [
+                "CGS 1060C or experience"
+              ],
+              "corequisites": [],
+              "industry_cert": "CompTIA A+"
+            },
+            {
+              "code": "CTS 1131",
+              "title": "A+ Computer Essentials & Support",
+              "credits": 4,
+              "prerequisites": [
+                "CGS 1560"
+              ],
+              "corequisites": [],
+              "industry_cert": "CompTIA A+"
+            },
+            {
+              "code": "CTS 1328",
+              "title": "Supporting Microsoft Clients",
+              "credits": 4,
+              "prerequisites": [
+                "CGS 1060C or experience"
+              ],
+              "corequisites": [],
+              "industry_cert": "Microsoft Modern Desktop Administrator Associate"
+            },
+            {
+              "code": "CTS 2153",
+              "title": "Supporting Windows Users & Applications",
+              "credits": 4,
+              "prerequisites": [
+                "CTS 1328"
+              ],
+              "corequisites": [],
+              "industry_cert": "Microsoft Modern Desktop Administrator Associate"
+            },
+            {
+              "code": "CTS 2148C",
+              "title": "IT Project Management",
+              "credits": 4,
+              "prerequisites": [],
+              "corequisites": [],
+              "industry_cert": "CompTIA Project+"
+            },
+            {
+              "code": "CGS 2108",
+              "title": "Advanced Desktop Applications",
+              "credits": 4,
+              "prerequisites": [
+                "CGS 1060C"
+              ],
+              "corequisites": []
+            }
+          ],
+          "electives": "13 credits: any CAP, CEN, CGS, CIS, COP, CTS, GIS (use COP 1334 and CGS 1540C to meet B.S. IST prerequisites)",
+          "embedded_certificates": [
+            {
+              "code": "66037",
+              "name": "Help Desk Support Technician"
+            },
+            {
+              "code": "66044",
+              "name": "Information Technology Support"
+            }
+          ],
+          "sequence_full_time": [
+            {
+              "term": "Semester 1",
+              "courses": [
+                "ENC 1101",
+                "CTS 1134 or CTS 1650",
+                "MAC 1105 or STA 2023",
+                "CGS 1060C"
+              ],
+              "credits": 14
+            },
+            {
+              "term": "Semester 2",
+              "courses": [
+                "Humanities",
+                "CGS 1560",
+                "CTS 1328",
+                "Elective"
+              ],
+              "credits": 15
+            },
+            {
+              "term": "Semester 3",
+              "courses": [
+                "Social science",
+                "Natural science"
+              ],
+              "credits": 6
+            },
+            {
+              "term": "Semester 4",
+              "courses": [
+                "CTS 1131",
+                "CTS 2148C",
+                "CTS 2153"
+              ],
+              "credits": 12
+            },
+            {
+              "term": "Semester 5",
+              "courses": [
+                "CGS 2108",
+                "Electives (9)"
+              ],
+              "credits": 13
+            }
+          ],
+          "sources": [
+            "MDC 25055 program sheet and CSG (Fall 2024)",
+            "https://changemaking.mdc.edu/computerinformationtechnology"
+          ]
+        },
+        "mdc_bachelor": {
+          "code": "S5500",
+          "name": "Information Systems Technology - Networking",
+          "degree": "BS",
+          "other_concentrations": [
+            "S5501 Software Engineering / Application Development",
+            "Cybersecurity"
+          ],
+          "admission": [
+            "AA, AS or 60 credits incl. gen-ed",
+            "2.5 GPA",
+            "MDC application"
+          ],
+          "common_prerequisites": [
+            "CGS 1060C",
+            "CGS 1540C",
+            "CTS 1134 or CTS 1650",
+            "COP 1334",
+            "ECO 2013 or ECO 2023",
+            "MAC 1105",
+            "SPC 1017 or SPC 2608",
+            "STA 2023"
+          ],
+          "masters_agreements": [
+            "FIU M.S. Information Technology",
+            "FIU M.S. Telecommunications & Networking"
+          ],
+          "source": "https://ceaudio.mdc.edu/informationsystemsnetworking/admission-requirements.aspx"
+        },
+        "fiu_transfer": {
+          "degree": "B.S. Information Technology (majors: DevOps, Software)",
+          "catalog_year": "2026-2027",
+          "min_gpa": 2.0,
+          "admission": [
+            "Completed AA",
+            "2.0 transfer GPA",
+            "C or higher in prerequisites",
+            "MAC 1140 or MAC 1147 before transfer"
+          ],
+          "prerequisites": [
+            {
+              "mdc": [
+                "MAC 1140 or MAC 1147"
+              ],
+              "fiu": [
+                "MAC 1140 / MAC 1147"
+              ]
+            },
+            {
+              "mdc": [
+                "CGS 1060C"
+              ],
+              "fiu": [
+                "CGS 2060"
+              ]
+            },
+            {
+              "mdc": [
+                "COP 1047C"
+              ],
+              "fiu": [
+                "COP 2047"
+              ],
+              "note": "Python"
+            },
+            {
+              "mdc": [
+                "PSY 2012"
+              ],
+              "fiu": [
+                "PSY 2012"
+              ]
+            },
+            {
+              "mdc": [
+                "MAD 2104"
+              ],
+              "fiu": [
+                "MAD 2104"
+              ],
+              "note": "Software major only"
+            },
+            {
+              "mdc": [
+                "STA 2023"
+              ],
+              "fiu": [
+                "STA 2023"
+              ],
+              "note": "Additional lower-division (required)"
+            }
+          ],
+          "note": "FIU B.A. in IT only as a second degree; business-facing consultants can choose FIU BBA (MIS).",
+          "sources": [
+            "FIU Information Technology transfer guide (MDC, 2026-27)"
+          ]
+        }
+      },
+      "timeline_and_cost": {
+        "stages": [
+          {
+            "stage": "CCC IT Support / Help Desk",
+            "years": "0.5-1",
+            "cost_low_usd": 1400,
+            "cost_high_usd": 2800
+          },
+          {
+            "stage": "AS Computer Information Technology",
+            "years": "1-2",
+            "cost_low_usd": 7093,
+            "cost_high_usd": 7093
+          },
+          {
+            "stage": "MDC B.S. IST (60 upper cr)",
+            "years": "+2",
+            "cost_low_usd": 7793,
+            "cost_high_usd": 7793
+          },
+          {
+            "stage": "FIU M.S. IT (~30 cr)",
+            "years": "+1-1.5",
+            "cost_low_usd": 13700,
+            "cost_high_usd": 13700,
+            "note": "Credits not verified"
+          }
+        ],
+        "total": {
+          "years": "3-4 to B.S.; ~5 to M.S.",
+          "cost_low_usd": 14900,
+          "cost_high_usd": 28600
+        },
+        "alternative": {
+          "route": "MDC AA -> FIU B.S. IT",
+          "years": 4,
+          "cost_usd": 19400
+        }
+      },
+      "professional_development": {
+        "certifications": [
+          "CompTIA A+",
+          "CompTIA Network+",
+          "CompTIA Security+",
+          "CompTIA Project+",
+          "Microsoft Modern Desktop Administrator Associate",
+          "AWS Cloud Practitioner / Solutions Architect",
+          "Microsoft Azure AZ-900 / AZ-104",
+          "ITIL 4 Foundation",
+          "PMP or CAPM"
+        ],
+        "experience": [
+          "Help desk -> systems/network admin -> analyst -> consultant",
+          "Internships during the AS"
+        ]
+      },
+      "alternative_pathways": [
+        {
+          "code": "25062",
+          "name": "Networking Services Technology - Network Infrastructure",
+          "degree": "AS",
+          "leads_to": "Network admin -> B.S. IST"
+        },
+        {
+          "code": "25077",
+          "name": "Networking Services Technology - Enterprise Cloud Computing",
+          "degree": "AS",
+          "leads_to": "Cloud admin -> B.S. IST"
+        },
+        {
+          "code": "25073",
+          "name": "Business Intelligence Specialist",
+          "degree": "AS",
+          "leads_to": "Data consulting"
+        },
+        {
+          "code": "S5510",
+          "name": "Data Analytics",
+          "degree": "BS",
+          "leads_to": "FIU M.S. Data Science & AI"
+        },
+        {
+          "code": "25065",
+          "name": "Computer Programming & Analysis - Business Apps",
+          "degree": "AS",
+          "leads_to": "Developer -> B.S. IST Software Engineering"
+        },
+        {
+          "code": "10702",
+          "name": "Computer Information Systems pathway",
+          "degree": "AA",
+          "leads_to": "FIU BBA MIS"
+        },
+        {
+          "code": "10703",
+          "name": "Computer Science pathway",
+          "degree": "AA",
+          "leads_to": "FIU B.S. Computer Science or IT"
+        },
+        {
+          "code": "66058",
+          "name": "Enterprise Cloud Computing",
+          "degree": "CCC",
+          "leads_to": "Cloud support job within months"
+        },
+        {
+          "code": "P9200",
+          "name": "Supervision and Management",
+          "degree": "BAS",
+          "leads_to": "Management skills for consulting"
+        }
+      ],
+      "unverified": [
+        "FIU M.S. IT credit total"
+      ]
+    }
+  ]
+}
