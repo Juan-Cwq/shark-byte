@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { saveAcademicRecord } from "@/lib/academic-record";
+import { extractPdfText } from "@/lib/pdf-text";
 import { parseAcademicRecord } from "@/lib/record-parse";
 import type { RecordCourse, RecordStatus } from "@/lib/types";
+
+const MAX_PDF_BYTES = 10 * 1024 * 1024;
 
 const STATUS_OPTIONS: { value: RecordStatus; label: string }[] = [
   { value: "completed", label: "Completed" },
@@ -16,16 +19,49 @@ export function RecordImport({ initial, onDone }: { initial: RecordCourse[] | nu
   const [text, setText] = useState("");
   const [courses, setCourses] = useState<RecordCourse[] | null>(initial);
   const [error, setError] = useState<string | null>(null);
+  const [readingPdf, setReadingPdf] = useState(false);
 
-  function read() {
-    const parsed = parseAcademicRecord(text);
-    if (parsed.length === 0) {
-      setError("No course codes found. Codes look like ENC 1101 or CGS 1060C.");
-      return;
-    }
+  function read(source: string): boolean {
+    const parsed = parseAcademicRecord(source);
+    if (parsed.length === 0) return false;
     setError(null);
     setText("");
     setCourses(parsed);
+    return true;
+  }
+
+  function readPasted() {
+    if (!read(text)) setError("No course codes found. Codes look like ENC 1101 or CGS 1060C.");
+  }
+
+  async function readPdf(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+      setError("That file isn't a PDF. Upload your MAP or transcript PDF, or paste the text instead.");
+      return;
+    }
+    if (file.size > MAX_PDF_BYTES) {
+      setError("That PDF is over 10 MB. Try pasting the text instead.");
+      return;
+    }
+    setError(null);
+    setReadingPdf(true);
+    try {
+      const pdfText = await extractPdfText(file);
+      if (!read(pdfText)) {
+        setError(
+          pdfText.trim()
+            ? "No course codes found in that PDF. Try copying and pasting the text instead."
+            : "That PDF has no selectable text (it may be a scan or photo). Try pasting the text instead."
+        );
+      }
+    } catch {
+      setError("Couldn't read that PDF. It may be password-protected. Try pasting the text instead.");
+    } finally {
+      setReadingPdf(false);
+    }
   }
 
   function setStatus(code: string, status: RecordStatus) {
@@ -45,30 +81,41 @@ export function RecordImport({ initial, onDone }: { initial: RecordCourse[] | nu
   if (!courses) {
     return (
       <div className="mt-5">
-        <ol className="list-decimal space-y-1 pl-5 text-sm text-mdc-muted">
-          <li>Open your MAP or unofficial transcript (PDF) from your MDC student portal.</li>
-          <li>Select all the text (⌘A on Mac, Ctrl+A on Windows) and copy it.</li>
-          <li>Paste it below. You&apos;ll check every course before anything is saved.</li>
-        </ol>
+        <p className="text-sm text-mdc-muted">
+          Download your MAP or unofficial transcript as a PDF from your MDC student portal, then upload it here.
+          You&apos;ll check every course before anything is saved.
+        </p>
+        <label
+          className={`mt-4 inline-flex cursor-pointer items-center rounded-full bg-mdc-blue px-5 py-2 text-sm font-bold text-white hover:bg-mdc-blue-bright ${
+            readingPdf ? "pointer-events-none opacity-60" : ""
+          }`}
+        >
+          {readingPdf ? "Reading PDF…" : "Upload PDF"}
+          <input type="file" accept="application/pdf,.pdf" onChange={readPdf} className="sr-only" disabled={readingPdf} />
+        </label>
+        <p className="mt-6 text-sm text-mdc-muted">
+          Or open the PDF, select all the text (⌘A on Mac, Ctrl+A on Windows), copy it and paste it here:
+        </p>
         <textarea
-          className="mt-4 h-40 w-full border border-mdc-line bg-white px-3 py-2 font-mono text-xs text-mdc-ink"
+          className="mt-2 h-32 w-full border border-mdc-line bg-white px-3 py-2 font-mono text-xs text-mdc-ink"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={"ENC 1101  English Composition 1  3  Completed  A\nCTS 1134  Networking Technologies  4  Planned"}
           aria-label="Paste your MAP or transcript text"
         />
         <p className="mt-2 text-xs text-mdc-muted">
-          Read in your browser and never uploaded. Only course codes, statuses and grades are saved, on this device.
+          Your PDF or text is read in your browser and never sent anywhere. Only course codes, statuses and grades
+          are saved, on this device.
         </p>
         {error ? <p className="mt-2 text-sm text-mdc-blue">{error}</p> : null}
         <div className="mt-4 flex gap-3">
           <button
             type="button"
-            onClick={read}
+            onClick={readPasted}
             disabled={!text.trim()}
-            className="rounded-full bg-mdc-blue px-5 py-2 text-sm font-bold text-white hover:bg-mdc-blue-bright disabled:opacity-50"
+            className="rounded-full border border-mdc-blue px-5 py-2 text-sm font-bold text-mdc-blue hover:bg-mdc-blue/5 disabled:opacity-50"
           >
-            Read my courses
+            Read pasted text
           </button>
           <button type="button" onClick={onDone} className="text-sm text-mdc-muted hover:text-mdc-blue">
             Cancel

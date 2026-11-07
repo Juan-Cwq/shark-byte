@@ -38,7 +38,7 @@ export function ProgressTracker({ terms, programLabel }: { terms: PathProgressTe
       ) : (
         <>
           <p className="mt-2 text-sm text-mdc-muted">
-            Paste your MAP or unofficial transcript to see which courses on this path you&apos;ve finished and
+            Upload or paste your MAP or unofficial transcript to see which courses on this path you&apos;ve finished and
             what&apos;s left. Your completed courses also fill in the personalized plan below.
           </p>
           <button
