@@ -1019,6 +1019,66 @@
         "corequisite": "BOT 1010L",
         "note": "Its 1-credit lab (BOT 1010L) is a required corequisite but doesn't count in the AA natural-science block.",
         "source": "https://mdconnect.mdc.edu/academics/programs/csg/2024/AA_LandscapeArchitecture_csg.pdf"
+      },
+      "CHM 1025": {
+        "title": "Introductory Chemistry",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "ETS 1603C": {
+        "title": "Introduction to Robotics",
+        "credits": 4,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "GEB 1432": {
+        "title": "Applied Artificial Intelligence (AI) in Business",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "HSC 2060": {
+        "title": "Artificial Intelligence Applications in Healthcare",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "MAC 1106": {
+        "title": "Integrated College and Precalculus Algebra",
+        "credits": 5,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "MAC 1147": {
+        "title": "Pre-Calculus Algebra and Trigonometry",
+        "credits": 5,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "SPC 1017": {
+        "title": "Introduction to Communications",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "ECO 2013": {
+        "title": "Principles of Economics (Macro)",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "PSY 2012": {
+        "title": "Introduction to Psychology",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "MAC 1140": {
+        "title": "Pre-Calculus Algebra",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "MAD 2104": {
+        "title": "Discrete Mathematics",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
+      },
+      "PHY 1020": {
+        "title": "General Education Physics",
+        "credits": 3,
+        "source": "S9520 program sheet Spring 2026"
       }
     }
   },
@@ -1415,7 +1475,8 @@
       "name": "Applied Artificial Intelligence",
       "degree": "BS",
       "credits": 120,
-      "effective_term": "Program sheet Fall 2024 (2247); sequence guide Spring 2026 (2263)",
+      "effective_term": "Spring 2026 (2263)",
+      "description": "Practical use of computer vision, natural language processing and machine learning to turn large datasets into actionable outputs that increase productivity and operational efficiency. Covers AI tools and their applications, AI process automation and optimization, and ethical, socially responsible practices in designing and implementing AI systems.",
       "sources": [
         "https://specialreports.mdc.edu/academics/programs/ps/S9520.pdf",
         "https://www.mdc.edu/academics/programs/csg/BS_AppliedArtificialIntelligence_csg.pdf",
@@ -1442,7 +1503,77 @@
         "upper_division": 35,
         "program_electives": 18
       },
-      "gen_ed": [],
+      "gen_ed": [
+        {
+          "label": "ENC 1101",
+          "credits": 3,
+          "options": ["ENC 1101"]
+        },
+        {
+          "label": "ENC 1102",
+          "credits": 3,
+          "options": ["ENC 1102"]
+        },
+        {
+          "label": "Oral communication",
+          "credits": 3,
+          "options": ["ENC 2300", "SPC 1017", "SPC 2608"],
+          "note": "Select one course."
+        },
+        {
+          "label": "Humanities (State Core)",
+          "credits": 3,
+          "options": ["ARH 1000", "HUM 1020", "LIT 2000", "MUL 1010", "PHI 2010", "THE 2000"],
+          "note": "Select one course from State Core."
+        },
+        {
+          "label": "Humanities (MDC Core)",
+          "credits": 3,
+          "options": ["ARC 2701", "ARC 2702", "ARH 1000", "ARH 2050", "ARH 2051", "ARH 2740", "DAN 2100", "DAN 2130", "HUM 1020", "LIT 2000", "LIT 2120", "MUH 2111", "MUH 2112", "MUL 1010", "MUL 2380", "PHI 2010", "PHI 2600", "THE 2000"],
+          "note": "Select one course from MDC Core."
+        },
+        {
+          "label": "Social science (State Core)",
+          "credits": 3,
+          "options": ["AMH 2010", "AMH 2020", "ANT 2000", "ECO 2013", "POS 2041", "PSY 2012"],
+          "note": "Select one course from State Core. One selection should be AMH 2010, AMH 2020 or POS 2041 for civic literacy."
+        },
+        {
+          "label": "Social science (MDC Core)",
+          "credits": 3,
+          "options": ["AMH 2010", "AMH 2020", "ANT 2000", "DEP 2000", "ECO 2013", "POS 2041", "PSY 2012", "SYG 2000", "WOH 2012", "WOH 2022"],
+          "note": "Select one course from MDC Core. One selection should be AMH 2010, AMH 2020 or POS 2041 for civic literacy."
+        },
+        {
+          "label": "Natural science (State Core)",
+          "credits": 3,
+          "options": ["AST 1002", "BSC 1005", "BSC 2010", "BSC 2085", "CHM 1020", "CHM 1045", "ESC 1000", "EVR 1001", "GLY 1010", "OCE 1001", "PHY 1020", "PHY 2048", "PHY 2053"],
+          "note": "Select one course from State Core. Laboratory courses do not fulfill this area."
+        },
+        {
+          "label": "Natural science (MDC Core)",
+          "credits": 3,
+          "options": ["AST 1002", "BOT 1010", "BSC 1005", "BSC 1084", "BSC 2010", "BSC 2020", "BSC 2085", "CHM 1020", "CHM 1025", "CHM 1033", "CHM 1045", "CHM 1046", "CHM 2200", "CHM 2210", "CHM 2211", "ESC 1000", "EVR 1001", "GLY 1010", "GLY 1100", "HUN 1201", "MET 1010", "OCB 1010", "OCE 1001", "PCB 2033", "PHY 1004", "PHY 1020", "PHY 1025", "PHY 2048", "PHY 2049", "PHY 2053", "PHY 2054", "PSC 1121", "PSC 1515"],
+          "note": "Select one course from MDC Core. Laboratory courses do not fulfill this area."
+        },
+        {
+          "label": "MAC 1105",
+          "credits": 3,
+          "options": ["MAC 1105", "MAC 1106", "MAC 1114", "MAC 1140", "MAC 1147", "MAC 2233", "MAC 2311", "MAC 2312", "MAC 2313", "MAD 1100", "MAD 2104", "MAP 2302", "MAS 2103"],
+          "note": "MAC 1105 may be replaced by a higher-level mathematics course with prefix MAC*, MAD*, MAS* or MAP*."
+        },
+        {
+          "label": "STA 2023",
+          "credits": 3,
+          "options": ["STA 2023"]
+        },
+        {
+          "label": "General education elective",
+          "credits": 3,
+          "options": [],
+          "note": "See academic advisor for approved selection."
+        }
+      ],
       "courses": [
         {
           "code": "CAI 1001C",
@@ -1606,7 +1737,7 @@
         },
         {
           "code": "CAP 3330",
-          "title": "Upper-division statistics option",
+          "title": "Programming R for Statistics",
           "credits": 4,
           "division": "upper",
           "prerequisites": [
@@ -1615,7 +1746,7 @@
         },
         {
           "code": "STA 3164",
-          "title": "Upper-division statistics option",
+          "title": "Statistical Methods II",
           "credits": 4,
           "division": "upper",
           "prerequisites": [
@@ -1627,32 +1758,26 @@
         "credits_total": 18,
         "slot_credits": 3,
         "slot_credits_basis": "Totals 60 credits with 3-credit electives. MDC's part-time plan for AA students covers the same courses over 7 semesters.",
-        "options": [],
-        "allowed_lists": [
+        "options": [
           {
-            "label": "Program sheet (Fall 2024)",
-            "patterns": [
-              "COP*",
-              "MAC*",
-              "MAD*",
-              "MAP*",
-              "CAI 2820C",
-              "CAP 1788",
-              "CAP 2761C",
-              "CAP 3321C",
-              "CAP 4744",
-              "CGS 1540C",
-              "CIS 3368",
-              "CTS 1120",
-              "CTS 1145",
-              "ETS 1603C",
-              "GEB 1432",
-              "HSC 2060",
-              "MAD 1100"
-            ]
+            "code": "ETS 1603C",
+            "title": "Introduction to Robotics",
+            "credits": 4
           },
           {
-            "label": "Sequence guide (Spring 2026)",
+            "code": "GEB 1432",
+            "title": "Applied Artificial Intelligence (AI) in Business",
+            "credits": 3
+          },
+          {
+            "code": "HSC 2060",
+            "title": "Artificial Intelligence Applications in Healthcare",
+            "credits": 3
+          }
+        ],
+        "allowed_lists": [
+          {
+            "label": "Spring 2026 program sheet",
             "patterns": [
               "CAI*",
               "CAP*",
@@ -1665,15 +1790,11 @@
               "CTS*",
               "MAC*",
               "MAD*",
-              "MAP*",
-              "CIS 3368",
-              "ETS 1603C",
-              "GEB 1432",
-              "HSC 2060"
+              "MAP*"
             ]
           }
         ],
-        "note": "The two lists differ; confirm with an advisor for your catalog year."
+        "note": "Restricted to these prefixes and courses per the Spring 2026 program sheet."
       },
       "sequence_basis": "after_associate",
       "entry_credits": 60,
@@ -1730,11 +1851,15 @@
       ],
       "sequence_note": "Totals 60 credits with 3-credit electives. MDC's part-time plan for AA students covers the same courses over 7 semesters.",
       "competencies": [
-        "Computer competency",
-        "Foreign language (2 years HS or elementary 2 level)",
-        "Civic literacy (AMH 2010/AMH 2020/POS 2041 + assessment)"
+        "Computer competency: attempt by 16 credits, satisfy by 31 (CGS 1060C, equivalent college credit course, or MDC's approved competency test)",
+        "Foreign language: 2 credits (2 years) of one foreign language in high school, OR an elementary 2 course (ASL 1150C, CHI 1121, FRE 1121, GER 1121, ITA 1121, JPN 1121, POR 1121, RUS 1121, SPN 1121), OR a standardized exam documenting elementary 2 competency. Students admitted without the requirement (2 sequential courses, 8-10 credits) must earn it before graduation.",
+        "Civic literacy: students first entering FCS/SUS in 2021-22 or later must pass AMH 2010, AMH 2020 or POS 2041 AND an approved assessment"
       ],
-      "notes": [],
+      "notes": [
+        "Graduation: 120 credits (unduplicated), 2.0 cumulative GPA, C or higher in all gen-ed and upper-division courses",
+        "Gordon Rule (6A-10.030) writing/math courses and MDC residency credits; check the individualized Degree Audit Report",
+        "AS/AAS entrants may have more than 24 elective credits and may need more gen-ed credits to reach 36; AA entrants may need extra electives for background"
+      ],
       "career": {
         "summary": "MDC's state proposal for S9520 crosswalks the degree (CIP 11.0102, Artificial Intelligence) to Data Scientists (15-2051) and Software Developers (15-1252); MDC lists job titles such as AI analyst, AI programmer and NLP specialist. Computer and Information Research Scientists is the graduate-level next step.",
         "data_source": "BLS Occupational Outlook Handbook; pay is May 2025, projections 2025-2035",
@@ -2313,7 +2438,7 @@
             "cost_high_usd": 9200
           },
           {
-            "stage": "FIU M.Arch (102 cr)",
+            "stage": "FIU M.Arch (114 cr: 60 undergrad + 54 grad)",
             "years": "3-4",
             "cost_low_usd": 21000,
             "cost_high_usd": 46500,
@@ -2841,8 +2966,7 @@
             "stage": "FIU BSME upper division (~60-68 cr)",
             "years": "2-2.5",
             "cost_low_usd": 12300,
-            "cost_high_usd": 14000,
-            "note": "Total credits not verified"
+            "cost_high_usd": 14000
           },
           {
             "stage": "Optional M.S. (30 cr)",
@@ -2941,7 +3065,6 @@
         }
       ],
       "unverified": [
-        "FIU BSME total credits",
         "MDC ME program sheet shows a Fall 2017 effective term; CSG used instead"
       ]
     },
@@ -4423,9 +4546,6 @@
           "degree": "BAS",
           "leads_to": "Management skills for consulting"
         }
-      ],
-      "unverified": [
-        "FIU M.S. IT credit total"
       ]
     }
   ]
