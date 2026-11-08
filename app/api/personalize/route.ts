@@ -3,6 +3,7 @@ import path from "path";
 import { NextResponse } from "next/server";
 import { buildPersonalizePayload } from "@/lib/agents";
 import { sanitizePlan } from "@/lib/pathways";
+import { checkPlan, stripCreditClaims } from "@/lib/plan-check";
 import { callSwarm, extractFinalText, parseJsonLoose, SwarmsError } from "@/lib/swarms";
 import {
   PersonalizedPlan,
@@ -30,6 +31,21 @@ async function runPersonalize(req: PersonalizeRequest) {
   return sanitizePlan(req.careerId, plan);
 }
 
+/** Credit numbers come from the catalog, so any the AI wrote are removed before the plan is checked. */
+function respond(req: PersonalizeRequest, plan: PersonalizedPlan, unknownCodesRemoved: string[], fromCache: boolean) {
+  const clean: PersonalizedPlan = {
+    ...plan,
+    adjustedTerms: plan.adjustedTerms.map((t) => ({ ...t, note: stripCreditClaims(t.note) })),
+  };
+  const response: PersonalizeResponse = {
+    plan: clean,
+    unknownCodesRemoved,
+    fromCache,
+    check: checkPlan(req.careerId, clean, req.completedCourseCodes),
+  };
+  return NextResponse.json(response);
+}
+
 export async function POST(request: Request) {
   try {
     const body = PersonalizeRequest.parse(await request.json());
@@ -42,35 +58,21 @@ export async function POST(request: Request) {
           { status: 503 }
         );
       }
-      const response: PersonalizeResponse = {
-        plan: cached,
-        unknownCodesRemoved: [],
-        fromCache: true,
-      };
-      return NextResponse.json(response);
+      return respond(body, cached, [], true);
     }
 
     try {
       const { plan, unknownCodesRemoved } = await runPersonalize(body);
-      const response: PersonalizeResponse = { plan, unknownCodesRemoved, fromCache: false };
-      return NextResponse.json(response);
+      return respond(body, plan, unknownCodesRemoved, false);
     } catch (firstErr) {
       console.error("personalize attempt 1:", firstErr);
       try {
         const { plan, unknownCodesRemoved } = await runPersonalize(body);
-        const response: PersonalizeResponse = { plan, unknownCodesRemoved, fromCache: false };
-        return NextResponse.json(response);
+        return respond(body, plan, unknownCodesRemoved, false);
       } catch (secondErr) {
         console.error("personalize attempt 2:", secondErr);
         const cached = await loadCache(body.careerId);
-        if (cached) {
-          const response: PersonalizeResponse = {
-            plan: cached,
-            unknownCodesRemoved: [],
-            fromCache: true,
-          };
-          return NextResponse.json(response);
-        }
+        if (cached) return respond(body, cached, [], true);
         throw secondErr;
       }
     }
