@@ -340,7 +340,7 @@ function carriedFrom(reqs: Requirement[], plan: ProgressPlan, record: StoredAcad
       used.add(code);
       const course = record?.courses.find((c) => normalizeRecordCode(c.code) === code);
       if (course) {
-        carried.push({ course, title: plan.knownTitles[code] ?? null, credits: plan.knownCredits[code] ?? null, countsAs: `${r.label} (elective)` });
+        carried.push({ course, title: plan.knownTitles[code] ?? null, credits: plan.knownCredits[code] ?? null, countsAs: /^electives?\b/i.test(r.label) ? r.label : `${r.label} (elective)` });
       }
     }
   }

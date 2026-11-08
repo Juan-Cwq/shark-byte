@@ -37,12 +37,14 @@ export function PlanDrawer({
   plan,
   record,
   source,
+  transferFrom,
   onClose,
   onAskAi,
 }: {
   plan: ProgressPlan;
   record: StoredAcademicRecord;
   source: PlanSource;
+  transferFrom: string | null;
   onClose: () => void;
   onAskAi: (() => void) | null;
 }) {
@@ -50,6 +52,7 @@ export function PlanDrawer({
   const fp = buildFinishPlan(plan, record, source);
   const left = fp.requirements.filter(needsWork);
   const inProgress = fp.carried.filter((c) => c.course.status === "in_progress");
+  const moving = source.kind === "switch" || source.fiu || transferFrom != null;
 
   useEffect(() => {
     closeRef.current?.focus();
@@ -74,7 +77,9 @@ export function PlanDrawer({
       >
         <header className="flex items-start justify-between gap-4 border-b border-mdc-line bg-white px-5 py-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-mdc-blue">Your plan to finish</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-mdc-blue">
+              {transferFrom ? `Transfer plan · from your ${transferFrom}` : "Your plan to finish"}
+            </p>
             <h2 id="plan-drawer-title" className="font-display text-xl font-bold text-mdc-ink">
               {fp.title}
             </h2>
@@ -91,14 +96,14 @@ export function PlanDrawer({
 
         <div className="flex-1 overflow-y-auto px-5 pb-10 pt-4">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <Stat label="Carry over" value={String(fp.carried.length)} sub={inProgress.length ? `${inProgress.length} in progress` : "courses"} />
+            <Stat label={moving ? "Carry over" : "Already done"} value={String(fp.carried.length)} sub={inProgress.length ? `${inProgress.length} in progress` : "courses"} />
             <Stat label="Still needed" value={String(left.length)} sub="requirements" />
             <Stat label="Credits left" value={range(fp.totals.remaining)} sub="about" />
             <Stat label="Est. tuition" value={range(fp.totals.cost, dollars)} sub="MDC, before fees" />
           </div>
           <p className="mt-2 text-xs text-mdc-muted">{fp.totals.rateNote}</p>
 
-          <Section n={1} title="Courses that carry over">
+          <Section n={1} title={moving ? "Courses that carry over" : "Courses you've already done"}>
             {fp.carried.length ? (
               <div className="overflow-x-auto border border-mdc-line bg-white/70">
                 <table className="w-full text-left text-sm">

@@ -1,11 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { MyPathBadge } from "@/components/MyPathBadge";
+import { MyPathBanner } from "@/components/MyPathBanner";
 import { formatPay } from "@/lib/format";
 import { getAllCareers } from "@/lib/pathways";
+import type { CareerId } from "@/lib/types";
 
 export default function HomePage() {
   const careers = getAllCareers();
+  const titles = Object.fromEntries(careers.map((c) => [c.id, c.title])) as Record<CareerId, string>;
 
   return (
     <main className="flex-1">
@@ -64,6 +68,7 @@ export default function HomePage() {
           <p className="mt-3 max-w-2xl text-mdc-muted">
             Catalog-backed roadmaps from Miami Dade College — courses, costs, transfer rules, and next steps.
           </p>
+          <MyPathBanner titles={titles} />
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {careers.map((c) => (
               <li key={c.id}>
@@ -71,6 +76,7 @@ export default function HomePage() {
                   href={`/career/${c.id}`}
                   className="feature-card relative flex h-full flex-col overflow-hidden rounded-2xl border border-mdc-line p-5 transition hover:-translate-y-0.5 hover:border-mdc-blue/35"
                 >
+                  <MyPathBadge careerId={c.id} />
                   <h3 className="relative font-display text-xl font-bold text-mdc-navy">{c.title}</h3>
                   <p className="relative mt-2 line-clamp-3 flex-1 text-sm text-mdc-muted">{c.summary}</p>
                   <p className="relative mt-4 text-sm font-semibold text-mdc-blue">
