@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AuthLink } from "@/components/AuthLink";
 
 export function SiteHeader() {
   return (
@@ -29,9 +30,12 @@ export function SiteHeader() {
               <span className="hidden text-sm text-mdc-muted sm:inline">Plan your path from MDC to a career</span>
             </span>
           </Link>
-          <span className="text-sm font-medium text-mdc-muted" aria-label="Language: English">
-            EN
-          </span>
+          <div className="flex shrink-0 items-center gap-4">
+            <AuthLink />
+            <span className="text-sm font-medium text-mdc-muted" aria-label="Language: English">
+              EN
+            </span>
+          </div>
         </div>
       </div>
     </header>

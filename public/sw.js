@@ -79,6 +79,8 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin || url.pathname === "/sw.js") return;
+  // Sign-in routes and the session check carry user data and must never be cached.
+  if (url.pathname.startsWith("/auth/") || url.pathname === "/login") return;
 
   if (url.pathname === "/api/alerts") {
     event.respondWith(networkFirst(request, DATA));
