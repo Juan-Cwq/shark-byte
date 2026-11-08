@@ -39,7 +39,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <ul className="mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
+          <ul className="mx-auto mt-12 grid max-w-4xl gap-5 sm:grid-cols-2">
             <FeatureCard
               href="#careers"
               title="Career Navigator"
