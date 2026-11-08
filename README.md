@@ -20,7 +20,7 @@ cp .env.example .env.local
 - Keep `APP_BASE_URL=http://localhost:3000` for local development.
 - In the Auth0 application settings, allow `http://localhost:3000/auth/callback` as a callback URL and `http://localhost:3000` as both a logout URL and web origin.
 
-Only the AI features need an account: Personalize, AI tips, Study Buddy and the alert explanation. Their API routes (`/api/personalize`, `/api/tutor`, `/api/tutor/profile`, `/api/explain`) check the Auth0 session on the server and return 401 when signed out, and the UI shows a "Sign in" link that returns to the same page. All pages, the progress tracker, the PDF import and the alert checker stay public and keep working offline. The service worker never caches `/auth/*` or `/login`. Without the Auth0 variables the site still works, but the AI routes return 503.
+Sign-in is optional. Every page and feature, including the AI ones, works without an account; the header shows "Sign in" or the signed-in user with "Sign out". The service worker never caches `/auth/*` or `/login`. Without the Auth0 variables the site still works and the header hides the sign-in link.
 
 `/login` links to Auth0's hosted sign-in and sign-up. `.env.local` is ignored by Git and should never be committed.
 
