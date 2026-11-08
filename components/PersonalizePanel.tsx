@@ -24,6 +24,18 @@ interface RunParams {
 
 const AGENTS = ["Interpreting your profile", "Adjusting your path", "Writing your plan"] as const;
 
+function TermCredits({ term }: { term: PersonalizeResponse["check"]["terms"][number] | undefined }) {
+  if (!term) return null;
+  const { low, high } = term.credits;
+  if (!high && term.unpriced.length) return <span className="ml-2 text-xs font-normal text-mdc-muted">· credits not listed</span>;
+  return (
+    <span className="ml-2 text-xs font-normal text-mdc-muted">
+      · {low === high ? low : `${low}–${high}`} credits
+      {term.unpriced.length ? ` + ${term.unpriced.join(", ")} (credits not listed)` : ""}
+    </span>
+  );
+}
+
 export function PersonalizePanel({
   careerId,
   courseOptions,
@@ -217,9 +229,12 @@ export function PersonalizePanel({
           <p className="mt-1 text-sm text-mdc-muted">{result.plan.pathwayChoice.reason}</p>
           <p className="mt-4 text-mdc-ink">{result.plan.summary}</p>
           <ol className="mt-6 space-y-4">
-            {result.plan.adjustedTerms.map((t) => (
+            {result.plan.adjustedTerms.map((t, ti) => (
               <li key={t.label}>
-                <p className="font-semibold text-mdc-blue">{t.label}</p>
+                <p className="font-semibold text-mdc-blue">
+                  {t.label}
+                  <TermCredits term={result.check?.terms[ti]} />
+                </p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {t.courseCodes.map((c) => (
                     <CourseChip key={c} careerId={careerId} codeOrLabel={c} />
@@ -234,6 +249,13 @@ export function PersonalizePanel({
               </li>
             ))}
           </ol>
+          {result.check?.missing.length ? (
+            <p className="mt-4 border border-amber/40 bg-amber/5 p-3 text-sm text-mdc-ink">
+              <span className="font-semibold">Not in this plan but required by {result.check.programLabel}:</span>{" "}
+              {result.check.missing.join(", ")}. If you haven&apos;t completed these, you still need them; confirm with an
+              MDC advisor.
+            </p>
+          ) : null}
           {result.plan.warnings.length ? (
             <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-amber">
               {result.plan.warnings.map((w) => (

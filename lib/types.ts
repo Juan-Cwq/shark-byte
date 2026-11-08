@@ -337,6 +337,14 @@ export interface PersonalizeResponse {
   plan: PersonalizedPlan;
   unknownCodesRemoved: string[];
   fromCache: boolean;
+  check: PlanCheck;
+}
+
+// Catalog check of an AI plan: per-term credits from the data, and catalog items the plan left out.
+export interface PlanCheck {
+  terms: { credits: CreditRange; unpriced: string[] }[]; // same order as plan.adjustedTerms
+  missing: string[]; // primary-program courses/slots not in the plan and not completed
+  programLabel: string | null; // set when the plan follows the primary program
 }
 
 /* ------------------------------------------------------------------ */
