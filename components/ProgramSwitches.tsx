@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { SwitchDetail } from "@/components/SwitchDetail";
 import type { CreditRange, StoredAcademicRecord, SwitchPlan } from "@/lib/types";
 
@@ -8,12 +7,15 @@ export function ProgramSwitches({
   switches,
   record,
   knownCredits,
+  selected,
+  onSelect,
 }: {
   switches: SwitchPlan[];
   record: StoredAcademicRecord;
   knownCredits: Record<string, CreditRange>;
+  selected: number;
+  onSelect: (index: number) => void;
 }) {
-  const [selected, setSelected] = useState(0);
   const plan = switches[selected];
 
   return (
@@ -33,7 +35,7 @@ export function ProgramSwitches({
               type="radio"
               name="program-switch"
               checked={i === selected}
-              onChange={() => setSelected(i)}
+              onChange={() => onSelect(i)}
               className="mt-0.5 h-4 w-4 accent-mdc-blue"
             />
             <span>

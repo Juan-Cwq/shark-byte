@@ -21,6 +21,7 @@ import {
   type CreditRange,
   type Division,
   type FiuPlan,
+  type GenEdRequirement,
   type ProgramSwitch,
   type ProgressPlan,
   type SwitchEntry,
@@ -89,6 +90,52 @@ function knownCredits(): Map<string, CreditRange> {
   return map;
 }
 
+interface CourseFacts {
+  titles: Map<string, string>;
+  prerequisites: Map<string, string[]>;
+  corequisites: Map<string, string[]>;
+}
+
+let courseFactsCache: CourseFacts | null = null;
+/** Titles and prerequisite text for every course object in the data (careers first, then programs). */
+function courseFacts(): CourseFacts {
+  if (courseFactsCache) return courseFactsCache;
+  const facts: CourseFacts = { titles: new Map(), prerequisites: new Map(), corequisites: new Map() };
+  const add = (c: { code: string; title: string; prerequisites: string[]; corequisites: string[] }) => {
+    for (const code of extractCourseCodes(c.code).map(normalizeCode)) {
+      if (!facts.titles.has(code)) facts.titles.set(code, c.title);
+      if (!facts.prerequisites.has(code) && c.prerequisites.length) facts.prerequisites.set(code, c.prerequisites);
+      if (!facts.corequisites.has(code) && c.corequisites.length) facts.corequisites.set(code, c.corequisites);
+    }
+  };
+  for (const id of CAREER_IDS) getCourseObjects(getCareer(id)).forEach(add);
+  for (const program of getPrograms()) [...program.courses, ...program.electives.options].forEach(add);
+  for (const [code, c] of Object.entries(getCourseCredits()?.courses ?? {})) {
+    if (!facts.titles.has(normalizeCode(code))) facts.titles.set(normalizeCode(code), c.title);
+  }
+  courseFactsCache = facts;
+  return facts;
+}
+
+// primary_program.gen_ed entries look like "ENC 1101", "Humanities (1)", "AMH 2010 / AMH 2020 / POS 2041".
+function genEdRequirements(raw: unknown, credits: Map<string, CreditRange>): GenEdRequirement[] {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter((v): v is string => typeof v === "string")
+    .map((label) => {
+      const codes = extractCourseCodes(label).map(normalizeCode);
+      return { label: codes.length ? label : label.replace(/\s*\(\d+\)\s*$/, ""), codes, credits: spanCredits(codes, credits) };
+    });
+}
+
+// primary_program.electives looks like "9 credits: any CAI, CGS, CIS, COP, CTS (e.g. ...)".
+function electiveRule(raw: unknown): ProgressPlan["electives"] {
+  if (typeof raw !== "string") return null;
+  const credits = raw.match(/^(\d+)\s*credits/);
+  const prefixes = raw.match(/any\s+((?:[A-Z]{3}(?:,\s*|\s+or\s+|\s+and\s+)?)+)/)?.[1].match(/[A-Z]{3}/g) ?? [];
+  return { credits: credits ? Number(credits[1]) : null, prefixes, note: raw };
+}
+
 function sharedTitle(normalizedCode: string): string | null {
   const hit = Object.entries(getCourseCredits()?.courses ?? {}).find(([code]) => normalizeCode(code) === normalizedCode);
   return hit?.[1].title ?? null;
@@ -148,6 +195,7 @@ function getSwitchPlan(career: Career, sw: ProgramSwitch): SwitchPlan | null {
   return {
     label: sw.label,
     fromLabel: from ? programLabel(from.degree, from.name, from.code) : sw.from,
+    fromCode: sw.from,
     target: {
       code: target.code,
       name: target.name,
@@ -164,7 +212,13 @@ function getSwitchPlan(career: Career, sw: ProgramSwitch): SwitchPlan | null {
       minGrade: target.admission.min_grade ?? null,
       prerequisites: target.admission.prerequisites.map((label) => {
         const code = normalizeCode(label);
-        return { code, label, title: courseByCode.get(code)?.title ?? sharedTitle(code), credits: credits.get(code) ?? null };
+        return {
+          code,
+          label,
+          title: courseByCode.get(code)?.title ?? sharedTitle(code),
+          credits: credits.get(code) ?? null,
+          prerequisites: courseByCode.get(code)?.prerequisites ?? courseFacts().prerequisites.get(code) ?? [],
+        };
       }),
       notes: target.admission.notes,
     },
@@ -218,6 +272,14 @@ export function getProgressPlan(id: CareerId): ProgressPlan {
   // The career's own catalog values win; shared values fill gen-ed gaps.
   const creditsByCode = new Map([...credits, ...ownCredits]);
 
+  const facts = courseFacts();
+  const ownCourses = new Map<string, { prerequisites: string[]; corequisites: string[] }>();
+  for (const c of getCourseObjects(career)) {
+    for (const code of extractCourseCodes(c.code).map(normalizeCode)) ownCourses.set(code, c);
+  }
+  const reqsFor = (codes: string[], key: "prerequisites" | "corequisites") =>
+    [...new Set(codes.flatMap((c) => ownCourses.get(c)?.[key] ?? facts[key].get(c) ?? []))];
+
   const terms = program.sequence_full_time.map((t) => ({
     term: t.term,
     entries: t.courses.map((label) => {
@@ -227,6 +289,9 @@ export function getProgressPlan(id: CareerId): ProgressPlan {
         codes,
         title: codes.length === 1 ? (lookupCourse(id, label)?.title ?? sharedTitle(codes[0])) : null,
         credits: spanCredits(codes, creditsByCode),
+        // Alternatives ("CTS 1134 or CTS 1650") only carry requirements shared by every option.
+        prerequisites: codes.length === 1 ? reqsFor(codes, "prerequisites") : [],
+        corequisites: codes.length === 1 ? reqsFor(codes, "corequisites") : [],
       };
     }),
   }));
@@ -277,6 +342,10 @@ export function getProgressPlan(id: CareerId): ProgressPlan {
     fiu,
     switches: ep.program_switches.map((sw) => getSwitchPlan(career, sw)).filter((s): s is SwitchPlan => s != null),
     knownCredits: Object.fromEntries(credits),
+    knownTitles: Object.fromEntries(facts.titles),
+    knownPrerequisites: Object.fromEntries(facts.prerequisites),
+    genEd: genEdRequirements((program as Record<string, unknown>).gen_ed, creditsByCode),
+    electives: electiveRule((program as Record<string, unknown>).electives),
   };
 }
 

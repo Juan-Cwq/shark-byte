@@ -52,10 +52,13 @@ export function prerequisiteMet(text: string, byCode: Map<string, RecordCourse>)
 export function summarizeSwitch(
   plan: SwitchPlan,
   record: StoredAcademicRecord | null,
-  knownCredits: Record<string, CreditRange>
+  knownCredits: Record<string, CreditRange>,
+  usedElsewhere: Set<string> = new Set() // normalized codes already counted toward another program
 ): SwitchSummary {
   const byCode = recordByCode(record);
-  const used = new Set<string>();
+  const used = new Set<string>(usedElsewhere);
+  // After an associate degree, only courses beyond its 60 credits count here, which a record can't show.
+  const electivesNeedAdvisor = plan.target.basis === "after_associate";
   const remaining: CreditRange = { low: 0, high: 0 };
   const cost: CreditRange = { low: 0, high: 0 };
   const unknownCredits: string[] = [];
@@ -102,7 +105,7 @@ export function summarizeSwitch(
     matches.push({
       course,
       credits: knownCredits[code] ?? null,
-      sure: explicit || lists.length === plan.electives.lists.length,
+      sure: !electivesNeedAdvisor && (explicit || lists.length === plan.electives.lists.length),
       lists,
     });
   }
@@ -115,7 +118,10 @@ export function summarizeSwitch(
     add({ low: required - covered.high, high: required - covered.low }, plan.electives.division, "Electives");
   }
 
-  const carried = (record?.courses ?? []).filter((c) => used.has(normalizeRecordCode(c.code)) && c.status !== "planned");
+  const carried = (record?.courses ?? []).filter((c) => {
+    const code = normalizeRecordCode(c.code);
+    return used.has(code) && !usedElsewhere.has(code) && c.status !== "planned";
+  });
 
   return {
     entries,

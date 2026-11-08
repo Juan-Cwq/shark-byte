@@ -14,14 +14,18 @@ const PLAN: ProgressPlan = {
   fiu: null,
   switches: [],
   knownCredits: {},
+  knownTitles: {},
+  knownPrerequisites: {},
+  genEd: [],
+  electives: null,
   terms: [
     {
       term: "Term 1",
       entries: [
-        { label: "AAA 1000", codes: ["AAA1000"], title: null, credits: { low: 3, high: 3 } },
-        { label: "BBB 1000 or BBB 2000", codes: ["BBB1000", "BBB2000"], title: null, credits: { low: 3, high: 4 } },
-        { label: "CCC 1000", codes: ["CCC1000"], title: null, credits: null },
-        { label: "Electives (9)", codes: [], title: null, credits: null },
+        { label: "AAA 1000", codes: ["AAA1000"], title: null, credits: { low: 3, high: 3 }, prerequisites: [], corequisites: [] },
+        { label: "BBB 1000 or BBB 2000", codes: ["BBB1000", "BBB2000"], title: null, credits: { low: 3, high: 4 }, prerequisites: [], corequisites: [] },
+        { label: "CCC 1000", codes: ["CCC1000"], title: null, credits: null, prerequisites: [], corequisites: [] },
+        { label: "Electives (9)", codes: [], title: null, credits: null, prerequisites: [], corequisites: [] },
       ],
     },
   ],

@@ -441,7 +441,21 @@ export interface PathProgressTerm {
   term: string;
   // codes normalized ("ENC1101"); empty = gen-ed/elective slot. title only for single-course entries.
   // credits from the catalog data; null when the data has no credit value for this entry.
-  entries: { label: string; codes: string[]; title: string | null; credits: CreditRange | null }[];
+  entries: {
+    label: string;
+    codes: string[];
+    title: string | null;
+    credits: CreditRange | null;
+    prerequisites: string[]; // catalog text, e.g. "CTS 1134 or CTS 1650"
+    corequisites: string[];
+  }[];
+}
+
+// One gen-ed requirement behind a "Gen-ed (15)" sequence slot, from the program's gen_ed list.
+export interface GenEdRequirement {
+  label: string; // "MAC 1105 or STA 2023", "Humanities"
+  codes: string[]; // normalized; empty = any approved course in that area
+  credits: CreditRange | null;
 }
 
 // One FIU prerequisite row: every part is required; a part is met by any one of its codes.
@@ -490,12 +504,14 @@ export interface SwitchPrereq {
   label: string;
   title: string | null;
   credits: CreditRange | null;
+  prerequisites: string[];
 }
 
 // Switching into another MDC program (e.g. Cybersecurity A.S. -> Applied AI A.S.), prepared on the server.
 export interface SwitchPlan {
   label: string;
   fromLabel: string;
+  fromCode: string;
   target: {
     code: string;
     name: string;
@@ -547,4 +563,8 @@ export interface ProgressPlan {
   fiu: FiuPlan | null;
   switches: SwitchPlan[];
   knownCredits: Record<string, CreditRange>; // normalized code -> credits, across all catalog data
+  knownTitles: Record<string, string>; // normalized code -> course title, across all catalog data
+  knownPrerequisites: Record<string, string[]>; // normalized code -> catalog prerequisite text
+  genEd: GenEdRequirement[]; // expands the "Gen-ed (N)" slot; empty when the program has none
+  electives: { credits: number | null; prefixes: string[]; note: string | null } | null;
 }

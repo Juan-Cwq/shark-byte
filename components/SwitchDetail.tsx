@@ -179,8 +179,11 @@ export function SwitchDetail({
         ) : null}
         {maybeElectives.length ? (
           <p className="mt-1 text-amber">
-            May count (allowed only by {[...new Set(maybeElectives.flatMap((m) => m.lists))].join(", ")}):{" "}
-            {maybeElectives.map((m) => m.course.code).join(", ")}
+            May count (
+            {afterAssociate
+              ? "only courses beyond your associate degree's credits count here; ask an advisor"
+              : `allowed only by ${[...new Set(maybeElectives.flatMap((m) => m.lists))].join(", ")}`}
+            ): {maybeElectives.map((m) => m.course.code).join(", ")}
           </p>
         ) : null}
         {electives.note ? <p className="mt-1 text-xs text-mdc-muted">{electives.note}</p> : null}

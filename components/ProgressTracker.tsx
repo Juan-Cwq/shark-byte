@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { CareerCompare } from "@/components/CareerCompare";
 import { FiuTransferCheck } from "@/components/FiuTransferCheck";
 import { PathProgress } from "@/components/PathProgress";
+import { PlanDrawer } from "@/components/PlanDrawer";
 import { ProgramSwitches } from "@/components/ProgramSwitches";
 import { RecordImport } from "@/components/RecordImport";
 import { clearAcademicRecord, requestPlanRemaining, useAcademicRecord } from "@/lib/academic-record";
+import type { PlanSource } from "@/lib/finish-plan";
 import type { ProgressPlan } from "@/lib/types";
 
 type View = "path" | "compare" | "switch";
@@ -16,6 +18,13 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
   const [editing, setEditing] = useState(false);
   const [view, setView] = useState<View>("path");
   const [planningFiu, setPlanningFiu] = useState(false);
+  const [switchIndex, setSwitchIndex] = useState(0);
+  const [drawer, setDrawer] = useState<PlanSource | null>(null);
+  const closeDrawer = useCallback(() => setDrawer(null), []);
+
+  const onSwitch = view === "switch" && plan.switches.length > 0;
+  const openPlan = () =>
+    setDrawer(onSwitch ? { kind: "switch", index: switchIndex } : { kind: "path", fiu: planningFiu && plan.fiu != null });
 
   const tab = (v: View, label: string) => (
     <button
@@ -61,7 +70,13 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
               <PathProgress record={record} plan={plan} />
             </>
           ) : view === "switch" ? (
-            <ProgramSwitches switches={plan.switches} record={record} knownCredits={plan.knownCredits} />
+            <ProgramSwitches
+              switches={plan.switches}
+              record={record}
+              knownCredits={plan.knownCredits}
+              selected={switchIndex}
+              onSelect={setSwitchIndex}
+            />
           ) : (
             <CareerCompare plans={allPlans} record={record} currentId={plan.careerId} />
           )}
@@ -69,15 +84,18 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
           <div className="mt-6 flex flex-wrap items-center gap-4">
             <button
               type="button"
-              onClick={() =>
-                requestPlanRemaining({ goal: planningFiu && plan.fiu ? `Transfer to FIU for ${plan.fiu.degree}` : null })
-              }
+              onClick={openPlan}
               className="rounded-full bg-mdc-blue px-5 py-2 text-sm font-bold text-white hover:bg-mdc-blue-bright"
             >
               Plan what&apos;s left
             </button>
             <span className="text-xs text-mdc-muted">
-              Runs Personalize below with your record (in-progress courses count as done).
+              {onSwitch
+                ? `Full plan for: ${plan.switches[switchIndex]?.label}`
+                : `Full plan for your ${plan.programLabel.split(" · ").slice(0, 2).join(" ")}${
+                    planningFiu && plan.fiu ? " plus FIU prerequisites" : ""
+                  }`}
+              : what carries over, what&apos;s left, and a semester-by-semester schedule.
             </span>
           </div>
 
@@ -96,6 +114,23 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
           <p className="mt-2 text-xs text-mdc-muted">
             A planning aid, not a degree audit. Confirm with an MDC advisor before registering.
           </p>
+
+          {drawer ? (
+            <PlanDrawer
+              plan={plan}
+              record={record}
+              source={drawer}
+              onClose={closeDrawer}
+              onAskAi={
+                drawer.kind === "path"
+                  ? () => {
+                      setDrawer(null);
+                      requestPlanRemaining({ goal: drawer.fiu && plan.fiu ? `Transfer to FIU for ${plan.fiu.degree}` : null });
+                    }
+                  : null
+              }
+            />
+          ) : null}
         </>
       ) : (
         <>
