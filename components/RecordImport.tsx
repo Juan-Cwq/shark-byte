@@ -57,7 +57,8 @@ export function RecordImport({ initial, onDone }: { initial: RecordCourse[] | nu
             : "That PDF has no selectable text (it may be a scan or photo). Try pasting the text instead."
         );
       }
-    } catch {
+    } catch (err) {
+      console.error("PDF read failed", err);
       setError("Couldn't read that PDF. It may be password-protected. Try pasting the text instead.");
     } finally {
       setReadingPdf(false);

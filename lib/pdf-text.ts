@@ -11,8 +11,10 @@ interface Piece {
 }
 
 export async function extractPdfText(file: File): Promise<string> {
-  const pdfjs = await import("pdfjs-dist");
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
+  // The modern build calls Map.getOrInsertComputed, Math.sumPrecise, etc. directly and throws in Safari;
+  // the legacy build polyfills them.
+  const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
+  pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/legacy/build/pdf.worker.min.mjs", import.meta.url).toString();
 
   const task = pdfjs.getDocument({ data: new Uint8Array(await file.arrayBuffer()) });
   const lines: string[] = [];
