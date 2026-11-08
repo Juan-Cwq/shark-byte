@@ -126,7 +126,8 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
                 : `Full plan for your ${plan.programLabel.split(" · ").slice(0, 2).join(" ")}${
                     planningFiu && plan.fiu ? " plus FIU prerequisites" : ""
                   }`}
-              : what carries over, what&apos;s left, and a semester-by-semester schedule.
+              : {onSwitch || (planningFiu && plan.fiu) ? "what carries over" : "what you've done"}, what&apos;s left, and a
+              semester-by-semester schedule.
             </span>
           </div>
 
