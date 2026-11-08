@@ -39,18 +39,12 @@ export default function HomePage() {
             </p>
           </div>
 
-          <ul className="mt-12 grid gap-5 sm:grid-cols-3">
+          <ul className="mx-auto mt-12 grid max-w-4xl gap-5 sm:grid-cols-2">
             <FeatureCard
               href="#careers"
               title="Career Navigator"
               description="Explore careers and build your personalized roadmap."
               icon={<GradCapIcon />}
-            />
-            <FeatureCard
-              href="#careers"
-              title="AI Study Buddy"
-              description="Get help with your studies, anytime you need it."
-              icon={<BuddyIcon />}
             />
             <FeatureCard
               href="/alerts"
@@ -153,22 +147,6 @@ function GradCapIcon() {
       <path d="M2 9l10-5 10 5-10 5L2 9Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
       <path d="M6 11.5v4.2c0 1.2 2.7 3.3 6 3.3s6-2.1 6-3.3v-4.2" stroke="currentColor" strokeWidth="1.7" />
       <path d="M22 9v6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function BuddyIcon() {
-  return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect x="5" y="7" width="14" height="12" rx="3" stroke="currentColor" strokeWidth="1.7" />
-      <circle cx="9.5" cy="12.5" r="1.2" fill="currentColor" />
-      <circle cx="14.5" cy="12.5" r="1.2" fill="currentColor" />
-      <path
-        d="M12 3v4M9 19.5c.8.7 1.9 1 3 1s2.2-.3 3-1"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }
