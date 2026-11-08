@@ -61,7 +61,7 @@ export function LearnerMemoryView({
       <button
         type="button"
         onClick={() => {
-          if (window.confirm("Erase everything study buddy remembers, including saved notes?")) onReset();
+          if (window.confirm("Erase everything study buddy remembers, including saved answers and past questions? Your uploaded notes stay.")) onReset();
         }}
         className="rounded-md border border-mdc-line px-3 py-1.5 text-xs font-semibold text-mdc-muted hover:border-red-300 hover:text-red-700"
       >

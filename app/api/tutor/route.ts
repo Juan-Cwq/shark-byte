@@ -33,7 +33,9 @@ export async function POST(request: Request) {
         body.history,
         body.question,
         body.profile,
-        body.questionsAsked
+        body.questionsAsked,
+        body.sources,
+        body.recalled
       )
     );
     const reply = extractFinalText(raw);
