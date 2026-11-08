@@ -87,8 +87,21 @@ export const FiuTransfer = z
       )
       .default([]),
     sources: z.array(z.string()).optional(),
+    // FIU degree total and remaining credits after a 60-credit AA: conditional estimates, not a degree audit.
+    total_credits: z.number().optional(),
+    remaining_after_aa_estimate: z.number().optional(),
+    remaining_note: z.string().optional(),
+    credits_source: z.string().optional(),
+    credit_split_assumption: z
+      .object({ undergrad_credits: z.number(), grad_credits: z.number(), note: z.string() })
+      .optional(),
+    major_note: z.string().optional(),
   })
   .passthrough();
+
+// A program a student on this career can switch into (keys of PathwaysFile.programs / career program codes).
+export const ProgramSwitch = z.object({ from: z.string(), to: z.string(), label: z.string() });
+export type ProgramSwitch = z.infer<typeof ProgramSwitch>;
 
 export const CostStage = z.object({
   stage: z.string(),
@@ -130,6 +143,7 @@ export const Career = z
         primary_program: PrimaryProgram,
         mdc_bachelor: MdcBachelor.optional(),
         fiu_transfer: FiuTransfer.optional(),
+        program_switches: z.array(ProgramSwitch).default([]),
         other_transfer: z.array(z.string()).optional(),
         graduate: z.array(z.string()).optional(),
       })
@@ -157,12 +171,88 @@ export const Career = z
   .passthrough();
 export type Career = z.infer<typeof Career>;
 
+// Credits for common gen-ed / shared courses that aren't in any one career's course list.
+export const CourseCredits = z
+  .object({
+    notes: z.array(z.string()).default([]),
+    sources: z.array(z.string()).default([]),
+    courses: z.record(
+      z.string(),
+      z.object({ title: z.string(), credits: z.number(), corequisite: z.string().optional(), note: z.string().optional() }).passthrough()
+    ),
+  })
+  .passthrough();
+
+export const ProgramCourse = Course.extend({ division: z.enum(["lower", "upper"]).optional() });
+export type ProgramCourse = z.infer<typeof ProgramCourse>;
+
+export const Occupation = z
+  .object({
+    title: z.string(),
+    soc: z.string().optional(),
+    median_pay: z.number(),
+    outlook_pct: z.number().optional(),
+    entry_education: z.string().optional(),
+    source: z.string().optional(),
+  })
+  .passthrough();
+
+// A full MDC program (beyond a career's primary program), e.g. the Applied AI A.S. and B.S.
+export const Program = z
+  .object({
+    code: z.string(),
+    name: z.string(),
+    degree: z.string(),
+    credits: z.number(),
+    effective_term: z.string().optional(),
+    description: z.string().optional(),
+    sources: z.array(z.string()).default([]),
+    admission: z.object({
+      prior_degree: z.string().optional(),
+      min_gpa: z.number().optional(),
+      min_grade: z.string().optional(),
+      prerequisites: z.array(z.string()).default([]),
+      notes: z.array(z.string()).default([]),
+    }),
+    blocks: z.record(z.string(), z.number()).default({}),
+    gen_ed: z
+      .array(z.object({ label: z.string(), credits: z.number(), options: z.array(z.string()), note: z.string().optional() }))
+      .default([]),
+    courses: z.array(ProgramCourse),
+    electives: z.object({
+      credits_total: z.number(),
+      slot_credits: z.number(),
+      slot_credits_basis: z.string().optional(),
+      options: z.array(Course.extend({ recommended_for_bs: z.boolean().optional() })).default([]),
+      allowed_lists: z.array(z.object({ label: z.string(), patterns: z.array(z.string()) })).default([]),
+      note: z.string().optional(),
+    }),
+    // "after_associate": the sequence covers only the credits after an associate degree.
+    sequence_basis: z.enum(["full_program", "after_associate"]),
+    entry_credits: z.number(),
+    sequence: z.array(SequenceTerm),
+    notes: z.array(z.string()).default([]),
+    career: z
+      .object({
+        summary: z.string(),
+        data_source: z.string().optional(),
+        occupations: z.array(Occupation),
+        with_bs: z.object({ note: z.string(), occupations: z.array(Occupation) }).optional(),
+      })
+      .passthrough()
+      .optional(),
+  })
+  .passthrough();
+export type Program = z.infer<typeof Program>;
+
 export const PathwaysFile = z
   .object({
     meta: z.object({ title: z.string(), as_of: z.string(), notes: z.string() }).passthrough(),
     cost_basis: z.record(z.string(), z.unknown()),
     transfer_rules: z.record(z.string(), z.unknown()),
     articulation_agreements: z.array(z.object({ mdc: z.string(), to: z.array(z.string()) }).passthrough()),
+    course_credits: CourseCredits.optional(),
+    programs: z.record(z.string(), Program).default({}),
     careers: z.array(Career),
   })
   .passthrough();
@@ -370,6 +460,79 @@ export interface FiuPlan {
   exception: string | null; // from transfer_rules.fiu_exceptions when it applies to this degree
   asNote: string | null; // transfer_rules.as_to_bachelors, shown when the primary program is an AS
   advising: string | null;
+  // Conditional estimate (degree total minus a 60-credit AA), never a confirmed transfer award.
+  remaining: {
+    totalCredits: number;
+    credits: number;
+    note: string;
+    source: string | null;
+    ratePerCredit: number | null; // null when the credits span undergrad + grad rates
+    rateTerm: string;
+    splitAssumption: { undergrad: number; grad: number; note: string } | null;
+  } | null;
+  majorNote: string | null;
+}
+
+export type Division = "lower" | "upper";
+
+export interface SwitchEntry {
+  label: string;
+  codes: string[]; // normalized; for gen-ed areas, the area's course options
+  title: string | null;
+  credits: CreditRange | null;
+  division: Division | null;
+  kind: "course" | "elective";
+  prerequisites: string[];
+}
+
+export interface SwitchPrereq {
+  code: string; // normalized
+  label: string;
+  title: string | null;
+  credits: CreditRange | null;
+}
+
+// Switching into another MDC program (e.g. Cybersecurity A.S. -> Applied AI A.S.), prepared on the server.
+export interface SwitchPlan {
+  label: string;
+  fromLabel: string;
+  target: {
+    code: string;
+    name: string;
+    degree: string;
+    credits: number;
+    label: string;
+    effectiveTerm: string | null;
+    basis: "full_program" | "after_associate";
+    entryCredits: number;
+  };
+  admission: {
+    priorDegree: string | null;
+    minGpa: number | null;
+    minGrade: string | null;
+    prerequisites: SwitchPrereq[];
+    notes: string[];
+  };
+  terms: { term: string; entries: SwitchEntry[] }[];
+  electives: {
+    slotCredits: number;
+    slotCreditsBasis: string | null;
+    division: Division | null; // null = could be either; cost shown as a range
+    codes: string[]; // explicit options (normalized)
+    lists: { label: string; patterns: string[] }[]; // a course counts for sure only if every list allows it
+    note: string | null;
+    recommended: string[];
+  };
+  genEdCredits: number | null;
+  notes: string[];
+  rates: { lower: number; upper: number; year: string };
+  career: {
+    summary: string;
+    dataSource: string | null;
+    occupations: { title: string; medianPay: number; outlookPct: number | null; entryEducation: string | null; source: string | null }[];
+    withBs: { note: string; occupations: { title: string; medianPay: number; outlookPct: number | null }[] } | null;
+  } | null;
+  sources: string[];
 }
 
 // Everything the client needs to track one career's primary program against a student's record.
@@ -382,4 +545,6 @@ export interface ProgressPlan {
   rateYear: string;
   terms: PathProgressTerm[];
   fiu: FiuPlan | null;
+  switches: SwitchPlan[];
+  knownCredits: Record<string, CreditRange>; // normalized code -> credits, across all catalog data
 }

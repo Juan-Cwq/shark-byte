@@ -12,6 +12,8 @@ const PLAN: ProgressPlan = {
   ratePerCredit: 100,
   rateYear: "test",
   fiu: null,
+  switches: [],
+  knownCredits: {},
   terms: [
     {
       term: "Term 1",

@@ -1,5 +1,6 @@
 "use client";
 
+import { formatUsd } from "@/lib/format";
 import { prerequisiteProgress, recordByCode, type PrereqState } from "@/lib/progress";
 import type { FiuPlan, StoredAcademicRecord } from "@/lib/types";
 
@@ -8,6 +9,36 @@ const ICON: Record<PrereqState, { mark: string; className: string; label: string
   in_progress: { mark: "◐", className: "text-amber", label: "In progress" },
   remaining: { mark: "○", className: "text-mdc-muted", label: "Still needed" },
 };
+
+function FiuRemaining({ remaining: r }: { remaining: NonNullable<FiuPlan["remaining"]> }) {
+  return (
+    <div className="mt-3 border-l-2 border-amber pl-3 text-sm">
+      <p className="text-mdc-ink">
+        <span className="font-semibold">About {r.credits} credits at FIU</span> after a 60-credit AA ({r.totalCredits}{" "}
+        total)
+        {r.ratePerCredit != null
+          ? ` · roughly ${formatUsd(Math.round(r.credits * r.ratePerCredit))} at ${formatUsd(r.ratePerCredit)}/credit${
+              r.rateTerm ? ` (${r.rateTerm})` : ""
+            }, excluding fees`
+          : ""}
+      </p>
+      {r.splitAssumption ? (
+        <p className="mt-1 text-xs text-amber">
+          Assumed split: {r.splitAssumption.undergrad} undergraduate + {r.splitAssumption.grad} graduate credits.{" "}
+          {r.splitAssumption.note}
+        </p>
+      ) : null}
+      <p className="mt-1 text-xs text-mdc-muted">
+        {r.note}{" "}
+        {r.source ? (
+          <a href={r.source} target="_blank" rel="noreferrer" className="text-mdc-blue hover:underline">
+            FIU source
+          </a>
+        ) : null}
+      </p>
+    </div>
+  );
+}
 
 export function FiuTransferCheck({ fiu, record }: { fiu: FiuPlan; record: StoredAcademicRecord }) {
   const byCode = recordByCode(record);
@@ -27,6 +58,8 @@ export function FiuTransferCheck({ fiu, record }: { fiu: FiuPlan; record: Stored
         </span>{" "}
         FIU prerequisites done{remaining.length ? ` · ${remaining.length} still needed` : ""}
       </p>
+      {fiu.majorNote ? <p className="mt-1 text-xs text-mdc-muted">{fiu.majorNote}</p> : null}
+      {fiu.remaining ? <FiuRemaining remaining={fiu.remaining} /> : null}
 
       {fiu.prerequisites.length ? (
         <ul className="mt-3 space-y-1 text-sm">

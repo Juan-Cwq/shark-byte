@@ -4,11 +4,12 @@ import { useState } from "react";
 import { CareerCompare } from "@/components/CareerCompare";
 import { FiuTransferCheck } from "@/components/FiuTransferCheck";
 import { PathProgress } from "@/components/PathProgress";
+import { ProgramSwitches } from "@/components/ProgramSwitches";
 import { RecordImport } from "@/components/RecordImport";
 import { clearAcademicRecord, requestPlanRemaining, useAcademicRecord } from "@/lib/academic-record";
 import type { ProgressPlan } from "@/lib/types";
 
-type View = "path" | "compare";
+type View = "path" | "compare" | "switch";
 
 export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPlans: ProgressPlan[] }) {
   const record = useAcademicRecord();
@@ -40,7 +41,8 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
           <div className="mt-4 flex flex-wrap items-center gap-2">
             {tab("path", "This path")}
             {tab("compare", "Compare careers")}
-            {plan.fiu ? (
+            {plan.switches.length ? tab("switch", "Switch programs") : null}
+            {plan.fiu && view === "path" ? (
               <label className="ml-auto flex items-center gap-2 text-sm text-mdc-ink">
                 <input
                   type="checkbox"
@@ -58,6 +60,8 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
               {planningFiu && plan.fiu ? <FiuTransferCheck fiu={plan.fiu} record={record} /> : null}
               <PathProgress record={record} plan={plan} />
             </>
+          ) : view === "switch" ? (
+            <ProgramSwitches switches={plan.switches} record={record} knownCredits={plan.knownCredits} />
           ) : (
             <CareerCompare plans={allPlans} record={record} currentId={plan.careerId} />
           )}

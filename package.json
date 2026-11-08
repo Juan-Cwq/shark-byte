@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "check-data": "tsx scripts/check-data.ts",
-    "test": "tsx --test lib/*.test.ts",
+    "test": "tsx --conditions=react-server --test lib/*.test.ts",
     "probe-swarms": "tsx --env-file=.env.local scripts/probe-swarms.ts",
     "seed-cache": "tsx --env-file=.env.local scripts/seed-cache.ts"
   },

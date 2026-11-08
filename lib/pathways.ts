@@ -109,6 +109,20 @@ export function getSharedRules() {
   };
 }
 
+/** Standalone programs (e.g. Applied AI A.S. 25080 / B.S. S9520) by program code. */
+export function getProgram(code: string) {
+  return DATA.programs[code] ?? null;
+}
+
+export function getPrograms() {
+  return Object.values(DATA.programs);
+}
+
+/** Shared credit values for gen-ed and common courses, keyed by code ("ENC 1101"). */
+export function getCourseCredits() {
+  return DATA.course_credits ?? null;
+}
+
 /** Program codes the AI may choose as pathwayChoice.code. */
 export function getAllowedPathwayCodes(id: CareerId) {
   const ep = getCareer(id).educational_pathway;
