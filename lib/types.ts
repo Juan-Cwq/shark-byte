@@ -389,6 +389,41 @@ export const StudyArtifact = z.object({
 });
 export type StudyArtifact = z.infer<typeof StudyArtifact>;
 
+// Notes the student uploads or pastes (NotebookLM-style). Stored on the device; only matching passages are sent.
+export const StudyNote = z.object({
+  id: z.string(),
+  title: z.string().min(1).max(120),
+  kind: z.enum(["pdf", "text", "paste"]),
+  text: z.string().max(200_000),
+  createdAt: z.string(),
+});
+export type StudyNote = z.infer<typeof StudyNote>;
+
+// One past question/answer, kept so the tutor can recall related sessions later.
+export const StoredExchange = z.object({
+  id: z.string(),
+  careerId: CareerId,
+  question: z.string().max(4000),
+  answer: z.string().max(4000),
+  at: z.string(),
+});
+export type StoredExchange = z.infer<typeof StoredExchange>;
+
+// A passage from the student's notes or saved answers, sent with a tutor request and cited as [S1], [S2]...
+export const NoteSource = z.object({
+  ref: z.string().regex(/^S\d{1,2}$/),
+  title: z.string().max(120),
+  text: z.string().max(1500),
+});
+export type NoteSource = z.infer<typeof NoteSource>;
+
+export const RecalledExchange = z.object({
+  question: z.string().max(500),
+  answer: z.string().max(1200),
+  at: z.string().max(40),
+});
+export type RecalledExchange = z.infer<typeof RecalledExchange>;
+
 export const TutorRequest = z.object({
   careerId: CareerId,
   currentCourseCodes: z.array(z.string()).max(10).default([]),
@@ -396,6 +431,8 @@ export const TutorRequest = z.object({
   question: z.string().min(1).max(4000),
   profile: LearnerProfileFields.optional(),
   questionsAsked: z.number().int().min(0).optional(),
+  sources: z.array(NoteSource).max(6).default([]),
+  recalled: z.array(RecalledExchange).max(3).default([]),
 });
 export type TutorRequest = z.infer<typeof TutorRequest>;
 

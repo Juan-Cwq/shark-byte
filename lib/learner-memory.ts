@@ -3,11 +3,13 @@
 // Memory lives on this device only; clearing site data erases it.
 
 import { z } from "zod";
-import { StoredLearnerProfile, StudyArtifact, type LearnerProfileFields } from "./types";
+import { StoredExchange, StoredLearnerProfile, StudyArtifact, type LearnerProfileFields } from "./types";
 
 const PROFILE_KEY = "cone:learner-profile:v1";
 const ARTIFACTS_KEY = "cone:study-artifacts:v1";
 const MAX_ARTIFACTS = 50;
+const EXCHANGES_KEY = "cone:study-exchanges:v1";
+const MAX_EXCHANGES = 150;
 
 function read<T>(key: string, schema: z.ZodType<T>): T | null {
   try {
@@ -64,10 +66,33 @@ export function deleteArtifact(id: string): StudyArtifact[] {
   return next;
 }
 
+export function loadExchanges(): StoredExchange[] {
+  return read(EXCHANGES_KEY, z.array(StoredExchange)) ?? [];
+}
+
+export function addExchange(exchange: Omit<StoredExchange, "id" | "at">): StoredExchange {
+  const stored: StoredExchange = {
+    ...exchange,
+    question: exchange.question.slice(0, 4000),
+    answer: exchange.answer.slice(0, 4000),
+    id: crypto.randomUUID(),
+    at: new Date().toISOString(),
+  };
+  write(EXCHANGES_KEY, [stored, ...loadExchanges()].slice(0, MAX_EXCHANGES));
+  return stored;
+}
+
+export function deleteExchange(id: string): StoredExchange[] {
+  const next = loadExchanges().filter((e) => e.id !== id);
+  write(EXCHANGES_KEY, next);
+  return next;
+}
+
 export function clearMemory(): void {
   try {
     window.localStorage.removeItem(PROFILE_KEY);
     window.localStorage.removeItem(ARTIFACTS_KEY);
+    window.localStorage.removeItem(EXCHANGES_KEY);
   } catch {
     // Nothing to clear if storage is unavailable.
   }

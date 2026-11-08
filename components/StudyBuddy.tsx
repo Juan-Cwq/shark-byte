@@ -1,26 +1,39 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { LearnerMemoryView } from "@/components/LearnerMemoryView";
+import { NoteCitations } from "@/components/NoteCitations";
+import { RememberedSessions } from "@/components/RememberedSessions";
 import { SavedStudyList } from "@/components/SavedStudyList";
+import { StudyNotesPanel } from "@/components/StudyNotesPanel";
 import { TutorMessage } from "@/components/TutorMessage";
 import {
   addArtifact,
+  addExchange,
   clearMemory,
   deleteArtifact,
+  deleteExchange,
   loadArtifacts,
+  loadExchanges,
   loadProfile,
   saveProfile,
 } from "@/lib/learner-memory";
+import { buildPassages, citedRefs, findSources, recallExchanges, type CitedSource } from "@/lib/study-context";
+import { loadNotes } from "@/lib/study-notes";
 import {
   LearnerProfileFields,
   type CareerId,
   type ChatMessage,
+  type StoredExchange,
   type StoredLearnerProfile,
   type StudyArtifact,
+  type StudyNote,
 } from "@/lib/types";
 
-type Tab = "chat" | "saved" | "memory";
+type Tab = "chat" | "notes" | "saved" | "memory";
+
+// Source refs ([S1]) are renumbered every turn, so old ones are dropped from the history sent back.
+const stripRefs = (text: string) => text.replace(/\s?\[S\d{1,2}\]/g, "") || text;
 
 // Summarize into memory every few exchanges, and whenever the panel closes.
 const SYNC_EVERY_MESSAGES = 8;
@@ -47,12 +60,20 @@ export function StudyBuddy({
   const [profile, setProfile] = useState<StoredLearnerProfile | null>(null);
   const [artifacts, setArtifacts] = useState<StudyArtifact[]>([]);
   const [savedIndexes, setSavedIndexes] = useState<Set<number>>(new Set());
+  const [notes, setNotes] = useState<StudyNote[]>([]);
+  const [exchanges, setExchanges] = useState<StoredExchange[]>([]);
+  const [groundInNotes, setGroundInNotes] = useState(true);
+  const [replyMeta, setReplyMeta] = useState<Record<number, { sources: CitedSource[]; recalled: number }>>({});
+  const sessionExchangeIds = useRef(new Set<string>());
+  const passages = useMemo(() => buildPassages(notes, artifacts), [notes, artifacts]);
   const syncedUpTo = useRef(0);
   const syncing = useRef(false);
 
   function openPanel() {
     setProfile(loadProfile());
     setArtifacts(loadArtifacts());
+    setNotes(loadNotes());
+    setExchanges(loadExchanges());
     setOpen(true);
   }
 
@@ -96,6 +117,11 @@ export function StudyBuddy({
     setHistory(nextHistory);
     setQuestion("");
 
+    const previousQuestion = history.findLast((m) => m.role === "user")?.content ?? "";
+    const query = `${trimmed} ${previousQuestion}`;
+    const sources = groundInNotes ? findSources(query, passages) : [];
+    const recalled = recallExchanges(query, loadExchanges(), sessionExchangeIds.current);
+
     const memory = loadProfile();
     const questionsAsked = (memory?.questionsAsked ?? 0) + 1;
     setProfile(saveProfile(toFields(memory), questionsAsked));
@@ -107,16 +133,27 @@ export function StudyBuddy({
         body: JSON.stringify({
           careerId,
           currentCourseCodes: starterCourseCodes,
-          history: nextHistory.slice(0, -1).slice(-10),
+          history: nextHistory
+            .slice(0, -1)
+            .slice(-10)
+            .map((m) => ({ ...m, content: stripRefs(m.content) })),
           question: trimmed,
           profile: memory ? toFields(memory) : undefined,
           questionsAsked: memory?.questionsAsked,
+          sources: sources.map(({ ref, title, text }) => ({ ref, title, text })),
+          recalled,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Tutor unavailable");
       const withReply: ChatMessage[] = [...nextHistory, { role: "assistant", content: data.reply }];
       setHistory(withReply);
+      setReplyMeta((m) => ({
+        ...m,
+        [withReply.length - 1]: { sources: citedRefs(data.reply, sources), recalled: recalled.length },
+      }));
+      sessionExchangeIds.current.add(addExchange({ careerId, question: trimmed, answer: data.reply }).id);
+      setExchanges(loadExchanges());
       if (withReply.length - syncedUpTo.current >= SYNC_EVERY_MESSAGES) void syncMemory(withReply);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Tutor unavailable");
@@ -141,12 +178,15 @@ export function StudyBuddy({
     setProfile(null);
     setArtifacts([]);
     setSavedIndexes(new Set());
+    setExchanges([]);
+    sessionExchangeIds.current = new Set();
     syncedUpTo.current = history.length;
   }
 
   const lastTopic = profile?.topicsCovered[0];
   const tabs: { id: Tab; label: string }[] = [
     { id: "chat", label: "Chat" },
+    { id: "notes", label: `Notes${notes.length ? ` (${notes.length})` : ""}` },
     { id: "saved", label: `Saved${artifacts.length ? ` (${artifacts.length})` : ""}` },
     { id: "memory", label: "Memory" },
   ];
@@ -208,6 +248,7 @@ export function StudyBuddy({
                     {lastTopic
                       ? `Welcome back! Last time we worked on "${lastTopic}". Pick up there, or ask something new.`
                       : "Ask about a concept from your first-term courses. I'll hint, not hand over answers."}
+                    {notes.length === 0 ? " Tip: add your class notes in the Notes tab and I'll answer from them." : ""}
                   </p>
                 ) : null}
                 {history.map((m, i) =>
@@ -228,14 +269,26 @@ export function StudyBuddy({
                       >
                         {savedIndexes.has(i) ? "Saved" : "Save"}
                       </button>
+                      <NoteCitations sources={replyMeta[i]?.sources ?? []} recalled={replyMeta[i]?.recalled ?? 0} />
                     </div>
                   )
                 )}
                 {loading ? <p className="animate-pulse text-sm text-mdc-blue">Thinking…</p> : null}
                 {error ? <p className="text-sm text-mdc-blue">{error}</p> : null}
               </div>
+              {notes.length ? (
+                <label className="flex items-center gap-2 border-t border-mdc-line px-3 pt-2 text-xs text-mdc-muted">
+                  <input
+                    type="checkbox"
+                    checked={groundInNotes}
+                    onChange={(e) => setGroundInNotes(e.target.checked)}
+                    className="h-3.5 w-3.5 accent-mdc-blue"
+                  />
+                  Answer from my notes ({notes.length})
+                </label>
+              ) : null}
               <form
-                className="flex gap-2 border-t border-mdc-line p-3"
+                className={`flex gap-2 p-3 ${notes.length ? "" : "border-t border-mdc-line"}`}
                 onSubmit={(e) => {
                   e.preventDefault();
                   send(question);
@@ -259,10 +312,15 @@ export function StudyBuddy({
             </>
           ) : (
             <div className="flex-1 overflow-y-auto px-4 py-4">
-              {tab === "saved" ? (
+              {tab === "notes" ? (
+                <StudyNotesPanel notes={notes} onChange={setNotes} />
+              ) : tab === "saved" ? (
                 <SavedStudyList artifacts={artifacts} onDelete={(id) => setArtifacts(deleteArtifact(id))} />
               ) : (
-                <LearnerMemoryView profile={profile} onReset={resetMemory} />
+                <div className="space-y-6">
+                  <LearnerMemoryView profile={profile} onReset={resetMemory} />
+                  <RememberedSessions exchanges={exchanges} onDelete={(id) => setExchanges(deleteExchange(id))} />
+                </div>
               )}
             </div>
           )}
