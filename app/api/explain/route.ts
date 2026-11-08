@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { unauthorizedUnlessAuthenticated } from "@/lib/auth-guard";
 import { buildExplainPayload } from "@/lib/agents";
 import { callAgent, extractFinalText } from "@/lib/swarms";
 import { ExplainRequest } from "@/lib/types";
@@ -15,6 +16,9 @@ async function runExplain(req: ExplainRequest): Promise<string> {
 
 // On any failure the client shows the rule-based reasons as-is, so errors stay non-fatal.
 export async function POST(request: Request) {
+  const unauthorized = await unauthorizedUnlessAuthenticated();
+  if (unauthorized) return unauthorized;
+
   const parsed = ExplainRequest.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Invalid request" }, { status: 400 });
 

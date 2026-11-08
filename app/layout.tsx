@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
+import { Suspense } from "react";
 import { Disclaimer } from "@/components/Disclaimer";
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WaveFooter } from "@/components/WaveFooter";
-import { getAllCareers } from "@/lib/pathways";
 import "./globals.css";
 
 const body = Source_Sans_3({
@@ -28,11 +28,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${body.variable} ${display.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col bg-white font-sans text-mdc-ink">
-        <SiteHeader />
+        <Suspense fallback={<div className="h-28 bg-white" aria-hidden />}>
+          <SiteHeader />
+        </Suspense>
         <Disclaimer />
         {children}
         <WaveFooter />
-        <ServiceWorkerRegister precacheUrls={getAllCareers().map((c) => `/career/${c.id}`)} />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );

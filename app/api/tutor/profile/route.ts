@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { unauthorizedUnlessAuthenticated } from "@/lib/auth-guard";
 import { buildProfileUpdatePayload } from "@/lib/agents";
 import { callAgent, extractFinalText, parseJsonLoose } from "@/lib/swarms";
 import { LearnerProfileFields, ProfileUpdateRequest, type ChatMessage } from "@/lib/types";
@@ -37,6 +38,9 @@ async function runUpdate(req: ProfileUpdateRequest): Promise<LearnerProfileField
 }
 
 export async function POST(request: Request) {
+  const unauthorized = await unauthorizedUnlessAuthenticated();
+  if (unauthorized) return unauthorized;
+
   const parsed = ProfileUpdateRequest.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   const body = parsed.data;

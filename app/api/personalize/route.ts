@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
+import { unauthorizedUnlessAuthenticated } from "@/lib/auth-guard";
 import { buildPersonalizePayload } from "@/lib/agents";
 import { sanitizePlan } from "@/lib/pathways";
 import { checkPlan, stripCreditClaims } from "@/lib/plan-check";
@@ -47,6 +48,9 @@ function respond(req: PersonalizeRequest, plan: PersonalizedPlan, unknownCodesRe
 }
 
 export async function POST(request: Request) {
+  const unauthorized = await unauthorizedUnlessAuthenticated();
+  if (unauthorized) return unauthorized;
+
   try {
     const body = PersonalizeRequest.parse(await request.json());
 
