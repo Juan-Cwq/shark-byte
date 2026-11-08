@@ -1,7 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getAuth0Client } from "@/lib/auth0";
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const auth0 = getAuth0Client();
+  const session = auth0 ? await auth0.getSession() : null;
+
   return (
     <header className="z-40 bg-white">
       <div className="bg-mdc-navy">
@@ -29,9 +33,16 @@ export function SiteHeader() {
               <span className="hidden text-sm text-mdc-muted sm:inline">Plan your path from MDC to a career</span>
             </span>
           </Link>
-          <span className="text-sm font-medium text-mdc-muted" aria-label="Language: English">
-            EN
-          </span>
+          <div className="flex shrink-0 items-center gap-4">
+            {session && (
+              <a href="/auth/logout" className="text-sm font-semibold text-mdc-blue hover:text-mdc-blue-bright">
+                Sign out
+              </a>
+            )}
+            <span className="text-sm font-medium text-mdc-muted" aria-label="Language: English">
+              EN
+            </span>
+          </div>
         </div>
       </div>
     </header>

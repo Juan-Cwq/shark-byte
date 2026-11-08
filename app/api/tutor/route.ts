@@ -1,11 +1,15 @@
 import { readFile } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
+import { unauthorizedUnlessAuthenticated } from "@/lib/auth-guard";
 import { buildTutorPayload } from "@/lib/agents";
 import { callAgent, extractFinalText, SwarmsError } from "@/lib/swarms";
 import { TutorRequest } from "@/lib/types";
 
 export async function POST(request: Request) {
+  const unauthorized = await unauthorizedUnlessAuthenticated();
+  if (unauthorized) return unauthorized;
+
   try {
     const body = TutorRequest.parse(await request.json());
 

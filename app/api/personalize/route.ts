@@ -1,6 +1,7 @@
 import { readFile } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
+import { unauthorizedUnlessAuthenticated } from "@/lib/auth-guard";
 import { buildPersonalizePayload } from "@/lib/agents";
 import { sanitizePlan } from "@/lib/pathways";
 import { callSwarm, extractFinalText, parseJsonLoose, SwarmsError } from "@/lib/swarms";
@@ -31,6 +32,9 @@ async function runPersonalize(req: PersonalizeRequest) {
 }
 
 export async function POST(request: Request) {
+  const unauthorized = await unauthorizedUnlessAuthenticated();
+  if (unauthorized) return unauthorized;
+
   try {
     const body = PersonalizeRequest.parse(await request.json());
 

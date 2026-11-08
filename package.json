@@ -13,6 +13,7 @@
     "seed-cache": "tsx --env-file=.env.local scripts/seed-cache.ts"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^4.33.0",
     "katex": "^0.19.1",
     "next": "16.4.5",
     "react": "19.3.0",
