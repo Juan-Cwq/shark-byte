@@ -183,6 +183,38 @@ export const CourseCredits = z
   })
   .passthrough();
 
+// MDC general education areas shared by every A.A. and A.S. degree (from the A.A. pathway guide).
+const GenEdCourse = z.object({ code: z.string(), title: z.string().optional(), tags: z.array(z.string()).optional() }).passthrough();
+export const GenEdArea = z
+  .object({
+    credits: z.number(),
+    min_grade: z.string().optional(),
+    rule: z.string().optional(),
+    state_core: z.array(GenEdCourse).optional(),
+    mdc_core: z.array(GenEdCourse).optional(),
+    options: z.array(z.union([GenEdCourse, z.string()])).optional(),
+    excluded: z.array(z.string()).optional(),
+  })
+  .passthrough();
+export type GenEdArea = z.infer<typeof GenEdArea>;
+
+export const GeneralEducation = z
+  .object({
+    meta: z.object({ program: z.string(), effective_term: z.string(), source: z.string() }).passthrough(),
+    general_education: z.record(z.string(), GenEdArea),
+    competencies: z
+      .object({
+        computer: z.object({ attempt_by_credit: z.number(), satisfy_by_credit: z.number(), options: z.array(z.string()) }).passthrough(),
+        foreign_language: z.object({ options: z.array(z.string()), courses: z.array(z.string()) }).passthrough(),
+        civic_literacy: z.object({ requirement: z.string(), applies_to: z.string() }).passthrough(),
+      })
+      .passthrough(),
+    gordon_rule: z.record(z.string(), z.string()).default({}),
+    official_requirements_note: z.string().optional(),
+  })
+  .passthrough();
+export type GeneralEducation = z.infer<typeof GeneralEducation>;
+
 export const ProgramCourse = Course.extend({ division: z.enum(["lower", "upper"]).optional() });
 export type ProgramCourse = z.infer<typeof ProgramCourse>;
 
@@ -252,6 +284,7 @@ export const PathwaysFile = z
     transfer_rules: z.record(z.string(), z.unknown()),
     articulation_agreements: z.array(z.object({ mdc: z.string(), to: z.array(z.string()) }).passthrough()),
     course_credits: CourseCredits.optional(),
+    general_education: GeneralEducation.optional(),
     programs: z.record(z.string(), Program).default({}),
     careers: z.array(Career),
   })
@@ -448,7 +481,17 @@ export interface PathProgressTerm {
     credits: CreditRange | null;
     prerequisites: string[]; // catalog text, e.g. "CTS 1134 or CTS 1650"
     corequisites: string[];
+    area: GenEdAreaRule | null; // set when the entry is a gen-ed area slot ("Humanities")
   }[];
+}
+
+// A gen-ed area slot: any one listed option fills it, and each course fills only one slot.
+// Codes may be prefix patterns ("CHM*").
+export interface GenEdAreaRule {
+  name: string; // "Humanities"
+  rule: string | null;
+  minGrade: string | null;
+  source: string;
 }
 
 // One gen-ed requirement behind a "Gen-ed (15)" sequence slot, from the program's gen_ed list.
@@ -456,6 +499,7 @@ export interface GenEdRequirement {
   label: string; // "MAC 1105 or STA 2023", "Humanities"
   codes: string[]; // normalized; empty = any approved course in that area
   credits: CreditRange | null;
+  area: GenEdAreaRule | null;
 }
 
 // One FIU prerequisite row: every part is required; a part is met by any one of its codes.
@@ -567,4 +611,5 @@ export interface ProgressPlan {
   knownPrerequisites: Record<string, string[]>; // normalized code -> catalog prerequisite text
   genEd: GenEdRequirement[]; // expands the "Gen-ed (N)" slot; empty when the program has none
   electives: { credits: number | null; prefixes: string[]; note: string | null } | null;
+  competencies: string[]; // non-course graduation requirements (civic literacy, computer competency, ...)
 }

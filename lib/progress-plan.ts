@@ -8,6 +8,7 @@ import {
   getCareer,
   getCourseCredits,
   getCourseObjects,
+  getGeneralEducation,
   getProgram,
   getPrograms,
   getSharedRules,
@@ -21,6 +22,7 @@ import {
   type CreditRange,
   type Division,
   type FiuPlan,
+  type GenEdAreaRule,
   type GenEdRequirement,
   type ProgramSwitch,
   type ProgressPlan,
@@ -113,19 +115,113 @@ function courseFacts(): CourseFacts {
   for (const [code, c] of Object.entries(getCourseCredits()?.courses ?? {})) {
     if (!facts.titles.has(normalizeCode(code))) facts.titles.set(normalizeCode(code), c.title);
   }
+  for (const area of Object.values(getGeneralEducation()?.general_education ?? {})) {
+    for (const c of [...(area.state_core ?? []), ...(area.mdc_core ?? []), ...(area.options ?? [])]) {
+      if (typeof c === "string" || !c.title || c.code.includes("*")) continue;
+      if (!facts.titles.has(normalizeCode(c.code))) facts.titles.set(normalizeCode(c.code), c.title);
+    }
+  }
   courseFactsCache = facts;
   return facts;
 }
 
+const AREA_KEYS: Record<string, string> = {
+  communications: "communications",
+  humanities: "humanities",
+  mathematics: "mathematics",
+  "natural science": "natural_sciences",
+  "social science": "social_sciences",
+  "oral communication": "oral_communications",
+};
+
+interface AreaSlot {
+  codes: string[];
+  credits: CreditRange | null;
+  area: GenEdAreaRule;
+}
+
+/**
+ * A bare gen-ed slot ("Humanities", "Natural science (1)") filled from the shared MDC gen-ed areas.
+ * A.S. degrees take one State Core course per area; A.A. degrees take one State Core and one MDC Core course.
+ */
+function genEdArea(label: string, degree: string, credits: Map<string, CreditRange>): AreaSlot | null {
+  const ge = getGeneralEducation();
+  if (!ge) return null;
+  const name = label.replace(/\s*\(\d+\)\s*$/, "").trim();
+  const source = `${ge.meta.source}; ${ge.meta.effective_term}`;
+
+  if (/^computer competency$/i.test(name)) {
+    const comp = ge.competencies.computer;
+    const codes = comp.options.flatMap((o) => extractCourseCodes(o)).map(normalizeCode);
+    const course = spanCredits(codes, credits);
+    return {
+      codes,
+      // The competency test awards no credit, so the slot can cost 0 credits.
+      credits: course ? { low: 0, high: course.high } : null,
+      area: {
+        name,
+        rule: `Attempt by ${comp.attempt_by_credit} credits, satisfy by ${comp.satisfy_by_credit}: ${comp.options.join(", ")}.`,
+        minGrade: null,
+        source,
+      },
+    };
+  }
+
+  const key = AREA_KEYS[name.toLowerCase()];
+  const area = key ? ge.general_education[key] : undefined;
+  if (!area) return null;
+  const state = area.state_core ?? [];
+  const mdc = area.mdc_core ?? [];
+  const options = (area.options ?? []).map((o) => (typeof o === "string" ? { code: o } : o));
+  const list = state.length ? (degree === "AA" ? [...state, ...mdc] : state) : options;
+  const perSlot = area.credits / (state.length && mdc.length ? 2 : 1);
+  const rule = area.rule && (degree === "AA" || !/MDC Core/.test(area.rule)) ? area.rule : null;
+  return {
+    codes: [...new Set(list.map((o) => normalizeCode(o.code)))],
+    credits: { low: perSlot, high: perSlot },
+    area: { name, rule, minGrade: area.min_grade ?? null, source },
+  };
+}
+
+/** Every code an area lists (State Core, MDC Core and options), to recognize a program's own gen-ed entry for it. */
+function areaUniverse(label: string): Set<string> {
+  const key = AREA_KEYS[label.replace(/\s*\(\d+\)\s*$/, "").trim().toLowerCase()];
+  const area = key ? getGeneralEducation()?.general_education[key] : undefined;
+  if (!area) return new Set();
+  const all = [...(area.state_core ?? []), ...(area.mdc_core ?? []), ...(area.options ?? [])];
+  return new Set(all.map((o) => normalizeCode(typeof o === "string" ? o : o.code)));
+}
+
 // primary_program.gen_ed entries look like "ENC 1101", "Humanities (1)", "AMH 2010 / AMH 2020 / POS 2041".
-function genEdRequirements(raw: unknown, credits: Map<string, CreditRange>): GenEdRequirement[] {
+function genEdRequirements(raw: unknown, degree: string, credits: Map<string, CreditRange>): GenEdRequirement[] {
   if (!Array.isArray(raw)) return [];
   return raw
     .filter((v): v is string => typeof v === "string")
     .map((label) => {
       const codes = extractCourseCodes(label).map(normalizeCode);
-      return { label: codes.length ? label : label.replace(/\s*\(\d+\)\s*$/, ""), codes, credits: spanCredits(codes, credits) };
+      if (codes.length) return { label, codes, credits: spanCredits(codes, credits), area: null };
+      const slot = genEdArea(label, degree, credits);
+      return { label: label.replace(/\s*\(\d+\)\s*$/, ""), codes: slot?.codes ?? [], credits: slot?.credits ?? null, area: slot?.area ?? null };
     });
+}
+
+/** Graduation requirements that aren't courses, from the shared MDC gen-ed data. */
+function competencies(degree: string, hasComputerSlot: boolean): string[] {
+  const ge = getGeneralEducation();
+  if (!ge) return [];
+  const c = ge.competencies;
+  const out = [`Civic literacy: ${c.civic_literacy.requirement} Applies to ${c.civic_literacy.applies_to}`];
+  if (degree === "AA") {
+    if (!hasComputerSlot) {
+      out.push(`Computer competency: attempt by ${c.computer.attempt_by_credit} credits, satisfy by ${c.computer.satisfy_by_credit} (${c.computer.options.join(", ")}).`);
+    }
+    out.push(`Foreign language competency: ${c.foreign_language.options.join(", ")}, or one of ${c.foreign_language.courses.join(", ")}.`);
+    const gordon = Object.entries(ge.gordon_rule).filter(([k]) => k !== "reference");
+    if (gordon.length) {
+      out.push(`Gordon Rule${ge.gordon_rule.reference ? ` (${ge.gordon_rule.reference})` : ""}: ${gordon.map(([k, v]) => `${k}: ${v}`).join(" ")}`);
+    }
+  }
+  return out;
 }
 
 // primary_program.electives looks like "9 credits: any CAI, CGS, CIS, COP, CTS (e.g. ...)".
@@ -280,10 +376,32 @@ export function getProgressPlan(id: CareerId): ProgressPlan {
   const reqsFor = (codes: string[], key: "prerequisites" | "corequisites") =>
     [...new Set(codes.flatMap((c) => ownCourses.get(c)?.[key] ?? facts[key].get(c) ?? []))];
 
+  const rawGenEd = (program as Record<string, unknown>).gen_ed;
+  const sequenceCodes = new Set(program.sequence_full_time.flatMap((t) => t.courses.flatMap(extractCourseCodes)).map(normalizeCode));
+  // Coded gen-ed entries the sequence only names by area ("Social science" = "AMH 2010 / AMH 2020 / POS 2041").
+  const unplacedGenEd = (Array.isArray(rawGenEd) ? rawGenEd : [])
+    .filter((v): v is string => typeof v === "string")
+    .map((label) => ({ label, codes: extractCourseCodes(label).map(normalizeCode) }))
+    .filter((g) => g.codes.length && !g.codes.some((c) => sequenceCodes.has(c)));
+
+  const areaSlot = (label: string): AreaSlot | null => {
+    const slot = genEdArea(label, program.degree, creditsByCode);
+    if (!slot) return null;
+    const universe = areaUniverse(label);
+    const i = unplacedGenEd.findIndex((g) => g.codes.every((c) => universe.has(c)));
+    if (i < 0) return slot;
+    const [own] = unplacedGenEd.splice(i, 1);
+    return { ...slot, codes: own.codes, credits: spanCredits(own.codes, creditsByCode) ?? slot.credits, area: { ...slot.area, rule: `Program gen-ed: ${own.label}` } };
+  };
+
   const terms = program.sequence_full_time.map((t) => ({
     term: t.term,
     entries: t.courses.map((label) => {
       const codes = extractCourseCodes(label).map(normalizeCode);
+      const slot = codes.length ? null : areaSlot(label);
+      if (slot) {
+        return { label, codes: slot.codes, title: null, credits: slot.credits, prerequisites: [], corequisites: [], area: slot.area };
+      }
       return {
         label,
         codes,
@@ -292,6 +410,7 @@ export function getProgressPlan(id: CareerId): ProgressPlan {
         // Alternatives ("CTS 1134 or CTS 1650") only carry requirements shared by every option.
         prerequisites: codes.length === 1 ? reqsFor(codes, "prerequisites") : [],
         corequisites: codes.length === 1 ? reqsFor(codes, "corequisites") : [],
+        area: null,
       };
     }),
   }));
@@ -344,8 +463,9 @@ export function getProgressPlan(id: CareerId): ProgressPlan {
     knownCredits: Object.fromEntries(credits),
     knownTitles: Object.fromEntries(facts.titles),
     knownPrerequisites: Object.fromEntries(facts.prerequisites),
-    genEd: genEdRequirements((program as Record<string, unknown>).gen_ed, creditsByCode),
+    genEd: genEdRequirements(rawGenEd, program.degree, creditsByCode),
     electives: electiveRule((program as Record<string, unknown>).electives),
+    competencies: competencies(program.degree, terms.some((t) => t.entries.some((e) => /computer competency|CGS 1060C/i.test(e.label)))),
   };
 }
 

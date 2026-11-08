@@ -4,9 +4,9 @@
 // Every course, credit and rule comes from the plan (built from mdc_pathways.json); nothing is guessed.
 
 import { summarizeSwitch } from "./program-switch";
-import { entryProgress, recordByCode } from "./progress";
+import { belowAreaMinimum, entryProgress, matchEntries, recordByCode } from "./progress";
 import { normalizeRecordCode } from "./record-parse";
-import type { CreditRange, ProgressPlan, RecordCourse, StoredAcademicRecord, SwitchPlan } from "./types";
+import type { CreditRange, GenEdAreaRule, ProgressPlan, RecordCourse, StoredAcademicRecord, SwitchPlan } from "./types";
 
 export type ReqStatus = "done" | "in_progress" | "remaining" | "low_grade";
 export type ReqGroup = "admission" | "program" | "gen_ed" | "electives" | "fiu";
@@ -40,6 +40,7 @@ export interface Requirement {
   block: CreditBlock | null;
   extra: "none" | "maybe" | "yes"; // credits beyond the program total (FIU or B.S. prerequisites)
   mergedInto: string | null; // label of the requirement that already covers this one
+  area: GenEdAreaRule | null; // gen-ed area slot: codes are its options, any one fills it
 }
 
 export const needsWork = (r: Requirement) => !r.mergedInto && (r.status === "remaining" || r.status === "low_grade");
@@ -73,6 +74,20 @@ function statusOf(p: ReturnType<typeof entryProgress>): ReqStatus {
   return p.state === "done" ? "done" : p.state === "in_progress" ? "in_progress" : "remaining";
 }
 
+const displayCode = (c: string) => c.replace(/^([A-Z]{3})(?=[\d*])/, "$1 ").replace(/^([A-Z]{3}) \*$/, "any $1");
+
+/** Status and notes for a gen-ed area slot, including its minimum grade. */
+function areaRequirement(area: GenEdAreaRule, codes: string[], hit: ReturnType<typeof entryProgress>) {
+  const lowGrade = belowAreaMinimum(area, hit);
+  const notes = [
+    ...(area.rule ? [area.rule] : []),
+    codes.length ? `Options: ${codes.map(displayCode).join(", ")}.` : "Any approved course in this area; an advisor can match courses you've taken.",
+    ...(area.minGrade ? [`General education courses need a ${area.minGrade} or higher.`] : []),
+    ...(lowGrade ? [`You have a ${hit.match?.grade} in ${hit.match?.code}; retake it or take another option.`] : []),
+  ];
+  return { status: lowGrade ? ("low_grade" as const) : statusOf(hit), notes };
+}
+
 function creditsFor(codes: string[], known: Record<string, CreditRange>): CreditRange | null {
   const hits = codes.map((c) => known[c]).filter((r): r is CreditRange => r != null);
   if (!codes.length || hits.length !== codes.length) return null;
@@ -103,24 +118,47 @@ function pathRequirements(plan: ProgressPlan, byCode: Map<string, RecordCourse>,
     block: null,
     extra: "none",
     mergedInto: null,
+    area: null,
   });
+
+  const isGenEdBlock = (label: string) => /^gen-ed/i.test(label) && plan.genEd.length > 0;
+  const matchable = plan.terms.flatMap((t) => t.entries.flatMap((e) => (isGenEdBlock(e.label) ? plan.genEd : [e])));
+  const hits = matchEntries(matchable, byCode);
+  let next = 0;
 
   plan.terms.forEach((term, ti) =>
     term.entries.forEach((e, ei) => {
       const id = `p${phase}-${ti}-${ei}`;
-      if (/^gen-ed/i.test(e.label) && plan.genEd.length) {
+      if (isGenEdBlock(e.label)) {
         plan.genEd.forEach((g, gi) => {
-          const hit = entryProgress(g.codes, byCode);
+          const hit = hits[next++];
+          const area = g.area ? areaRequirement(g.area, g.codes, hit) : null;
           reqs.push({
             ...base(`${id}-${gi}`, g.label),
             group: "gen_ed",
             codes: g.codes,
             credits: g.credits,
             title: g.codes.length === 1 ? (plan.knownTitles[g.codes[0]] ?? null) : null,
-            status: g.codes.length ? statusOf(hit) : "remaining",
+            status: area?.status ?? (g.codes.length ? statusOf(hit) : "remaining"),
             match: hit.match,
-            notes: g.codes.length ? [] : ["Any approved course in this area; an advisor can match courses you've taken."],
+            notes: area?.notes ?? (g.codes.length ? [] : ["Any approved course in this area; an advisor can match courses you've taken."]),
+            area: g.area,
           });
+        });
+        return;
+      }
+      const hit = hits[next++];
+      if (e.area) {
+        const area = areaRequirement(e.area, e.codes, hit);
+        reqs.push({
+          ...base(id, e.label),
+          group: "gen_ed",
+          codes: e.codes,
+          credits: e.credits,
+          status: area.status,
+          match: hit.match,
+          notes: area.notes,
+          area: e.area,
         });
         return;
       }
@@ -144,7 +182,6 @@ function pathRequirements(plan: ProgressPlan, byCode: Map<string, RecordCourse>,
         });
         return;
       }
-      const hit = entryProgress(e.codes, byCode);
       reqs.push({
         ...base(id, e.label),
         title: e.title,
@@ -212,6 +249,7 @@ function switchRequirements(
     block: null,
     extra: "none",
     mergedInto: null,
+    area: null,
   });
 
   sw.admission.prerequisites.forEach((p, i) => {
@@ -287,6 +325,8 @@ function carriedFrom(reqs: Requirement[], plan: ProgressPlan, record: StoredAcad
       const code = normalizeRecordCode(r.match.code);
       if (used.has(code)) continue;
       used.add(code);
+      // A grade too low to count is shown on the requirement as a retake, not as carried over.
+      if (r.status === "low_grade") continue;
       carried.push({
         course: r.match,
         title: plan.knownTitles[code] ?? r.title,
@@ -335,7 +375,9 @@ function absorbPrerequisites(own: Requirement[], prereqs: Requirement[], targetL
       absorbed = add(absorbed, p.credits);
       continue;
     }
-    const choice = own.find((r) => r.status === "remaining" && r.codes.length > 1 && r.codes.includes(code) && !r.notes.some((n) => n.startsWith("Choose ")));
+    const choice = own.find(
+      (r) => !r.area && r.status === "remaining" && r.codes.length > 1 && r.codes.includes(code) && !r.notes.some((n) => n.startsWith("Choose "))
+    );
     if (choice) {
       choice.notes.push(`Choose ${p.label}: it's also a ${targetLabel} prerequisite.`);
       choice.label = `${p.label} (for ${choice.label})`;
@@ -381,16 +423,24 @@ export function buildFinishPlan(plan: ProgressPlan, record: StoredAcademicRecord
   if (source.kind === "path") {
     const reqs = pathRequirements(plan, byCode, 0);
     fillBlocks(reqs, record, plan.knownCredits);
-    const other: FinishPlan["other"] = [];
+    const other: FinishPlan["other"] = plan.competencies.map((text) => ({ phase: 0, text }));
     const notes: string[] = [];
 
     if (source.fiu && plan.fiu) {
       let order = 2000;
       for (const prereq of plan.fiu.prerequisites) {
         for (const part of prereq.parts) {
-          const onPath = reqs.find((r) => r.codes.length && part.codes.some((c) => r.codes.includes(c)));
+          const onPath = reqs.find((r) => !r.area && r.codes.length && part.codes.some((c) => r.codes.includes(c)));
           if (onPath) {
             onPath.notes.push(`Also an FIU prerequisite (FIU ${prereq.fiu}).`);
+            continue;
+          }
+          // An open gen-ed area slot that lists this course can take it instead of adding credits.
+          const slot = reqs.find(
+            (r) => r.area && needsWork(r) && !r.notes.some((n) => n.startsWith("Pick ")) && part.codes.some((c) => r.codes.includes(c))
+          );
+          if (slot) {
+            slot.notes.unshift(`Pick ${part.label} here: it's also an FIU prerequisite (FIU ${prereq.fiu}).`);
             continue;
           }
           const hit = entryProgress(part.codes, byCode);
@@ -411,6 +461,7 @@ export function buildFinishPlan(plan: ProgressPlan, record: StoredAcademicRecord
             block: null,
             extra: "maybe",
             mergedInto: null,
+            area: null,
           });
         }
       }
@@ -471,7 +522,7 @@ export function buildFinishPlan(plan: ProgressPlan, record: StoredAcademicRecord
     cost = { low: cost.low + ownLeft.low * plan.ratePerCredit, high: cost.high + ownLeft.high * plan.ratePerCredit };
   }
 
-  const other: FinishPlan["other"] = [];
+  const other: FinishPlan["other"] = own.length ? plan.competencies.map((text) => ({ phase: 0, text })) : [];
   const entryPhase = afterAssociate ? 1 : 0;
   if (sw.admission.priorDegree) {
     other.push({ phase: entryPhase, text: `To enter: ${sw.admission.priorDegree}${fromOwnProgram ? " (finishing your A.S. covers this)" : ""}` });

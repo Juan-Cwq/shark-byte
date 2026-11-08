@@ -83,6 +83,10 @@ export function PathProgress({ record, plan }: { record: StoredAcademicRecord; p
                       {entry.title ? <span className="text-mdc-muted"> {entry.title}</span> : null}
                       {match && entry.codes.length > 1 ? (
                         <span className="text-xs text-mdc-muted"> (you took {match.code})</span>
+                      ) : entry.area && entry.codes.length > 1 ? (
+                        <span className="text-xs text-mdc-muted"> (gen-ed: pick 1 of {entry.codes.length} options)</span>
+                      ) : entry.area && entry.codes.length === 1 ? (
+                        <span className="text-xs text-mdc-muted"> ({entry.codes[0].replace(/^([A-Z]{3})/, "$1 ")} or another approved option)</span>
                       ) : null}
                     </span>
                   </li>

@@ -74,6 +74,48 @@ describe("buildFinishPlan: Cybersecurity A.S. then Applied AI B.S.", () => {
   });
 });
 
+describe("gen-ed areas from the shared MDC gen-ed data", () => {
+  it("fills an A.S. Humanities slot from the State Core list, 3 credits", () => {
+    const hum = plan.genEd.find((g) => g.label === "Humanities")!;
+    assert.deepEqual(hum.codes, ["ARH1000", "HUM1020", "LIT2000", "MUL1010", "PHI2010", "THE2000"]);
+    assert.deepEqual(hum.credits, { low: 3, high: 3 });
+    const fp = buildFinishPlan(plan, record([{ code: "PHI 2010", status: "completed", grade: "B" }]), { kind: "path", fiu: false });
+    assert.equal(fp.requirements.find((r) => r.label === "Humanities")?.status, "done");
+  });
+
+  it("flags a gen-ed course below C", () => {
+    const fp = buildFinishPlan(plan, record([{ code: "PHI 2010", status: "completed", grade: "D" }]), { kind: "path", fiu: false });
+    assert.equal(fp.requirements.find((r) => r.label === "Humanities")?.status, "low_grade");
+    assert.ok(!fp.carried.some((c) => c.course.code === "PHI 2010"));
+  });
+
+  it("uses the program's own gen-ed entry for a bare A.S. slot", () => {
+    const social = getProgressPlan("it_consultant").terms.flatMap((t) => t.entries).find((e) => e.label === "Social science")!;
+    assert.deepEqual(social.codes, ["AMH2010", "AMH2020", "POS2041"]);
+  });
+
+  it("needs a different course for each of two A.A. Humanities slots", () => {
+    const mech = getProgressPlan("mechanical_engineer");
+    const one = buildFinishPlan(mech, record([{ code: "PHI 2010", status: "completed", grade: "A" }]), { kind: "path", fiu: false });
+    assert.deepEqual(one.requirements.filter((r) => r.label === "Humanities").map((r) => r.status), ["done", "remaining"]);
+    const two = buildFinishPlan(
+      mech,
+      record([
+        { code: "PHI 2010", status: "completed", grade: "A" },
+        { code: "ARH 2050", status: "completed", grade: "A" },
+      ]),
+      { kind: "path", fiu: false }
+    );
+    assert.deepEqual(two.requirements.filter((r) => r.label === "Humanities").map((r) => r.status), ["done", "done"]);
+  });
+
+  it("lists civic literacy for every program and A.A. competencies only for the A.A.", () => {
+    assert.ok(plan.competencies.some((c) => c.startsWith("Civic literacy")));
+    assert.ok(!plan.competencies.some((c) => c.startsWith("Foreign language")));
+    assert.ok(getProgressPlan("architect").competencies.some((c) => c.startsWith("Foreign language")));
+  });
+});
+
 describe("scheduleTerms", () => {
   const fp = buildFinishPlan(plan, student, { kind: "path", fiu: false });
 

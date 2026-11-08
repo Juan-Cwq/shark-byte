@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { plannedDoneCodes, prerequisiteProgress, recordByCode, summarizeProgress } from "./progress";
+import { entryProgress, plannedDoneCodes, prerequisiteProgress, recordByCode, summarizeProgress } from "./progress";
 import type { FiuPrerequisite, ProgressPlan, RecordCourse, StoredAcademicRecord } from "./types";
 
 // Test-only fixture shaped like a ProgressPlan; real plans are built from mdc_pathways.json.
@@ -18,14 +18,15 @@ const PLAN: ProgressPlan = {
   knownPrerequisites: {},
   genEd: [],
   electives: null,
+  competencies: [],
   terms: [
     {
       term: "Term 1",
       entries: [
-        { label: "AAA 1000", codes: ["AAA1000"], title: null, credits: { low: 3, high: 3 }, prerequisites: [], corequisites: [] },
-        { label: "BBB 1000 or BBB 2000", codes: ["BBB1000", "BBB2000"], title: null, credits: { low: 3, high: 4 }, prerequisites: [], corequisites: [] },
-        { label: "CCC 1000", codes: ["CCC1000"], title: null, credits: null, prerequisites: [], corequisites: [] },
-        { label: "Electives (9)", codes: [], title: null, credits: null, prerequisites: [], corequisites: [] },
+        { label: "AAA 1000", codes: ["AAA1000"], title: null, credits: { low: 3, high: 3 }, prerequisites: [], corequisites: [], area: null },
+        { label: "BBB 1000 or BBB 2000", codes: ["BBB1000", "BBB2000"], title: null, credits: { low: 3, high: 4 }, prerequisites: [], corequisites: [], area: null },
+        { label: "CCC 1000", codes: ["CCC1000"], title: null, credits: null, prerequisites: [], corequisites: [], area: null },
+        { label: "Electives (9)", codes: [], title: null, credits: null, prerequisites: [], corequisites: [], area: null },
       ],
     },
   ],
@@ -93,6 +94,14 @@ describe("prerequisiteProgress", () => {
       ])
     );
     assert.equal(prerequisiteProgress(prereq, full), "in_progress");
+  });
+});
+
+describe("entryProgress with prefix patterns", () => {
+  it("matches any course with the prefix except lab units, and skips used courses", () => {
+    const byCode = recordByCode(record([{ code: "CHM 1045L", status: "completed" }, { code: "CHM 2210", status: "completed" }]));
+    assert.equal(entryProgress(["CHM*"], byCode).match?.code, "CHM 2210");
+    assert.equal(entryProgress(["CHM*"], byCode, new Set(["CHM2210"])).state, "remaining");
   });
 });
 

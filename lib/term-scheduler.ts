@@ -87,7 +87,8 @@ function toUnits(plan: FinishPlan, settings: ScheduleSettings): Unit[] {
       retake: r.status === "low_grade",
       unlocks: [],
       warnings: [],
-      codes: r.codes,
+      // An area slot's options aren't courses the student takes, so it can't satisfy another class's prerequisite.
+      codes: r.area ? [] : r.codes,
       order: r.order,
       prereqGroups: groups(r.prerequisites),
       coreqGroups: groups(r.corequisites),
@@ -115,7 +116,7 @@ function toUnits(plan: FinishPlan, settings: ScheduleSettings): Unit[] {
     units.push({
       ...base,
       key: r.id,
-      label: r.status === "low_grade" ? `Retake ${r.label}` : r.label,
+      label: r.status !== "low_grade" ? r.label : r.area ? `${r.label} (replaces ${r.match?.code})` : `Retake ${r.label}`,
       credits: r.credits,
     });
   }
@@ -124,7 +125,11 @@ function toUnits(plan: FinishPlan, settings: ScheduleSettings): Unit[] {
 
 export function scheduleTerms(plan: FinishPlan, record: StoredAcademicRecord | null, settings: ScheduleSettings): Schedule {
   const units = toUnits(plan, settings);
-  const lowGrade = new Set(plan.requirements.filter((r) => r.status === "low_grade").flatMap((r) => r.codes));
+  const lowGrade = new Set(
+    plan.requirements
+      .filter((r) => r.status === "low_grade")
+      .flatMap((r) => (r.area ? (r.match ? [normalizeRecordCode(r.match.code)] : []) : r.codes))
+  );
   const done = new Set(
     (record?.courses ?? [])
       .filter((c: RecordCourse) => c.status === "completed" || c.status === "in_progress")

@@ -79,6 +79,854 @@
       ]
     }
   ],
+  "general_education": {
+    "meta": {
+      "program": "Associate in Arts Degree",
+      "degree": "Associate in Arts",
+      "institution": "Miami Dade College",
+      "effective_term": "Fall 2024 (2247)",
+      "total_credits": 60,
+      "effective_term_note": "Effective term depends on your most recent term of admission to the College. Students admitted before Fall 2024 can view their effective term on the Academic Requirements page in MDConnect (mdconnect.mdc.edu).",
+      "source": "MDC Associate in Arts Pathway Guide, effective Fall 2024 (user-provided PDF)"
+    },
+    "credit_summary": {
+      "general_education": 36,
+      "state_core": 15,
+      "mdc_core": 21,
+      "pathway_electives": 24
+    },
+    "legend": {
+      "*": "Includes all courses within associated prefix",
+      "**": "General education courses require a grade of C or higher to satisfy the requirement",
+      "W": "Writing Intensive Course",
+      "C": "Computational Course"
+    },
+    "general_education": {
+      "communications": {
+        "credits": 6,
+        "min_grade": "C",
+        "state_core": [
+          {
+            "code": "ENC 1101",
+            "title": "English Composition 1",
+            "tags": [
+              "W"
+            ]
+          }
+        ],
+        "mdc_core": [
+          {
+            "code": "ENC 1102",
+            "title": "English Composition 2",
+            "tags": [
+              "W"
+            ]
+          }
+        ]
+      },
+      "mathematics": {
+        "credits": 6,
+        "min_grade": "C",
+        "rule": "Select 1 course from State Core and 1 course from MDC Core. Lab units are not allowed in this area.",
+        "state_core": [
+          {
+            "code": "MAC 1105",
+            "title": "College Algebra",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "MAC 2311",
+            "title": "Calculus and Analytical Geometry 1",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "MGF 1130",
+            "title": "Mathematical Thinking",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "STA 2023",
+            "title": "Statistical Methods",
+            "tags": [
+              "C"
+            ]
+          }
+        ],
+        "mdc_core": [
+          {
+            "code": "MAC*",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "MAD 1100",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "MAD 2104",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "MAP*",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "MAS 2103",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "MGF*",
+            "tags": [
+              "C"
+            ]
+          },
+          {
+            "code": "QMB 2100"
+          },
+          {
+            "code": "STA 2023",
+            "tags": [
+              "C"
+            ]
+          }
+        ]
+      },
+      "oral_communications": {
+        "credits": 3,
+        "min_grade": "C",
+        "rule": "Select 1 course.",
+        "options": [
+          {
+            "code": "ENC 2300",
+            "title": "Advanced Composition and Communications",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "LIT 2480",
+            "title": "Issues in Literature and Culture",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "SPC 1017",
+            "title": "Introduction to Communication",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "SPC 2608",
+            "title": "Introduction to Public Speaking",
+            "tags": [
+              "W"
+            ]
+          }
+        ]
+      },
+      "humanities": {
+        "credits": 6,
+        "min_grade": "C",
+        "rule": "Select 1 course from State Core and 1 course from MDC Core.",
+        "state_core": [
+          {
+            "code": "ARH 1000",
+            "title": "Art Appreciation"
+          },
+          {
+            "code": "HUM 1020",
+            "title": "Humanities"
+          },
+          {
+            "code": "LIT 2000",
+            "title": "Introduction to Literature",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "MUL 1010",
+            "title": "Music Appreciation"
+          },
+          {
+            "code": "PHI 2010",
+            "title": "Introduction to Philosophy",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "THE 2000",
+            "title": "Theatre Appreciation",
+            "tags": [
+              "W"
+            ]
+          }
+        ],
+        "mdc_core": [
+          {
+            "code": "ARC 2701",
+            "title": "History of Architecture 1"
+          },
+          {
+            "code": "ARC 2702",
+            "title": "History of Architecture 2",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "ARH 1000",
+            "title": "Art Appreciation"
+          },
+          {
+            "code": "ARH 2050",
+            "title": "Art History 1"
+          },
+          {
+            "code": "ARH 2051",
+            "title": "Art History 2",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "ARH 2740",
+            "title": "Cinema Appreciation",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "DAN 2100",
+            "title": "Dance Appreciation"
+          },
+          {
+            "code": "DAN 2130",
+            "title": "Dance History 1",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "HUM 1020",
+            "title": "Humanities"
+          },
+          {
+            "code": "IND 1100",
+            "title": "History of Interiors 1"
+          },
+          {
+            "code": "IND 1130",
+            "title": "History of Interiors 2",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "LIT 2000",
+            "title": "Introduction to Literature",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "LIT 2120",
+            "title": "A Survey of World Literature 2",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "MUH 2111",
+            "title": "Survey of Music History 1"
+          },
+          {
+            "code": "MUH 2112",
+            "title": "Survey of Music History 2",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "MUL 1010",
+            "title": "Music Appreciation"
+          },
+          {
+            "code": "MUL 2380",
+            "title": "Jazz and Popular Music in America",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "PHI 2010",
+            "title": "Introduction to Philosophy",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "PHI 2600",
+            "title": "Introduction to Ethics",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "THE 2000",
+            "title": "Theater Appreciation",
+            "tags": [
+              "W"
+            ]
+          }
+        ]
+      },
+      "social_sciences": {
+        "credits": 6,
+        "min_grade": "C",
+        "rule": "Select 1 course from State Core and 1 course from MDC Core. To meet the Civic Literacy Competency Requirement, one selection should be AMH 2010, AMH 2020 or POS 2041.",
+        "state_core": [
+          {
+            "code": "AMH 2010",
+            "title": "History of the US to 1877"
+          },
+          {
+            "code": "AMH 2020",
+            "title": "History of the US Since 1877"
+          },
+          {
+            "code": "ANT 2000",
+            "title": "Introduction to Anthropology"
+          },
+          {
+            "code": "ECO 2013",
+            "title": "Principles of Economics (Macro)",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "POS 2041",
+            "title": "American Federal Government"
+          },
+          {
+            "code": "PSY 2012",
+            "title": "Introduction to Psychology"
+          }
+        ],
+        "mdc_core": [
+          {
+            "code": "AMH 2010",
+            "title": "History of the US to 1877"
+          },
+          {
+            "code": "AMH 2020",
+            "title": "History of the US Since 1877"
+          },
+          {
+            "code": "ANT 2000",
+            "title": "Introduction to Anthropology"
+          },
+          {
+            "code": "ANT 2410",
+            "title": "Introduction to Cultural Anthropology"
+          },
+          {
+            "code": "CLP 1006",
+            "title": "Psychology of Personal Effectiveness"
+          },
+          {
+            "code": "DEP 2000",
+            "title": "Human Growth and Development"
+          },
+          {
+            "code": "ECO 2013",
+            "title": "Principles of Economics (Macro)",
+            "tags": [
+              "W"
+            ]
+          },
+          {
+            "code": "ISS 1120",
+            "title": "The Social Environment"
+          },
+          {
+            "code": "ISS 1161",
+            "title": "The Individual in Society"
+          },
+          {
+            "code": "POS 2041",
+            "title": "American Federal Government"
+          },
+          {
+            "code": "PSY 2012",
+            "title": "Introduction to Psychology"
+          },
+          {
+            "code": "SYG 2000",
+            "title": "Introduction to Sociology"
+          },
+          {
+            "code": "WOH 2012",
+            "title": "History of World Civilization to 1789"
+          },
+          {
+            "code": "WOH 2022",
+            "title": "History of World Civilization From 1789"
+          }
+        ]
+      },
+      "natural_sciences": {
+        "credits": 6,
+        "min_grade": "C",
+        "rule": "Select 1 course from State Core and 1 course from MDC Core. Lab units are not allowed in this area.",
+        "state_core": [
+          {
+            "code": "AST 1002",
+            "title": "Descriptive Astronomy"
+          },
+          {
+            "code": "BSC 1005",
+            "title": "General Education Biology"
+          },
+          {
+            "code": "BSC 2010",
+            "title": "Principles of Biology"
+          },
+          {
+            "code": "BSC 2085",
+            "title": "Human Anatomy and Physiology I"
+          },
+          {
+            "code": "CHM 1020",
+            "title": "General Education Chemistry"
+          },
+          {
+            "code": "CHM 1045",
+            "title": "General Chemistry & Qualitative Analysis"
+          },
+          {
+            "code": "ESC 1000",
+            "title": "General Education Earth Science"
+          },
+          {
+            "code": "EVR 1001",
+            "title": "Introduction to Environmental Science"
+          },
+          {
+            "code": "GLY 1010",
+            "title": "Physical Geology"
+          },
+          {
+            "code": "OCE 1001",
+            "title": "Introduction to Oceanography"
+          },
+          {
+            "code": "PHY 1020",
+            "title": "General Education Physics"
+          },
+          {
+            "code": "PHY 2048",
+            "title": "Physics with Calculus 1"
+          },
+          {
+            "code": "PHY 2053",
+            "title": "Physics (without Calculus) 1"
+          }
+        ],
+        "mdc_core": [
+          {
+            "code": "AST 1002",
+            "title": "Descriptive Astronomy"
+          },
+          {
+            "code": "BOT 1010",
+            "title": "Botany"
+          },
+          {
+            "code": "BSC 1005",
+            "title": "General Education Biology"
+          },
+          {
+            "code": "BSC 1030",
+            "title": "Social Issues in Biology"
+          },
+          {
+            "code": "BSC 1050",
+            "title": "Biology & Environment"
+          },
+          {
+            "code": "BSC 1084",
+            "title": "Functional Human Anatomy"
+          },
+          {
+            "code": "BSC 2010",
+            "title": "Principles of Biology"
+          },
+          {
+            "code": "BSC 2020",
+            "title": "Human Biology: Fundamentals of Anatomy/Physiology"
+          },
+          {
+            "code": "BSC 2085",
+            "title": "Anatomy and Physiology I"
+          },
+          {
+            "code": "BSC 2250",
+            "title": "Natural History of South Florida"
+          },
+          {
+            "code": "ESC 1000",
+            "title": "General Education Earth Science"
+          },
+          {
+            "code": "EVR 1001",
+            "title": "Introduction to Environmental Science"
+          },
+          {
+            "code": "GLY 1010",
+            "title": "Physical Geology"
+          },
+          {
+            "code": "HUN 1201",
+            "title": "Essentials of Human Nutrition"
+          },
+          {
+            "code": "OCB 1010",
+            "title": "Introduction to Marine Biology"
+          },
+          {
+            "code": "OCE 1001",
+            "title": "Introduction to Oceanography"
+          },
+          {
+            "code": "PCB 2033",
+            "title": "Introduction to Ecology"
+          },
+          {
+            "code": "PSC 1121",
+            "title": "General Education Physical Science"
+          },
+          {
+            "code": "PSC 1515",
+            "title": "Energy in the Natural Environment"
+          },
+          {
+            "code": "ZOO 1010",
+            "title": "Zoology"
+          },
+          {
+            "code": "CHM*"
+          },
+          {
+            "code": "GLY*"
+          },
+          {
+            "code": "MET*"
+          },
+          {
+            "code": "OCE*"
+          },
+          {
+            "code": "PHY*"
+          }
+        ]
+      },
+      "general_education_elective": {
+        "credits": 3,
+        "rule": "Select one course from any of the following options.",
+        "options": [
+          "AFH 2000",
+          "AMH*",
+          "AML*",
+          "ANT*",
+          "ARC 2701",
+          "ARC 2702",
+          "ARH 1000",
+          "ARH 2050",
+          "ARH 2051",
+          "ARH 2402",
+          "ARH 2740",
+          "ARH 2857",
+          "ASL*",
+          "AST*",
+          "BOT 1*",
+          "BOT 2*",
+          "BSC 1*",
+          "BSC 2*",
+          "CGS 1060C",
+          "CHI*",
+          "CHM 1*",
+          "CHM 2*",
+          "CLP*",
+          "CPO*",
+          "CRW*",
+          "DAN 2100",
+          "DAN 2130",
+          "DAN 2131",
+          "DEP*",
+          "EAB 1001",
+          "ECO*",
+          "EDF 1005",
+          "EDF 2144",
+          "EEX 2000",
+          "ENC*",
+          "ENG*",
+          "ENL*",
+          "ESC 1000",
+          "EUH*",
+          "EVR*",
+          "FRE*",
+          "FRW*",
+          "GEO 2420",
+          "GER*",
+          "GLY 1*",
+          "HLP*",
+          "HSC 2400",
+          "HUM*",
+          "HUN*",
+          "IND 1100",
+          "IND 1130",
+          "INP 2390",
+          "INR*",
+          "ISS*",
+          "ITA*",
+          "JPN*",
+          "LAH*",
+          "LIT*",
+          "MAC*",
+          "MAD 1100",
+          "MAD 2104",
+          "MAP*",
+          "MAS 2103",
+          "MCB 2*",
+          "MET*",
+          "MGF*",
+          "MUH*",
+          "MUL*",
+          "OCB*",
+          "OCE 1001",
+          "PCB 2*",
+          "PHI*",
+          "PHM 2300",
+          "PHY 1*",
+          "PHY 2*",
+          "POR*",
+          "POS*",
+          "POT 2014",
+          "PSC*",
+          "PSB*",
+          "PSY*",
+          "QMB 2100",
+          "REL*",
+          "RUS*",
+          "SOP*",
+          "SPC*",
+          "SPN*",
+          "SPW*",
+          "STA 2023",
+          "SYG*",
+          "THE 2000",
+          "WOH*"
+        ],
+        "excluded": [
+          "ACG 2021",
+          "ACG 2021L",
+          "AMH 2070",
+          "AMH 2079",
+          "ARC 2765",
+          "ARC 2767",
+          "ASL 1906",
+          "BSC 2943L",
+          "CLP 2431",
+          "CLP 2470",
+          "COP 1332",
+          "COP 1334",
+          "COP 2270",
+          "DEP 2402",
+          "DEP 2481",
+          "ECO 2071",
+          "ENC 1112",
+          "ENC 1113",
+          "EUH 2068",
+          "EVR 1001L",
+          "FRW 2011",
+          "GLY 1100L",
+          "HCW 2020",
+          "HUN 1012",
+          "LAH 2023",
+          "LAH 2025",
+          "LIT 2174",
+          "PCB 2061",
+          "POS 2293",
+          "PSC 1191L",
+          "SPC 2940",
+          "SPT 2842",
+          "SYG 2010",
+          "SYG 2430"
+        ]
+      }
+    },
+    "pathway_electives": {
+      "credits": 24,
+      "rule": "Select electives by pathway and/or specialization; consult an advisor and your transfer institution. General education courses not used to meet gen-ed requirements may count here."
+    },
+    "competencies": {
+      "computer": {
+        "attempt_by_credit": 16,
+        "satisfy_by_credit": 31,
+        "options": [
+          "CGS 1060C",
+          "An equivalent college course",
+          "The College's approved computer competency test"
+        ]
+      },
+      "foreign_language": {
+        "options": [
+          "Foreign Language Competency (FLC) standardized examinations"
+        ],
+        "courses": [
+          "ASL 1150C",
+          "CHI 1121",
+          "FRE 1121",
+          "GER 1121",
+          "ITA 1121",
+          "JPN 1121",
+          "POR 1121",
+          "RUS 1121",
+          "SPN 1121"
+        ]
+      },
+      "civic_literacy": {
+        "requirement": "Complete a civic literacy course (AMH 2010, AMH 2020 or POS 2041) AND pass the Florida Civic Literacy Examination (FCLE).",
+        "applies_to": "AA or baccalaureate students entering an FCS or SUS institution in 2021-2022 or later; AS students entering in 2022-2023 or later.",
+        "exception": "First-time-in-college students who entered between Fall 2018 and Summer 2021 may pass a course or an approved assessment."
+      }
+    },
+    "first_year_experience": {
+      "default": {
+        "code": "SLS 1106",
+        "title": "First Year Experience Seminar"
+      },
+      "alternatives_by_advisor": [
+        {
+          "code": "IDH 1001",
+          "title": "Honors Leadership Seminar 1"
+        },
+        {
+          "code": "IDH 1002",
+          "title": "Honors Leadership Seminar 2"
+        },
+        {
+          "code": "IDH 2003",
+          "title": "Honors Leadership Seminar 3"
+        },
+        {
+          "code": "IDH 2004",
+          "title": "Honors Leadership Seminar 4"
+        },
+        {
+          "code": "SLS 1125",
+          "title": "Student Support Seminar"
+        },
+        {
+          "code": "SLS 1502",
+          "title": "College Study Skills"
+        },
+        {
+          "code": "SLS 1505",
+          "title": "College Survival Skills"
+        },
+        {
+          "code": "SLS 1510",
+          "title": "Preparing for Student Success"
+        }
+      ]
+    },
+    "gordon_rule": {
+      "W": "Six semester hours of English coursework and six semester hours of additional coursework requiring college-level writing through multiple assignments.",
+      "C": "Six semester hours of mathematics coursework at the level of college algebra or higher.",
+      "reference": "State Rule 6A-10.030"
+    },
+    "general_education_standards": {
+      "communication": "Courses must afford students the ability to communicate effectively, including writing clearly and public speaking.",
+      "humanities": "Courses must afford students the ability to think critically through subjects concerned with human culture, especially literature, history, art, music, and philosophy, including selections from the Western canon.",
+      "mathematics": "Courses must afford students mastery of foundational mathematical and computation models and methods by applying them in problem solving.",
+      "natural_science": "Courses must afford students the ability to critically examine and evaluate the principles of the scientific method, model construction, and use the scientific method to explain natural experiences and phenomena.",
+      "social_science": "Courses must afford students an understanding of basic social and behavioral science concepts and principles used in analyzing behavior and past and present social, political, and economic issues.",
+      "reference": "Rule 6A-14.0303"
+    },
+    "advisement_offices": [
+      {
+        "campus": "Hialeah",
+        "room": "2101",
+        "phone": "305-237-8794"
+      },
+      {
+        "campus": "Homestead",
+        "room": "C210",
+        "phone": "305-237-5046"
+      },
+      {
+        "campus": "Padrón",
+        "room": "1101",
+        "phone": "305-237-6133"
+      },
+      {
+        "campus": "Kendall",
+        "room": "R243",
+        "phone": "305-237-2125"
+      },
+      {
+        "campus": "Medical",
+        "room": "1223",
+        "phone": "305-237-4141"
+      },
+      {
+        "campus": "North",
+        "room": "1104",
+        "phone": "305-237-1425"
+      },
+      {
+        "campus": "Wolfson",
+        "room": "2301",
+        "phone": "305-237-3077"
+      },
+      {
+        "campus": "West",
+        "room": "2114",
+        "phone": "305-237-8947"
+      },
+      {
+        "campus": "Meek Center",
+        "room": "1102-02",
+        "phone": "305-237-1900"
+      }
+    ],
+    "contact": {
+      "call_center": "305-237-8888",
+      "email": "mdcinfo@mdc.edu"
+    },
+    "official_requirements_note": "Official graduation requirements are on the Academic Requirements page in MDConnect (mdconnect.mdc.edu)."
+  },
   "course_credits": {
     "compiled": "2026-11-07",
     "notes": [
