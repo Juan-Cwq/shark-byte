@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AlertLabelBadge } from "@/components/AlertLabelBadge";
 import { OfficialAlertList } from "@/components/OfficialAlertList";
+import { SignInLink } from "@/components/SignInLink";
 import { loadCachedAlerts, saveCachedAlerts } from "@/lib/alerts-cache";
 import { AlertsSnapshot, type VerifyResult } from "@/lib/types";
 import { verifyAlert } from "@/lib/verify";
@@ -32,6 +33,7 @@ export function AlertChecker() {
   const [result, setResult] = useState<VerifyResult | null>(null);
   const [explanation, setExplanation] = useState<string | null>(null);
   const [explaining, setExplaining] = useState(false);
+  const [explainNeedsSignIn, setExplainNeedsSignIn] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -72,6 +74,7 @@ export function AlertChecker() {
     const verdict = verifyAlert(text, snapshot?.alerts ?? null);
     setResult(verdict);
     setExplanation(null);
+    setExplainNeedsSignIn(false);
     if (!navigator.onLine) return;
 
     setExplaining(true);
@@ -81,6 +84,10 @@ export function AlertChecker() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(verdict),
       });
+      if (res.status === 401) {
+        setExplainNeedsSignIn(true);
+        return;
+      }
       const data = (await res.json()) as { explanation?: string | null };
       if (res.ok && typeof data.explanation === "string") setExplanation(data.explanation);
     } catch {
@@ -146,6 +153,11 @@ export function AlertChecker() {
               <p className="text-mdc-ink">{explanation}</p>
               <p className="mt-1 text-xs text-mdc-muted">AI summary of the checks below. The label comes from the rules, not the AI.</p>
             </div>
+          ) : explainNeedsSignIn ? (
+            <p className="text-sm text-mdc-muted">
+              <SignInLink className="font-semibold text-mdc-blue underline underline-offset-2">Sign in</SignInLink> for a
+              plain-language AI explanation. The label and checks below work without an account.
+            </p>
           ) : null}
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-wider text-mdc-navy">Why</h3>

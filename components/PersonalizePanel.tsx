@@ -3,6 +3,7 @@
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import type { CareerId, PersonalizedPlan, PersonalizeResponse } from "@/lib/types";
 import { CourseChip } from "@/components/CourseChip";
+import { SignInLink } from "@/components/SignInLink";
 import { onPlanRemaining, useAcademicRecord, type PlanRemainingRequest } from "@/lib/academic-record";
 import { plannedDoneCodes } from "@/lib/progress";
 import { normalizeRecordCode } from "@/lib/record-parse";
@@ -61,6 +62,7 @@ export function PersonalizePanel({
   const [loading, setLoading] = useState(false);
   const [agentStep, setAgentStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [needsSignIn, setNeedsSignIn] = useState(false);
   const [result, setResult] = useState<(PersonalizeResponse & { plan: PersonalizedPlan }) | null>(null);
 
   function toggleCourse(code: string) {
@@ -69,6 +71,7 @@ export function PersonalizePanel({
 
   async function run({ status, completedCourseCodes, goals }: RunParams) {
     setError(null);
+    setNeedsSignIn(false);
     setLoading(true);
     setAgentStep(0);
     const timer = setInterval(() => {
@@ -88,6 +91,10 @@ export function PersonalizePanel({
           goals: goals.trim() || undefined,
         }),
       });
+      if (res.status === 401) {
+        setNeedsSignIn(true);
+        return;
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Personalization failed");
       setResult(data);
@@ -216,6 +223,12 @@ export function PersonalizePanel({
       ) : null}
 
       {error ? <p className="mt-4 text-sm text-mdc-blue">{error}</p> : null}
+      {needsSignIn ? (
+        <p className="mt-4 text-sm text-mdc-ink">
+          <SignInLink className="font-semibold text-mdc-blue underline underline-offset-2">Sign in</SignInLink> to get an
+          AI-personalized plan. Everything else on this page works without an account.
+        </p>
+      ) : null}
 
       {result ? (
         <div className="mt-8 border border-mdc-blue/50 bg-white/80 p-5">

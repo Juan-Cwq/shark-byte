@@ -11,7 +11,7 @@ export default function AlertsPage() {
         <h1 className="mt-4 font-display text-3xl font-semibold text-mdc-navy sm:text-4xl">Storm Alert Checker</h1>
         <p className="mt-2 max-w-2xl text-mdc-muted">
           Got a hurricane alert, text or post? Paste it below. We compare it with live National Weather Service alerts
-          and check links for scams. Connect to the internet to check current alerts.
+          and check links for scams. Works offline with the last saved alerts.
         </p>
         <div className="mt-8">
           <AlertChecker />

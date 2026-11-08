@@ -1,11 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getAuth0Client } from "@/lib/auth0";
+import { AuthLink } from "@/components/AuthLink";
 
-export async function SiteHeader() {
-  const auth0 = getAuth0Client();
-  const session = auth0 ? await auth0.getSession() : null;
-
+export function SiteHeader() {
   return (
     <header className="z-40 bg-white">
       <div className="bg-mdc-navy">
@@ -34,11 +31,7 @@ export async function SiteHeader() {
             </span>
           </Link>
           <div className="flex shrink-0 items-center gap-4">
-            {session && (
-              <a href="/auth/logout" className="text-sm font-semibold text-mdc-blue hover:text-mdc-blue-bright">
-                Sign out
-              </a>
-            )}
+            <AuthLink />
             <span className="text-sm font-medium text-mdc-muted" aria-label="Language: English">
               EN
             </span>

@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Cone of Uncertainty — Miami Dade College",
     short_name: "Cone",
-    description: "MDC career pathways, study support, and storm alerts.",
+    description: "MDC career pathways, study buddy, and a storm alert checker that works offline.",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

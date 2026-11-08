@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { LearnerMemoryView } from "@/components/LearnerMemoryView";
+import { SignInLink } from "@/components/SignInLink";
 import { SavedStudyList } from "@/components/SavedStudyList";
 import { TutorMessage } from "@/components/TutorMessage";
 import {
@@ -44,6 +45,7 @@ export function StudyBuddy({
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [needsSignIn, setNeedsSignIn] = useState(false);
   const [profile, setProfile] = useState<StoredLearnerProfile | null>(null);
   const [artifacts, setArtifacts] = useState<StudyArtifact[]>([]);
   const [savedIndexes, setSavedIndexes] = useState<Set<number>>(new Set());
@@ -90,6 +92,7 @@ export function StudyBuddy({
     const trimmed = text.trim();
     if (!trimmed || loading) return;
     setError(null);
+    setNeedsSignIn(false);
     setLoading(true);
     setTab("chat");
     const nextHistory = [...history, { role: "user" as const, content: trimmed }];
@@ -113,6 +116,12 @@ export function StudyBuddy({
           questionsAsked: memory?.questionsAsked,
         }),
       });
+      if (res.status === 401) {
+        setHistory(history);
+        setQuestion(trimmed);
+        setNeedsSignIn(true);
+        return;
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Tutor unavailable");
       const withReply: ChatMessage[] = [...nextHistory, { role: "assistant", content: data.reply }];
@@ -233,6 +242,12 @@ export function StudyBuddy({
                 )}
                 {loading ? <p className="animate-pulse text-sm text-mdc-blue">Thinking…</p> : null}
                 {error ? <p className="text-sm text-mdc-blue">{error}</p> : null}
+                {needsSignIn ? (
+                  <p className="text-sm text-mdc-ink">
+                    <SignInLink className="font-semibold text-mdc-blue underline underline-offset-2">Sign in</SignInLink>{" "}
+                    to chat with your Study Buddy. Your saved notes stay on this device.
+                  </p>
+                ) : null}
               </div>
               <form
                 className="flex gap-2 border-t border-mdc-line p-3"
