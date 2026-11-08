@@ -12,6 +12,7 @@ export interface CompareProgram {
   plan: SwitchPlan;
   viaCareerId: CareerId;
   viaTitle: string;
+  switchIndex: number | null; // position in this page's switches; null if planned from another career's page
 }
 
 interface Row {
@@ -25,6 +26,7 @@ interface Row {
   remaining: CreditRange;
   cost: CreditRange;
   unpriced: boolean;
+  onPlan: (() => void) | null;
 }
 
 const range = (r: CreditRange, fmt: (n: number) => string | number = (n) => n) =>
@@ -35,13 +37,19 @@ export function CareerCompare({
   programs,
   record,
   currentId,
+  homeId,
   knownCredits,
+  onPlanCareer,
+  onPlanSwitch,
 }: {
   plans: ProgressPlan[];
   programs: CompareProgram[];
   record: StoredAcademicRecord;
   currentId: CareerId;
+  homeId: CareerId; // the student's chosen path, or this page if none
   knownCredits: Record<string, CreditRange>;
+  onPlanCareer: (id: CareerId) => void;
+  onPlanSwitch: (index: number) => void;
 }) {
   const myPath = useMyPath();
 
@@ -58,10 +66,11 @@ export function CareerCompare({
       remaining: s.remaining,
       cost: s.cost,
       unpriced: s.noCreditData.length > 0,
+      onPlan: plan.careerId === homeId ? null : () => onPlanCareer(plan.careerId),
     };
   });
 
-  const programRows: Row[] = programs.map(({ plan, viaCareerId, viaTitle }) => {
+  const programRows: Row[] = programs.map(({ plan, viaCareerId, viaTitle, switchIndex }) => {
     const s = summarizeSwitch(plan, record, knownCredits);
     const states = [...s.entries.flat().filter((e) => e.state !== "slot"), ...s.prereqs];
     return {
@@ -75,6 +84,7 @@ export function CareerCompare({
       remaining: s.remaining,
       cost: { low: Math.round(s.cost.low), high: Math.round(s.cost.high) },
       unpriced: s.unknownCredits.length > 0,
+      onPlan: switchIndex == null ? null : () => onPlanSwitch(switchIndex),
     };
   });
 
@@ -112,6 +122,15 @@ export function CareerCompare({
                     <span className="ml-2 inline-block whitespace-nowrap rounded-full bg-mdc-blue px-2 py-0.5 text-xs font-semibold text-white">★ Your path</span>
                   ) : null}
                   <p className="text-xs text-mdc-muted">{row.detail}</p>
+                  {row.onPlan ? (
+                    <button
+                      type="button"
+                      onClick={row.onPlan}
+                      className="mt-1 text-xs font-semibold text-mdc-blue hover:underline"
+                    >
+                      Plan a transfer here →
+                    </button>
+                  ) : null}
                 </td>
                 <td className="py-2 pr-4 text-mdc-ink">
                   {row.carried} of {row.required}

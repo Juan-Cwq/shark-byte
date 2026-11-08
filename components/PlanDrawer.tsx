@@ -37,12 +37,14 @@ export function PlanDrawer({
   plan,
   record,
   source,
+  transferFrom,
   onClose,
   onAskAi,
 }: {
   plan: ProgressPlan;
   record: StoredAcademicRecord;
   source: PlanSource;
+  transferFrom: string | null;
   onClose: () => void;
   onAskAi: (() => void) | null;
 }) {
@@ -50,7 +52,7 @@ export function PlanDrawer({
   const fp = buildFinishPlan(plan, record, source);
   const left = fp.requirements.filter(needsWork);
   const inProgress = fp.carried.filter((c) => c.course.status === "in_progress");
-  const moving = source.kind === "switch" || source.fiu;
+  const moving = source.kind === "switch" || source.fiu || transferFrom != null;
 
   useEffect(() => {
     closeRef.current?.focus();
@@ -75,7 +77,9 @@ export function PlanDrawer({
       >
         <header className="flex items-start justify-between gap-4 border-b border-mdc-line bg-white px-5 py-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-mdc-blue">Your plan to finish</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-mdc-blue">
+              {transferFrom ? `Transfer plan · from your ${transferFrom}` : "Your plan to finish"}
+            </p>
             <h2 id="plan-drawer-title" className="font-display text-xl font-bold text-mdc-ink">
               {fp.title}
             </h2>
