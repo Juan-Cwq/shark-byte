@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CourseChip } from "@/components/CourseChip";
+import { MyPathButton } from "@/components/MyPathButton";
 import { PersonalizePanel } from "@/components/PersonalizePanel";
 import { ProgressTracker } from "@/components/ProgressTracker";
 import { StudyBuddy } from "@/components/StudyBuddy";
 import { UnverifiedBadge } from "@/components/UnverifiedBadge";
 import { formatPay, formatUsd } from "@/lib/format";
 import { CAREER_IDS, type CareerId } from "@/lib/types";
-import { extractCourseCodes, getCareer, getCourseObjects, lookupCourse } from "@/lib/pathways";
+import { extractCourseCodes, getCareer, getCourseObjects, getProgram, lookupCourse } from "@/lib/pathways";
 import { getAllProgressPlans } from "@/lib/progress-plan";
 
 export function generateStaticParams() {
@@ -28,6 +29,10 @@ export default async function CareerPage({ params }: { params: Promise<{ id: str
     const short = hit?.title ? ` (${hit.title.split(" ").slice(0, 4).join(" ")})` : "";
     return { code, label: `Quiz me on ${code}${short} basics` };
   });
+
+  const switchPrograms = [...new Set(ep.program_switches.map((sw) => sw.to))]
+    .map(getProgram)
+    .filter((p) => p != null);
 
   const allPlans = getAllProgressPlans();
   const progressPlan = allPlans.find((p) => p.careerId === careerId)!;
@@ -59,6 +64,7 @@ export default async function CareerPage({ params }: { params: Promise<{ id: str
           <h1 className="mt-2 font-display text-4xl font-semibold text-mdc-ink sm:text-5xl">{career.title}</h1>
           <p className="mt-4 max-w-3xl text-mdc-muted">{career.summary}</p>
           <p className="mt-4 font-semibold text-mdc-blue">{formatPay(explore.median_pay_usd, explore.pay_year)}</p>
+          <MyPathButton careerId={careerId} title={career.title} />
         </header>
 
         <nav className="sticky top-0 z-30 -mx-5 mt-0 flex gap-1 overflow-x-auto border-b border-mdc-line bg-white px-5 py-3 shadow-sm">
@@ -276,6 +282,29 @@ export default async function CareerPage({ params }: { params: Promise<{ id: str
         <section id="routes" className="scroll-mt-20 py-12">
           <h2 className="font-display text-2xl font-bold text-mdc-ink">Other Routes</h2>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            {switchPrograms.map((p) => (
+              <li key={p.code} className="border border-mdc-blue/40 bg-white/70 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-mdc-blue">
+                  {p.degree} · MDC program you can switch into
+                </p>
+                <h3 className="mt-1 font-display text-lg font-bold text-mdc-ink">{p.name}</h3>
+                <p className="mt-1 text-xs text-mdc-muted">
+                  Code {p.code} · {p.credits} credits{p.effective_term ? ` · effective ${p.effective_term}` : ""}
+                </p>
+                <p className="mt-3 line-clamp-3 text-sm text-mdc-muted">{p.description}</p>
+                {p.career?.occupations.length ? (
+                  <p className="mt-2 text-sm text-mdc-muted">
+                    Related jobs (BLS): {p.career.occupations.map((o) => o.title).join(", ")}
+                  </p>
+                ) : null}
+                {p.admission.prior_degree ? (
+                  <p className="mt-2 text-xs text-mdc-muted">Needs first: {p.admission.prior_degree}</p>
+                ) : null}
+                <a href="#progress" className="mt-3 inline-block text-sm font-semibold text-mdc-blue hover:underline">
+                  See how your courses carry over →
+                </a>
+              </li>
+            ))}
             {career.alternative_pathways.map((alt) => (
               <li key={alt.code} className="border border-mdc-line bg-white/50 p-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-mdc-blue">{alt.degree}</p>

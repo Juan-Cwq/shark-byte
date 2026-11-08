@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useState } from "react";
-import { CareerCompare } from "@/components/CareerCompare";
+import Link from "next/link";
+import { useCallback, useMemo, useState } from "react";
+import { CareerCompare, type CompareProgram } from "@/components/CareerCompare";
 import { FiuTransferCheck } from "@/components/FiuTransferCheck";
 import { PathProgress } from "@/components/PathProgress";
 import { PlanDrawer } from "@/components/PlanDrawer";
@@ -9,6 +10,7 @@ import { ProgramSwitches } from "@/components/ProgramSwitches";
 import { RecordImport } from "@/components/RecordImport";
 import { clearAcademicRecord, requestPlanRemaining, useAcademicRecord } from "@/lib/academic-record";
 import type { PlanSource } from "@/lib/finish-plan";
+import { useMyPath } from "@/lib/my-path";
 import type { ProgressPlan } from "@/lib/types";
 
 type View = "path" | "compare" | "switch";
@@ -21,6 +23,20 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
   const [switchIndex, setSwitchIndex] = useState(0);
   const [drawer, setDrawer] = useState<PlanSource | null>(null);
   const closeDrawer = useCallback(() => setDrawer(null), []);
+  const myPath = useMyPath();
+  const myPathPlan = myPath && myPath !== plan.careerId ? allPlans.find((p) => p.careerId === myPath) : undefined;
+
+  // Programs a student starts from scratch (A.S.) compare like careers; bachelor's switches need a prior degree.
+  const comparePrograms = useMemo(() => {
+    const byCode = new Map<string, CompareProgram>();
+    for (const p of allPlans) {
+      for (const sw of p.switches) {
+        if (sw.target.basis !== "full_program" || byCode.has(sw.target.code)) continue;
+        byCode.set(sw.target.code, { plan: sw, viaCareerId: p.careerId, viaTitle: p.careerTitle });
+      }
+    }
+    return [...byCode.values()];
+  }, [allPlans]);
 
   const onSwitch = view === "switch" && plan.switches.length > 0;
   const openPlan = () =>
@@ -42,6 +58,15 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
   return (
     <section id="progress" className="scroll-mt-20 my-10 border border-mdc-blue/40 bg-white/70 p-5 sm:p-6">
       <h2 className="font-display text-xl font-bold text-mdc-ink">Track my progress</h2>
+      {myPathPlan ? (
+        <p className="mt-2 text-sm text-mdc-muted">
+          Your path is{" "}
+          <Link href={`/career/${myPathPlan.careerId}#progress`} className="font-semibold text-mdc-blue hover:underline">
+            {myPathPlan.careerTitle}
+          </Link>
+          . This page shows how your courses would fit {plan.careerTitle} instead.
+        </p>
+      ) : null}
 
       {editing ? (
         <RecordImport initial={record?.courses ?? null} onDone={() => setEditing(false)} />
@@ -78,7 +103,13 @@ export function ProgressTracker({ plan, allPlans }: { plan: ProgressPlan; allPla
               onSelect={setSwitchIndex}
             />
           ) : (
-            <CareerCompare plans={allPlans} record={record} currentId={plan.careerId} />
+            <CareerCompare
+              plans={allPlans}
+              programs={comparePrograms}
+              record={record}
+              currentId={plan.careerId}
+              knownCredits={plan.knownCredits}
+            />
           )}
 
           <div className="mt-6 flex flex-wrap items-center gap-4">
