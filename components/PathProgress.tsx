@@ -1,10 +1,9 @@
 "use client";
 
-import { recordByCode } from "@/lib/academic-record";
+import { formatUsd } from "@/lib/format";
+import { summarizeProgress, type EntryState } from "@/lib/progress";
 import { normalizeRecordCode } from "@/lib/record-parse";
-import type { PathProgressTerm, RecordCourse, StoredAcademicRecord } from "@/lib/types";
-
-type EntryState = "done" | "in_progress" | "remaining" | "slot";
+import type { ProgressPlan, StoredAcademicRecord } from "@/lib/types";
 
 const ICON: Record<EntryState, { mark: string; className: string; label: string }> = {
   done: { mark: "✓", className: "text-emerald-700", label: "Done" },
@@ -13,44 +12,19 @@ const ICON: Record<EntryState, { mark: string; className: string; label: string 
   slot: { mark: "?", className: "text-mdc-blue", label: "Advisor matches your courses to this" },
 };
 
-export function PathProgress({
-  record,
-  terms,
-  programLabel,
-}: {
-  record: StoredAcademicRecord;
-  terms: PathProgressTerm[];
-  programLabel: string;
-}) {
-  const byCode = recordByCode(record);
+function rangeText(low: number, high: number, format: (n: number) => string = String) {
+  return low === high ? format(low) : `${format(low)}–${format(high)}`;
+}
 
-  // Compound entries ("CTS 1134 or CTS 1650", "Social science (AMH 2010/POS 2041)") need any one code.
-  function entryState(codes: string[]): { state: EntryState; match?: RecordCourse } {
-    if (codes.length === 0) return { state: "slot" };
-    const hits = codes.map((c) => byCode.get(c)).filter((c): c is RecordCourse => c != null);
-    const done = hits.find((c) => c.status === "completed");
-    if (done) return { state: "done", match: done };
-    const going = hits.find((c) => c.status === "in_progress");
-    if (going) return { state: "in_progress", match: going };
-    return { state: "remaining" };
-  }
-
-  const states = terms.flatMap((t) => t.entries.map((e) => entryState(e.codes)));
-  const required = states.filter((s) => s.state !== "slot").length;
-  const done = states.filter((s) => s.state === "done").length;
-  const inProgress = states.filter((s) => s.state === "in_progress").length;
-  const slots = states.length - required;
-  const pct = required ? Math.round((done / required) * 100) : 0;
-
-  const pathCodes = new Set(terms.flatMap((t) => t.entries.flatMap((e) => e.codes)));
+export function PathProgress({ record, plan }: { record: StoredAcademicRecord; plan: ProgressPlan }) {
+  const s = summarizeProgress(plan, record);
+  const pct = s.required ? Math.round((s.done / s.required) * 100) : 0;
+  const pathCodes = new Set(plan.terms.flatMap((t) => t.entries.flatMap((e) => e.codes)));
   const lowGrades = record.courses.filter((c) => c.note && pathCodes.has(normalizeRecordCode(c.code)));
-  const otherCourses = record.courses.filter(
-    (c) => c.status === "completed" && !pathCodes.has(normalizeRecordCode(c.code))
-  );
 
   return (
     <div className="mt-5">
-      <p className="text-sm text-mdc-muted">{programLabel}</p>
+      <p className="text-sm text-mdc-muted">{plan.programLabel}</p>
       <div
         className="mt-2 h-3 w-full overflow-hidden rounded-full bg-mdc-line"
         role="progressbar"
@@ -63,19 +37,41 @@ export function PathProgress({
       </div>
       <p className="mt-2 text-sm text-mdc-ink">
         <span className="font-semibold">
-          {done} of {required}
+          {s.done} of {s.required}
         </span>{" "}
-        listed courses done{inProgress ? ` · ${inProgress} in progress` : ""}
-        {slots ? ` · ${slots} gen-ed or elective slot${slots === 1 ? "" : "s"} for your advisor to match` : ""}
+        listed courses done{s.inProgress ? ` · ${s.inProgress} in progress` : ""}
+        {s.slots ? ` · ${s.slots} gen-ed or elective slot${s.slots === 1 ? "" : "s"} for your advisor to match` : ""}
       </p>
 
+      <div className="mt-5 border border-mdc-line bg-white/60 p-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-mdc-blue">Estimated cost to finish</p>
+        <p className="mt-1 font-display text-2xl font-bold text-mdc-ink">{rangeText(s.cost.low, s.cost.high, formatUsd)}</p>
+        <p className="mt-1 text-sm text-mdc-muted">
+          About {rangeText(s.remaining.low, s.remaining.high)} of {plan.programCredits} credits left × MDC tuition of{" "}
+          {formatUsd(plan.ratePerCredit)}/credit{plan.rateYear ? `, ${plan.rateYear} rate` : ""}. In-progress courses
+          count as covered. Excludes fees and books.
+        </p>
+        {s.noCreditData.length ? (
+          <p className="mt-2 text-xs text-amber">
+            Our catalog data doesn&apos;t list credits for {s.noCreditData.join(", ")}, so they aren&apos;t
+            subtracted. Your real cost is likely lower; ask an MDC advisor.
+          </p>
+        ) : null}
+        {s.otherCompleted.length ? (
+          <p className="mt-2 text-xs text-mdc-muted">
+            Other completed courses (may count toward gen-ed or electives and lower this; ask an MDC advisor):{" "}
+            {s.otherCompleted.map((c) => c.code).join(", ")}
+          </p>
+        ) : null}
+      </div>
+
       <ol className="mt-6 grid gap-4 sm:grid-cols-2">
-        {terms.map((term, ti) => (
+        {plan.terms.map((term, ti) => (
           <li key={term.term} className="border border-mdc-line bg-white/60 p-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-mdc-blue">{term.term}</p>
             <ul className="mt-2 space-y-1 text-sm">
               {term.entries.map((entry, ei) => {
-                const { state, match } = entryState(entry.codes);
+                const { state, match } = s.entries[ti][ei];
                 const icon = ICON[state];
                 return (
                   <li key={`${ti}-${ei}`} className="flex gap-2">
@@ -105,13 +101,6 @@ export function PathProgress({
             </li>
           ))}
         </ul>
-      ) : null}
-
-      {otherCourses.length ? (
-        <p className="mt-4 text-sm text-mdc-muted">
-          Also completed (may count toward gen-ed or electives; ask an MDC advisor):{" "}
-          {otherCourses.map((c) => c.code).join(", ")}
-        </p>
       ) : null}
     </div>
   );

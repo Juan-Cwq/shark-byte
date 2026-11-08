@@ -341,9 +341,45 @@ export const StoredAcademicRecord = z.object({
 });
 export type StoredAcademicRecord = z.infer<typeof StoredAcademicRecord>;
 
+export interface CreditRange {
+  low: number;
+  high: number;
+}
+
 // One semester of the primary program, prepared on the server for the progress tracker.
 export interface PathProgressTerm {
   term: string;
   // codes normalized ("ENC1101"); empty = gen-ed/elective slot. title only for single-course entries.
-  entries: { label: string; codes: string[]; title: string | null }[];
+  // credits from the catalog data; null when the data has no credit value for this entry.
+  entries: { label: string; codes: string[]; title: string | null; credits: CreditRange | null }[];
+}
+
+// One FIU prerequisite row: every part is required; a part is met by any one of its codes.
+export interface FiuPrerequisite {
+  parts: { label: string; codes: string[] }[];
+  fiu: string;
+  note: string | null;
+}
+
+export interface FiuPlan {
+  degree: string;
+  catalogYear: string | null;
+  minGpa: number | null;
+  admission: string[];
+  prerequisites: FiuPrerequisite[];
+  exception: string | null; // from transfer_rules.fiu_exceptions when it applies to this degree
+  asNote: string | null; // transfer_rules.as_to_bachelors, shown when the primary program is an AS
+  advising: string | null;
+}
+
+// Everything the client needs to track one career's primary program against a student's record.
+export interface ProgressPlan {
+  careerId: CareerId;
+  careerTitle: string;
+  programLabel: string;
+  programCredits: number;
+  ratePerCredit: number; // MDC lower-division tuition per credit from cost_basis
+  rateYear: string;
+  terms: PathProgressTerm[];
+  fiu: FiuPlan | null;
 }

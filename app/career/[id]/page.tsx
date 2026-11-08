@@ -6,8 +6,9 @@ import { ProgressTracker } from "@/components/ProgressTracker";
 import { StudyBuddy } from "@/components/StudyBuddy";
 import { UnverifiedBadge } from "@/components/UnverifiedBadge";
 import { formatPay, formatUsd } from "@/lib/format";
-import { CAREER_IDS, type CareerId, type PathProgressTerm } from "@/lib/types";
-import { extractCourseCodes, getCareer, getCourseObjects, lookupCourse, normalizeCode } from "@/lib/pathways";
+import { CAREER_IDS, type CareerId } from "@/lib/types";
+import { extractCourseCodes, getCareer, getCourseObjects, lookupCourse } from "@/lib/pathways";
+import { getAllProgressPlans } from "@/lib/progress-plan";
 
 export function generateStaticParams() {
   return CAREER_IDS.map((id) => ({ id }));
@@ -28,13 +29,8 @@ export default async function CareerPage({ params }: { params: Promise<{ id: str
     return { code, label: `Quiz me on ${code}${short} basics` };
   });
 
-  const progressTerms: PathProgressTerm[] = program.sequence_full_time.map((t) => ({
-    term: t.term,
-    entries: t.courses.map((label) => {
-      const codes = extractCourseCodes(label).map(normalizeCode);
-      return { label, codes, title: codes.length === 1 ? (lookupCourse(careerId, label)?.title ?? null) : null };
-    }),
-  }));
+  const allPlans = getAllProgressPlans();
+  const progressPlan = allPlans.find((p) => p.careerId === careerId)!;
   // Split compounds ("CTS 1134 or CTS 1650") so each course is its own chip.
   const courseOptions = getCourseObjects(career).flatMap((c) => {
     const parts = extractCourseCodes(c.code);
@@ -77,10 +73,7 @@ export default async function CareerPage({ params }: { params: Promise<{ id: str
           ))}
         </nav>
 
-        <ProgressTracker
-          terms={progressTerms}
-          programLabel={`${program.degree} · ${program.name} (${program.code}) · ${program.credits} credits`}
-        />
+        <ProgressTracker plan={progressPlan} allPlans={allPlans} />
 
         <PersonalizePanel careerId={careerId} courseOptions={courseOptions} />
 

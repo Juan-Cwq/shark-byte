@@ -3,7 +3,6 @@
 // Client-only. Lives on this device; clearing site data erases it.
 
 import { useSyncExternalStore } from "react";
-import { normalizeRecordCode } from "./record-parse";
 import { StoredAcademicRecord, type RecordCourse } from "./types";
 
 const KEY = "cone:academic-record:v1";
@@ -66,7 +65,19 @@ export function clearAcademicRecord(): void {
   window.dispatchEvent(new Event(CHANGE_EVENT));
 }
 
-/** Map of normalized code ("ENC1101") → course from the record. */
-export function recordByCode(record: StoredAcademicRecord | null): Map<string, RecordCourse> {
-  return new Map((record?.courses ?? []).map((c) => [normalizeRecordCode(c.code), c]));
+export interface PlanRemainingRequest {
+  goal: string | null;
+}
+
+const PLAN_EVENT = "cone:plan-remaining";
+
+/** Ask the Personalize panel on this page to plan the rest of the path from the saved record. */
+export function requestPlanRemaining(detail: PlanRemainingRequest): void {
+  window.dispatchEvent(new CustomEvent<PlanRemainingRequest>(PLAN_EVENT, { detail }));
+}
+
+export function onPlanRemaining(handler: (detail: PlanRemainingRequest) => void): () => void {
+  const listener = (e: Event) => handler((e as CustomEvent<PlanRemainingRequest>).detail);
+  window.addEventListener(PLAN_EVENT, listener);
+  return () => window.removeEventListener(PLAN_EVENT, listener);
 }
